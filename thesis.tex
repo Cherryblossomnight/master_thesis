@@ -10,28 +10,54 @@
 \usepackage{here}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage[ms]{pxchfon}
+\setminchofont{:0:msmincho.ttc}
+\setgothicfont{:0:msgothic.ttc}
+\DeclareUnicodeCharacter{92EE}{\char"92EE}
 
 \begin{document}
 
-% 表紙
-\thesis{修士論文}
-\date{令和 8 年 8 月 17 日}
-\title{
-    \scalebox{1.5}{Hybrid Impedance-Admittance Control }\\
-    \vspace{1.2zh}
-    \scalebox{1.5}{of Multi-Link Aerial Robots }\\
-    \vspace{1.2zh}
-    \scalebox{1.5}{for Contact-Rich Surface Sliding Task}
-}
-\teacher{趙 漠居~講師}
-\organization{東京大学大学院 工学系研究科}
-\author{}
+% 表紙: 自定义封面，避免 titlepage 环境
+\begingroup
+\thispagestyle{empty}
+\begin{center}
+    \vspace{16mm}
+    {\fontsize{20}{20}\selectfont\bfseries 修士論文\par}
+    \vspace{30mm}
+
+    % English main title (multi-line, centered)
+    {\fontsize{20}{24}\selectfont\bfseries Hybrid Impedance--Admittance Control\par}
+    \vspace{2mm}
+    {\fontsize{20}{24}\selectfont\bfseries of Multi-Link Aerial Robots\par}
+    \vspace{2mm}
+    {\fontsize{20}{24}\selectfont\bfseries for Contact-Rich Surface Sliding Task\par}
+    \vspace{8mm}
+
+    % Japanese subtitle and additional text — 参考图中应为粗体
+    {\fontsize{18}{20}\selectfont\textgt{\bfseries 傾斜面への接触ならび作業に向けた多リンク飛行ロボットのインピーダンス・アドミッタンス複合制御}\par}
+    \vspace{28mm}
+
+    % 提出日期与指导教师
+    {\fontsize{16}{18}\textgt{\bfseries 令和 8 年 8 月 17 日 提出}\par}
+    \vspace{2mm}
+    {\fontsize{16}{18}\textgt{\bfseries 指導教員~~趙 漠居~講師}\par}
+    \vspace{8mm}
+
+    % 学校与院系信息
+    {\fontsize{16}{18}\textgt{\bfseries 東京大学大学院 工学系研究科}\par}
+    \vspace{2mm}
+    {\fontsize{16}{18}\textgt{\bfseries 機械工学専攻}\par}
+    \vspace{2mm}
+    {\fontsize{16}{18}\textgt{\bfseries 37-245135 }\par}
+    \vspace*{8mm}
+\end{center}
+\clearpage
+\endgroup
+
+% 设置 PDF 元信息
 \hypersetup{
   pdftitle={Hybrid Impedance-Admittance Control of Multi-Link Aerial Robots for Contact-Rich Surface Sliding Task},
-  pdfauthor={},
+  pdfauthor={Zicheng Luo},
 }
-
-\maketitle
 
 % 前書き
 \frontmatter
