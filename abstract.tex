@@ -1,0 +1,52 @@
+\documentclass[a4paper, twocolumn]{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath, amssymb ,bm}
+\usepackage{here}
+\usepackage{_abstact}
+
+\title{{\Large Hybrid Impedance-Admittance Control of Multi-Link Aerial Robots for Contact-Rich Surface Sliding Task}}
+\author{機械工学専攻　37-245135　}
+\teacher{趙 漠居 講師}
+\keywords{impedance control, admittance control, aerial manipulation}
+
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+\maketitle
+\thispagestyle{empty}
+\normalsize
+
+\section{Introduction}
+Aerial manipulation has attracted significant attention in recent years due to its potential for enabling aerial robots to perform complex tasks \cite{ollero2021}. However, in interaction-based tasks such as surface sliding, an aerial robot must maintain a pressing contact between its end-effector and an unknown uneven surface while following a desired trajectory \cite{bodie2020}. Such tasks involve coupled uncertainties from surface geometry and friction, resulting in significant variations in the external wrench acting on the robot. Consequently, the controller must provide both robustness and compliant behavior to withstand disturbances while adapting to changing contact conditions. Nevertheless, existing aerial robot controllers remain limited in achieving this combination, largely due to the lack of external-force perception, which prevents effective adaptation to unknown surfaces and varying contact conditions \cite{ollero2021}.
+
+Previous work on aerial interaction tasks has commonly employed force-control strategies such as impedance and admittance control \cite{ollero2021}. Impedance control has been widely studied for aerial robots; for example, Bodie et al. \cite{bodie2020} proposed a six-DOF axis-selective impedance controller with surface-dependent gain adjustment, and Zhang et al. \cite{zhang2022} used learning-based methods to adapt impedance parameters. Admittance control has also been explored; Ryll et al. \cite{ryll2019} enabled an aerial robot to follow variations in contact-plane geometry, although lateral force disturbances caused noticeable rotational deviations. In general, impedance control performs well in stiff environments but may lose accuracy in soft contact, whereas admittance control excels in soft environments but can become unstable when the environment is stiff \cite{ott2010}. These complementary properties are difficult to exploit simultaneously because their opposite force–motion causalities lead to ill-posed or unstable behavior when implemented on the same actuation source. Since conventional aerial robots rely solely on rotor thrust, they are structurally limited to adopting only one paradigm. Although some aerial manipulation platforms introduce joint actuation \cite{lippiello2012}, existing studies have not leveraged this feature to realize simultaneous impedance–admittance control.
+
+Multi-link aerial robots can actively deform their articulated structures in flight, providing additional degrees of freedom for aerial manipulation. Their effectiveness has been demonstrated in a variety of experimental tasks \cite{zhao2021}. In this work, we propose a hybrid impedance–admittance control strategy that exploits the robot’s two actuation sources by assigning them distinct roles. Rotor thrust governs the platform’s global motion and realizes impedance control for disturbance-resilient interaction, while joint actuation regulates the end-effector pose and generates admittance behavior to adapt to unknown surface geometry and contact variations. This coordinated control enables resilient and adaptive sliding on unknown surfaces, as illustrated in Fig.~\ref{fig:main_figure}.
+% \begin{figure}[t]
+%  \centering
+%   \includegraphics[width=\linewidth]{figures/mainfigure.jpg}
+%   \caption{A multi-link aerial robot is tracking a circular trajectory on a sloped board while maintaining contact. The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation.}
+%   \label{fig:main_figure}
+%   \vspace{-7mm}
+% \end{figure}
+
+
+\section{Preliminary}
+
+\section{Control}
+
+\section{Experiment}
+
+
+\section{Conclusion}
+In this paper, we present a hybrid impedance–admittance control framework for a multi-link aerial robot performing surface-sliding tasks. By applying impedance control along the force-sensitive sliding directions and admittance control along the geometry-sensitive contact direction, the proposed method exploits the distinct interaction characteristics of each axis. Experimental results show improved trajectory tracking, reduced contact forces, and smaller geometry-induced variations compared with a standard PID controller, demonstrating the effectiveness of the approach for real-world surface interaction.
+% 結論
+
+% 展望
+
+
+\small{
+\bibliographystyle{bib/IEEEtransBST/IEEEtran}
+\bibliography{bib/liter,bib/IEEEtransBST/IEEEabrv}
+}
+
+\end{document}

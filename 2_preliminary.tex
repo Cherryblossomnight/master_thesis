@@ -1,0 +1,202 @@
+\chapter{Preliminary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this chapter, we will introduce two types of multi-link aerial robots. One is the underactuated multi-link aerial robot Hydrus Xi, which could realize 2D deformation and can be considered as a normal quadrotor. The other is the overactuated multi-link aerial robot Dragon, which is actually can deform in 3D working space. The basic constructions and modeling method will be introduced. In this chapter, we will mainly introduce the modeling and allocation method of two types of multi-link aerial robot.
+
+
+\section{Notation}
+In this thesis, we denote scalars by regular font $x \in \mathbb{R}$, vectors by bold lowercase $\boldsymbol{x} \in \mathbb{R}^n$, and matrices by bold uppercase $\boldsymbol{X} \in \mathbb{R}^{m \times n}$. A vector expressed in frame $\{A\}$ is written as $^A\boldsymbol{p}$, and the rotation matrix from frame $\{A\}$ to frame $\{B\}$ is denoted as $^A\boldsymbol{R}_B$.
+Also, $\{W\}$ represents the world frame, $\{C\}$ represents the CoG frame, $\{E\}$ represents the end effector frame, $\{B\}$ represents the base link frame, and $\{F_i\}, i\in\{1,2,3,4\}$ is defined as the coordinate frame in each rotor.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Underactuated multi-link aerial robot}
+\subsection{Construction introduction}
+The underactuated multi-link aerial robot Hydrus Xi is shown in Fig.~\ref{fig:hydrus_model}. The platform consists of four links, each of which carries an independent propeller unit. The robot employs a serial-link structure with one rotational degree of freedom per joint, whose joint axes are aligned in parallel. Here, $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and a 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted by $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:hydrus_model}, was originally developed in \cite{anzai_2019_design}.
+
+
+\subsection{Modeling}
+With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton–Euler equations, are given by:
+\begin{subequations}
+\label{eq:dynamics}
+\begin{align}
+    m(^W\!\ddot{\boldsymbol{p}}+\boldsymbol{g})&= {^W\!\boldsymbol{f}_{cmd}} + {^W\!\boldsymbol{f}_{ext}}, \\[2pt]
+    \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
+\end{align}
+\end{subequations}
+where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint and vectoring angles vary during motion, the inertial matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertial matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/hydrus_model.png}
+    \caption{}
+    \label{fig:hydrus_model}
+    \vspace{-5mm}
+\end{figure}
+\subsection{Allocation}
+The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
+\begin{equation}
+\label{eq:allocation for force}
+    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\boldsymbol{b}_3,
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\label{eq:allocation for torque}
+    {^C\!\boldsymbol{\tau}_i}&=^C\!\!\boldsymbol{p}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\times^C\!\!\boldsymbol{f}_i+\kappa_i ^C\!\boldsymbol{f}_i\\
+    &=\lambda_i(^{C}\boldsymbol{\hat{p}}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})+\kappa_i\boldsymbol{E}_3)\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\boldsymbol{b}_3,
+\end{aligned}
+\end{equation}
+where $i \in \{1, 2, 3, 4\}$. $\boldsymbol{q} \in \mathbb{R}^3$ and $\boldsymbol{\psi} \in \mathbb{R}^4$ correspond to joint angles and vectoring angles, respectively. The joint angles and vectoring angles determine $^{C}\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\in \mathbb{R}^3$, which denoted the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
+
+Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the mapping from the the thrust vector $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$ to the command wrench is given by:
+\begin{equation}
+\label{eq:allocation for wrench}
+\begin{pmatrix}
+^C\!\boldsymbol{f}_{cmd} \\
+^C\!\boldsymbol{\tau}_{cmd}
+\end{pmatrix}
+=
+\sum_{i=1}^{4}
+\begin{pmatrix}
+^C\!\boldsymbol{f}_i \\
+^C\!\boldsymbol{\tau}_i
+\end{pmatrix} 
+=\begin{pmatrix}
+\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) \\
+\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi})
+\end{pmatrix}\boldsymbol{\lambda},
+\end{equation}
+where $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) \in \mathbb{R}^{3\times4}$ and $\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi}) \in \mathbb{R}^{3\times4}$ denote the translational and rotational components of the allocation matrix, respectively. The command force in world frame can be obtained by $^W\!\boldsymbol{f}_{cmd} = ^W\!\!\!\boldsymbol{R}_C{}^C\!\boldsymbol{f}_{cmd}$.
+
+In this thesis, the allocation matrices $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi})$ and  $\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi})$ is correspond to the joint angles $\boldsymbol{q}$ and the propeller units' vectoring rotation angle $\boldsymbol{\psi}$. To reduce the calculation complexity, we use optimization method introduced in \cite{zhao_2021_singularity} to calculate the vectoring angle automatically. By this way, we can only control the rotor's speed, and the vectoring angle become completely related to joint angles, which means it becomes a function of joint angles as $\boldsymbol{\psi}(\boldsymbol{q})$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overactuated multi-link aerial robot}
+
+\subsection{Construction introduction}
+The overactuated multi-link aerial robot Dragon is shown in Fig.~\ref{fig:dragon_mdoel}. The platform is consists of four links, each of which carries an independent vector propeller unit. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted  $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:dragon_mdoel}, was originally developed in \cite{anzai_2019_design}.
+
+\subsection{Modeling}
+With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton–Euler equations, are given by:
+\begin{subequations}
+\label{eq:dynamics of dragon}
+\begin{align}
+    m(^W\!\ddot{\boldsymbol{p}}+\boldsymbol{g})&= {^W\!\boldsymbol{f}_{cmd}} + {^W\!\boldsymbol{f}_{ext}}, \\[2pt]
+    \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
+\end{align}
+\end{subequations}
+where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/dragon_model.png}
+    \caption{}
+    \label{fig:dragon_model}
+    \vspace{-5mm}
+\end{figure}
+
+\subsection{Allocation}
+
+The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
+\begin{equation}
+\label{eq:allocation for force dragon}
+    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{L_i}(\boldsymbol{q})^{L_i}\boldsymbol{R}_{G_i}(\phi_i)^{G_i}\boldsymbol{R}_{F_i}(\theta_i)\boldsymbol{b}_3=\lambda_i^{C}\!\boldsymbol{u}_i
+\end{equation}
+
+\begin{equation}
+\label{eq:allocation for torque dragon}
+    {^C\!\boldsymbol{\tau}_i}=\lambda_i^{C}\!\boldsymbol{p}_{F_i}(\boldsymbol{q}, \phi_i ) \times ^{C}\!\!\boldsymbol{u}_i=\lambda_i^{C}\!\boldsymbol{v}_i.
+\end{equation}
+
+Then the force and torque can be allocation by thrust as follows
+\begin{equation}
+\label{eq:allocation for wrench dragon}
+^C\!\boldsymbol{w}_{cmd}=\begin{pmatrix}
+^C\!\boldsymbol{f}_{cmd} \\
+^C\!\boldsymbol{\tau}_{cmd}
+\end{pmatrix}
+=
+\sum_{i=1}^{4}
+\begin{pmatrix}
+^C\!\boldsymbol{f}_i \\
+^C\!\boldsymbol{\tau}_i
+\end{pmatrix} 
+=\boldsymbol{Q}\boldsymbol{\lambda},
+\end{equation}
+where 
+\begin{equation}
+\label{eq:Q dragon}
+\boldsymbol{Q} = 
+\begin{pmatrix}
+^C\!\boldsymbol{u}_1&^C\!\boldsymbol{u}_2&^C\!\boldsymbol{u}_3&^C\!\boldsymbol{u}_4\\
+^C\!\boldsymbol{v}_1&^C\!\boldsymbol{v}_2&^C\!\boldsymbol{v}_3&^C\!\boldsymbol{v}_4
+\end{pmatrix},
+\end{equation}
+and $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$. Here $\boldsymbol{Q} \in \mathbb{R}^{6 \times 4}$ is the allocation matrix, $^C\boldsymbol{u}_i$,$^C\boldsymbol{v}_i$, and $\lambda_i$ correspond to equations \ref{eq:allocation for force dragon} and \ref{eq:allocation for torque dragon}.
+If we get the command wrench from controller, we need to calculate the rotors' thrust and the vectoring angles. Here we also accept optimization method, which try to make the possible command torque become largest \cite{zhao_2023_versatile}.
+
+The target of the optimization equation is too make the thrust become smallest
+\begin{equation}
+\label{eq:thrust least dragon}
+\begin{aligned}
+\min_{\lambda,\theta,\phi}\quad & \|\boldsymbol{\lambda}\|^2， \\
+\text{s.t.}\quad & ^C\!\boldsymbol{w}_{cmd}
+= \boldsymbol{Q}(\boldsymbol{\theta},\boldsymbol{\phi})\boldsymbol{\lambda}，
+\end{aligned}
+\end{equation}
+Actually, this process is completed by the follow process
+
+
+\begin{equation}
+\label{eq:thrust least2 dragon}
+\begin{aligned}
+\min_{\boldsymbol{F}} \quad &
+\left\| \boldsymbol{F} \right\|^2\\
+\text{s.t.} \quad &^C\!\boldsymbol{w}_{cmd}=\tilde{\boldsymbol{Q}}\boldsymbol{F}\\
+\tilde{\boldsymbol{Q}}&=\left[
+\tilde{\boldsymbol{Q}}_{col_1}
+\quad
+\tilde{\boldsymbol{Q}}_{col_2}
+\quad
+\cdots
+\quad
+\tilde{\boldsymbol{Q}}_{col_{N_l}}
+\right]\\
+\tilde{\boldsymbol{Q}}_{col_i}&=
+\begin{bmatrix}
+\boldsymbol{E}_{3 \times 3}
+\\
+\left[
+{}^{\{CoG\}}
+\boldsymbol{p}_{\{F_i\}}
+\times
+\right]
+\end{bmatrix}
+{}^{\{CoG\}}
+\boldsymbol{R}_{\{L_i\}}
+\end{aligned}
+\end{equation}
+here $\boldsymbol{F}
+=\begin{bmatrix}
+{}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&\cdots&{}^{\{L_{N_r}\}}\boldsymbol{f}_{N_r}^{\top}
+\end{bmatrix}^{\top}$.
+Then we get $\boldsymbol{F}$ by
+\begin{equation}
+\label{eq:thrust least3 dragon}
+\boldsymbol{F}=\tilde{\boldsymbol{Q}}^{\#}{}^C\!\boldsymbol{w}_{cmd},
+\end{equation}
+where $(\cdot)^{\#}$ denotes the MP-pseudo-inverse of a full-rank matrix.
+
+Then we can get the thrust force and gimbal angles
+\begin{subequations}
+\label{eq:thrust least4 dragon}
+\begin{align}
+\lambda_i&=\left\|{}^{\{L_i\}}\boldsymbol{f}_i\right\|\\
+\phi_i&=\tan^{-1}\left(\frac{-{}^{\{L_i\}}f_{iy}}{{}^{\{L_i\}}f_{iz}}\right)\\
+\theta_i&=\tan^{-1}\left(\frac{{}^{\{L_i\}}f_{ix}}{-{}^{\{L_i\}}f_{iy}\sin(\phi_i)+{}^{\{L_i\}}f_{iz}\cos(\phi_i)}\right)
+\end{align}
+\end{subequations}
+We can also know that the thrust force and gimbal angles will be calculated automatically by this process.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary}
+In this chapter, we introduce the notation used in this thesis and the modeling process of multi-link aerial robot. The fundamental assumption of multi-link dynamics is the quasi-static assumption, by using this, the Newton-Euler equation will establish. The different between the underactuated system and the overactuated system is the allocation process, and this will also affect the control part, which will be introduced in the following chapters later. In the next chapter, we will introduce how to use the modeling equation to help establish the control method.

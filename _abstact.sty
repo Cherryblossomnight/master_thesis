@@ -1,0 +1,60 @@
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,bm}
+% \setlength{\headheight}{0mm}
+% \setlength{\headsep}{0mm}
+% \setlength{\footskip}{0mm}
+% \setlength{\topmargin}{-14mm}
+% \setlength{\oddsidemargin}{-8mm}
+% \setlength{\evensidemargin}{-8mm}
+% \setlength{\textheight}{274mm}
+% \setlength{\textwidth}{176mm}
+% \setlength{\abovecaptionskip}{-4pt}
+% \setlength{\belowcaptionskip}{-10pt}
+\usepackage[top=2cm, bottom=2cm, left=1.5cm, right=1.5cm, columnsep=1cm]{geometry}
+%和文が14Qになるように欧文デフォルトのサイズを調整（上手くいく）
+% \fontsize{10truept}{14truept}\selectfont
+\renewcommand{\normalsize}{\@setfontsize\normalsize{14.1Q}{17.625H}}
+% 参考: フォントサイズ10pt(=14.1Q)
+% 卒論概要様式の行間固定値14pt
+\renewcommand{\refname}{\fontsize{16.92Q}{23H}\selectfont 参考文献}
+\def \figref  #1{\figurename\ref{#1}}
+\def \tabref  #1{\tablename\ref{#1}}
+\def \equref  #1{式(\ref{#1})}
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+{.3\Cvs \@plus.5\Cvs \@minus.2\Cvs} % section上部の空白量
+{.2\Cvs \@plus.3\Cvs} % section下部の空白量
+{\fontsize{16.92Q}{23H}\selectfont\large\bfseries}}	% フォント，フォントサイズを変更
+\renewcommand{\subsection}{
+  \@startsection{subsection}{1}{\z@}
+  {.3\Cvs \@plus.5\Cvs \@minus.2\Cvs} % subsection上部の空白量
+  {.2\Cvs \@plus.3\Cvs} % subsection下部の空白量
+  {\fontsize{16.92Q}{23H}\selectfont\large\bfseries}}	% フォント，フォントサイズを変更
+\def\teacher #1{\gdef\@teacher{#1}}
+\def\keywords #1{\gdef\@keywords{#1}}
+\renewcommand\maketitle{
+  \ifnum \col@number=\@ne \@maketitle
+  \else \twocolumn[
+    % \vspace{-10mm}
+    % \@maketitle
+    \centering
+    {
+      \fontsize{16.92Q}{23H}\selectfont
+      \@title
+    }
+    \vspace{0.2\baselineskip}
+    \fontsize{14.1Q}{17.625H}\selectfont
+    \hspace*{\fill}\\
+    \@author\hspace{1\Cvs}指導教員 \@teacher \hspace*{\fill}\\
+    Keywords: \@keywords \hspace*{\fill}\\
+    \vspace{\baselineskip}
+  ]
+  \fi
+ }
+\def\bstctlcite#1{\@bsphack
+  \@for\@citeb:=#1\do{
+  \edef\@citeb{\expandafter\@firstofone\@citeb}%
+  \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi}%
+\@esphack}
+\pagestyle{empty}

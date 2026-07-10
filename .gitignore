@@ -1,0 +1,41 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.dvi
+*.ps
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+*.ist
+*.glo
+*.gls
+*.glsdefs
+*.idx
+*.ilg
+*.ind
+*.lol
+*.loa
+*.toc
+
+# latexmk / editor temporary files
+latexmk_build.log
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# VS Code settings
+.vscode/

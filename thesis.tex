@@ -1,0 +1,60 @@
+\documentclass[dvipdfmx,a4paper,12pt]{jsbook}
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+\usepackage{thesis}
+\usepackage{makeidx}
+\usepackage{amsmath}
+\usepackage{txfonts,float}
+\usepackage{here}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[ms]{pxchfon}
+
+\begin{document}
+
+% 表紙
+\thesis{修士論文}
+\date{令和 8 年 8 月 17 日}
+\title{
+    \scalebox{1.5}{Hybrid Impedance-Admittance Control }\\
+    \vspace{1.2zh}
+    \scalebox{1.5}{of Multi-Link Aerial Robots }\\
+    \vspace{1.2zh}
+    \scalebox{1.5}{for Contact-Rich Surface Sliding Task}
+}
+\teacher{趙 漠居~講師}
+\organization{東京大学大学院 工学系研究科}
+\author{}
+\hypersetup{
+  pdftitle={Hybrid Impedance-Admittance Control of Multi-Link Aerial Robots for Contact-Rich Surface Sliding Task},
+  pdfauthor={},
+}
+
+\maketitle
+
+% 前書き
+\frontmatter
+\include{_abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+
+% 本文
+\mainmatter
+\include{1_introduction}
+\include{2_preliminary}
+\include{3_separation}
+\include{4_integration}
+\include{5_experiment}
+\include{6_conclusion}
+\include{acknowledgement}
+\include{bibliography}
+
+
+% 後書き
+\backmatter
+\appendix
+
+\printindex
+\end{document}
