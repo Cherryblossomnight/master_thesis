@@ -54,6 +54,13 @@ The parallel morphology is defined as an aerial robot mounted with a delta manip
 Due to these adventages, a few researchers have used such kind of morphology. Guo et al. \cite{guo_2024_flying} performed calligraph on a board with the parallel morphology,showing the potential of this morphology for precise manipulation tasks.Deng et al. \cite{deng_2025_whole} realized high speed manipulation like push objects and grasping object, indicating the ability of achieve fast motion requirements.
 The above application demonstrate that the parallel morphology can perform well in high precision and high speed requirements. However, since the surface sliding tasks usually requires large work space that the delta manipulator do not have, this morphology will struggle when faced with a wider range of surface geometry variations.
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
+  \caption{Four morphologies of aerial robots. (a) Static end effector. (b) serial manipulator. (c) delta manipulator. (d) multi-link aerial robot}
+  \label{fig:morphologies}
+  \vspace{-7mm}
+\end{figure}
 
 The serial morphology is defined as an robotic arm manipulator mounted on an aerial robot. The serial structures of robotic arm provides large work space. In contrast to the parallel morphology, the serial morphology is usually used in tasks requiring large working space and obstacle avoidance ability. 
 Move a robotic arm to an aerial robot is an intuitive idea, therefore a lot of researches realize it. He et al. \cite{he_2025_flying} used serial arm to draw a relative large figure on a board. 
@@ -71,13 +78,7 @@ The extra d.o.f of multi-link aerial robot can also help it do more things. Sugi
 In conclusion, the morphologies of aerial robots would influence the abilities: parallel robotic arms usually used for agile manipulation tasks, while the series arms are used for large working space tasks. When it comes to complicated aerial manipulation tasks like surface sliding tasks, multi-link aerial robot is a good choice.
 
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
-  \caption{Four morphologies of aerial robots. (a) Static end effector. (b) serial manipulator. (c) delta manipulator. (d) multi-link aerial robot}
-  \label{fig:morphologies}
-  \vspace{-7mm}
-\end{figure}
+
 
 \subsection{control method used in aerial manipulation}
 For more and more interaction aerial manipulation tasks, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
@@ -87,6 +88,7 @@ Both impedance and admittance control can be considered as can be considered as 
 Among these strategies, impedance control has been extensively explored for aerial robots. 
 For the beginning of aerial manipulation research, the impedance control method was used \cite{ollero_2021_past}.
 Forte et al. \cite{forte_2012_impedance} calculated the 3D impedance control for a single rigid body aerial robot, and Lippiello et al. \cite{lippiello_2012_cartesian} put forward the impedance equation of an aerial robot with a serial arm. In his paper, the aerial robot itself and the 3-dof robotic arm is set different dynamic parameters, which also gives this thesis inspiration. After those work introduce impedance control into aerial manipulation tasks, the community more focused on the effect impedance control can realize.
+In recent years, the impedance control has been used in more complicated tasks.
 Bodie et al. \cite{bodie_2020_active} introduced a six-DOF axis-selective impedance controller capable of adjusting impedance gains based on surface proximity. In this work, the impedance control is considered as the adjusting part. This work realized sliding on the surface, following a specific trajectory, which can be used for bridge inspection task.
 Zhang et al. \cite{zhang_2022_learning} employed learning-based techniques to adapt the impedance parameters, which helps the aerial robot sliding on an uneven plane. Both work pay attention to use impedance control as a adjusting part to adapt to the unknown external environment that has different force requirements. 
 We can see that using impedance control in aerial robot is relatively mature. However, current literatures are mainly focusing on designing a useful control framework instead analyzing how the impedance controller perform in different tasks, or analyzing how the parameters effect the performance of aerial manipulation.
