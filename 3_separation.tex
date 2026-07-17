@@ -140,7 +140,7 @@ If we write the PID control equation
 We will find that the two equations are very similar. If we chose $\tilde{c}_d=-\frac{k_d}{m}$ and $\tilde{k}_d=-\frac{k_p}{m}$, the only different lines on the I term $k_i\int e_p\mathrm{d}t$ and the external force term $(\mu-1){{f}_{ext}}$. 
 
 When there exists position error, the I term $k_i\int e_p\mathrm{d}t$ will continue integral to increase the command force. If there is free flight situation, maybe it would not cause problem. But if there exists a non-zero external force, the integral term will increase to infinite except we set a limitation in advance. That is means the integral term unable to respond well to external forces. On the other hand, the external force term $(\mu-1){{f}_{ext}}$ is related to the estimated external force. It can adjust the final command wrench by considering the external force. Therefore, in the contact scenario, it is better to choose impedance control instead of PID control.
-% Obviously, they all used for compensate the position errors.
+Obviously, they all used for compensate the position errors.
 % Let see what will happen in different scenarios. 
 
 However, the impedance control still has a lot of similarities to the PID control. So we can divide it into PD control part and external force part. Apparently, if there is no external force, the external force part should disappear, and only PD control part (also the gravity part which should be considered as feedforward term) left. So we can use PID turning method to find the parameters $\tilde{c}_d$ and $\tilde{k}_d$, now they are consider as the $k_p$ and $k_d$.
