@@ -2,6 +2,17 @@
 In this chapter, we will demonstrate the effects of the proposed framework.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental platform introduction}
+\subsection{2D Multi-Link aerial robot Hydrus Xi}
+In the experiment, we use the robot show in Fig.~\ref{fig:robot_hydrus}.
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_hydrus.png}
+    \caption{The mechanical design of the 2D multi-link aerial robot Hydrus. (a) Whole mechanical structure. (b) End-effector. (c) Propeller vectoring module. (d) Joint module.}
+    \label{fig:robot_hydrus}
+    \vspace{-5mm}
+\end{figure}
+
+\subsection{3D Multi-Link aerial robot Dragon}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental parameters adjustment}
 \subsection{Practical Parameter Design Considerations}
@@ -58,7 +69,7 @@ Here we choose three different $\mu=0.5, 1, 2$, and measure the estimated extern
 	\begin{tabular}{ll}\hline
 		 訓練データの正答率&: $98\%$ \\
 		 テストデータの正答率&: $88\%$ \\
-	\label{tb:params1}
+	\label{tb:params2}
 	\end{tabular}
 \end{table}
 
@@ -251,7 +262,7 @@ These improvements demonstrate that the admittance controller enables the robot 
     \vspace*{-5mm}
 \end{figure}
 
-\subsection{Compare on All directions}
+\subsection{Compare on All Directions}
 Table shows the data of the four controllers. The hybrid controller get the best performance.
 Fig.~\ref{fig:admittance_plot} shows the CoG displacement error compares with the tracking error in y axis.
 

@@ -23,7 +23,7 @@ and show it can imitate the traditional cooperative aerial manipulation systems 
     \vspace{-5mm}
 \end{figure}
 
-The motivation for this hybrid impedance-admittance control framework is to provide both resilience and adaptivity when sliding on an unknown surface, where geometry and friction introduce significant uncertainties. As illustrated in Fig.~\ref{fig:framework}, impedance control manages the overall state of the aerial robot, which is represented by the pose of its CoG, while admittance control is applied to regulate the end-effector state, resulting in adjustment of the joint angles. Since variations in joint angles modify the robot’s configuration and thus influence the thrust allocation, this dependency is taken into account in the thrust computation.
+The motivation for this hybrid impedance-admittance control framework is to provide both resilience and adaptivity when sliding on an unknown surface, where geometry and friction introduce significant uncertainties. As illustrated in Fig.~\ref{fig:framework}, impedance control manages the overall state of the aerial robot, which is represented by the pose of its CoG, while admittance control is applied to regulate the end-effector state, resulting in adjustment of the joint angles. Since variations in joint angles modify the robot's configuration and thus influence the thrust allocation, this dependency is taken into account in the thrust computation.
 As illustrated in Fig.~\ref{fig:hybrid_controller}, by combining both controllers, the multi-link aerial robot can regulate its interaction with the surface in both force and position. Detailed analysis of the advantages of this hybrid control is presented in the following section.
 
 \begin{figure}[h]

@@ -40,11 +40,11 @@ In this work, we propose a novel hybrid impedance--admittance control enabled by
 %The morphology is very important for the aerial manipulation\cite{ollero_2021_past}. 
 We can briefly divide the morphologies of aerial manipulation into four types: single rigid body morphology, parallel morphology, series morphology and other specific morphology like multi-link aerial robot as illustrated in Fig.~\ref{fig:morphologies}. These morphologies have their own features for different type of tasks.
 
-The single rigid body morphology is just install a rod or a stick on the aerial robot, and the manipulator usually keeps static to the aerial robot. This kind of morphology is very simple, we don't need to think about how to control the end effector itself. 
-By mainly controling the aerial robot itself to provide degree of freedom for the end effector, the rigid manipulator is used for task like push-and-slide and peg-in-hole. 
+The single rigid body morphology is defined as to mount a single rigid body manipulator such as a rod or a stick on the aerial robot, and the manipulator usually keeps static to the aerial robot. The mechnical structure and control method of this morphology is relatively simple, so it has been use early and widely.
+By mainly controling the aerial robot itself to provide degree of freedom for the end effector, the rigid manipulator is used for tasks like push-and-slide and peg-in-hole. 
 %The end effector is usually a pad that installed with sensors, or a roller to move in the surface %smoothly. 
-The main requirement is the pose of manipulator, and it is ragulate by aerial robot's pose.
-In the recent research. For example Bodie et al. \cite{bodie_2020_active} uses a static end effector to inspect bridge. Brunner et al. \cite{brunner_2022_planning} realized to operate an articulated door. 
+% The main requirement is the pose of manipulator, and it is ragulate by aerial robot's pose.
+Recent research using this kind of morphology mostly pay attention to the control method, therefore use the simple morphology in order to reduce the complexity. For example, Bodie et al. \cite{bodie_2020_active} uses a static end effector to inspect bridge. Brunner et al. \cite{brunner_2022_planning} realized using a rod with hook to operate an articulated door. 
 %Actually, they did not use the manipulator it self to do the tasks.
 However, for more complicated tasks, the rigid manipulator may be not enough. Meanwhile, the rigid manipulator do not have extra d.o.f, so if the requirements need more, this type is not good. 
 
@@ -56,7 +56,7 @@ The above application demonstrate that the parallel morphology can perform well 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
-  \caption{Four morphologies of aerial robots. (a) Static end effector. (b) serial manipulator. (c) delta manipulator. (d) multi-link aerial robot}
+  \caption{Four morphologies of aerial robots. (a) Single rigid body morphology. (b) Sseries morphology. (c) Parallel morphology. (d) multi-link morphology}
   \label{fig:morphologies}
   \vspace{-7mm}
 \end{figure}
