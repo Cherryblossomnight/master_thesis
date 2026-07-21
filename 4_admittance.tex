@@ -3,8 +3,6 @@
 In this chapter, we will introduce the basis concept of admittance control, as well as how can we realize it in the multi-link aerial robots. After that, the special setting on the 2D mutli-link aerial robot Hydrus Xi and on the 3D multi-link aerial robot Dragon will be introduced.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Framework Overview}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +14,9 @@ In this chapter, we will introduce the basis concept of admittance control, as w
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Admittance Control}
-Similar to impedance control, admittance control also regulates the system’s response to external forces through a virtual dynamic relationship. However, impedance control generates a resisting force in response to displacement errors, whereas admittance control directly produces a compliant displacement in response to external forces. In this work, we employ admittance control to regulate the end-effector state by adjusting the joint angles in response to the external forces induced by surface geometric variations, thereby mitigating both the force and position disturbances experienced by the CoG through deformation.  The admittance dynamics can then be written as:
+Similar to impedance control, admittance control also regulates the system's response to external forces through a virtual dynamic relationship. However, impedance control generates a resisting force in response to displacement errors, whereas admittance control directly produces a compliant displacement in response to external forces. In this work, we employ admittance control to regulate the end-effector state by adjusting the joint angles in response to the external forces induced by surface geometric variations, thereby mitigating both the force and position disturbances experienced by the CoG through deformation.  
+In our framework, the admittance control is applied for adjusting the position error.
+The admittance dynamics can then be written as:
 
 
 % For the surface-sliding task considered, we define the $x$ axis of the world frame as the contact direction, while the $y$ and $z$ axes represent the sliding directions. Since both the environmental contact forces and geometric variations occur primarily along the contact direction, admittance control is applied only along this direction. The admittance dynamics along the $x$ axis can then be written as:
@@ -129,4 +129,4 @@ where $\Delta t$ is the control period.
 % \subsection{Admittance control}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
+% In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
