@@ -196,6 +196,33 @@ Then we can get the thrust force and gimbal angles
 \end{align}
 \end{subequations}
 We can also know that the thrust force and gimbal angles will be calculated automatically by this process.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{External Wrench Estimation}
+
+For both impedance control and admittance control, an external wrench is required in their respective formulations. We can choose to use force sensor to get the measured wrench data, or use estimation method to get a estimated wrench data. Generally, a force sensor is usually could only measure the external wrench applied on where it mounted. On the other hand, the estimation method can deal with force added in anywhere on the aerial robot, but it could distinguish which type of wrench. Considering the framework, the impedance control need to deal with force from different directions added in different point, so we finally choose to use estimated method.
+
+In this framework, a momentum-based external wrench estimation method introduced in \cite{ruggiero_2014_impedance}. The wrench applied at the CoG is obtained as follows:
+
+\begin{subequations}
+\label{eq:external wrench estimation}
+\begin{align}
+ {^W\!\boldsymbol{\tilde{f}}_{ext}}=\boldsymbol{K}_{ti}(m^W\!\dot{\boldsymbol{p}}-\int({^W\!\boldsymbol{f}_{cmd}}-m\boldsymbol{g}+ {^W\!\boldsymbol{\tilde{f}}_{ext}})\mathrm{d}t),\\
+ {^C\!\boldsymbol{\tilde{\tau}}_{ext}}=\boldsymbol{K}_{ri}(\boldsymbol{I}^C\!\boldsymbol{\omega}-\int({^C\!\boldsymbol{\tau}_{cmd}}-{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}} + {^C\!\boldsymbol{\tilde{\tau}}_{ext}})\mathrm{d}t),
+\end{align}
+\end{subequations}
+where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}}_{ext}$ and the real external torque   ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} \in $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translation gain matrix and estimator rotation gain matrix, respectively.
+
+Differentiating (\ref{eq:external wrench estimation}) and substituting (\ref{eq:dynamics}) into it yields a first-order low-pass filtered form: 
+\begin{subequations}
+\label{eq:external wrench estimation low-pass}
+\begin{align}
+ {^W\!\boldsymbol{\dot{\tilde{f}}}_{ext}}&=\boldsymbol{K}_{ti}({^W\!\boldsymbol{f}}_{ext}-{^W\!\boldsymbol{\tilde{f}}_{ext}}),\\
+ {^C\!\boldsymbol{\dot{\tilde{\tau}}}_{ext}}&=\boldsymbol{K}_{ri}({^C\!\boldsymbol{\tau}_{ext}}-{^C\!\boldsymbol{\tilde{\tau}}_{ext}}).
+\end{align}
+\end{subequations}
+That means by increasing the parameters, the estimated data will follow the real data faster, but also easier to introduce noise and lead to instability.
+
+Note that \eqref{eq:external wrench estimation} estimates external forces and torques without using acceleration measurements, relying solely on the estimated linear and angular velocities. That means only by using built-in IMU data, we can realize getting the external wrench data.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}

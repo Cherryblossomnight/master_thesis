@@ -8,32 +8,7 @@ In this chapter, we will introduce the basis concept of impedance control, as we
 % The motivation for this hybrid impedance-admittance control framework is to provide both resilience and adaptivity when sliding on an unknown surface, where geometry and friction introduce significant uncertainties.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{External Wrench Estimation}
 
-For both impedance control and admittance control, an external wrench is required in their respective formulations. We can choose to use force sensor to get the measured wrench data, or use estimation method to get a estimated wrench data. Generally, a force sensor is usually could only measure the external wrench applied on where it mounted. On the other hand, the estimation method can deal with force added in anywhere on the aerial robot, but it could distinguish which type of wrench. Considering the framework, the impedance control need to deal with force from different directions added in different point, so we finally choose to use estimated method.
-
-In this framework, a momentum-based external wrench estimation method introduced in \cite{ruggiero_2014_impedance}. The wrench applied at the CoG is obtained as follows:
-
-\begin{subequations}
-\label{eq:external wrench estimation}
-\begin{align}
- {^W\!\boldsymbol{\tilde{f}}_{ext}}=\boldsymbol{K}_{ti}(m^W\!\dot{\boldsymbol{p}}-\int({^W\!\boldsymbol{f}_{cmd}}-m\boldsymbol{g}+ {^W\!\boldsymbol{\tilde{f}}_{ext}})\mathrm{d}t),\\
- {^C\!\boldsymbol{\tilde{\tau}}_{ext}}=\boldsymbol{K}_{ri}(\boldsymbol{I}^C\!\boldsymbol{\omega}-\int({^C\!\boldsymbol{\tau}_{cmd}}-{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}} + {^C\!\boldsymbol{\tilde{\tau}}_{ext}})\mathrm{d}t),
-\end{align}
-\end{subequations}
-where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}}_{ext}$ and the real external torque   ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} \in $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translation gain matrix and estimator rotation gain matrix, respectively.
-
-Differentiating (\ref{eq:external wrench estimation}) and substituting (\ref{eq:dynamics}) into it yields a first-order low-pass filtered form: 
-\begin{subequations}
-\label{eq:external wrench estimation low-pass}
-\begin{align}
- {^W\!\boldsymbol{\dot{\tilde{f}}}_{ext}}&=\boldsymbol{K}_{ti}({^W\!\boldsymbol{f}}_{ext}-{^W\!\boldsymbol{\tilde{f}}_{ext}}),\\
- {^C\!\boldsymbol{\dot{\tilde{\tau}}}_{ext}}&=\boldsymbol{K}_{ri}({^C\!\boldsymbol{\tau}_{ext}}-{^C\!\boldsymbol{\tilde{\tau}}_{ext}}).
-\end{align}
-\end{subequations}
-That means by increasing the parameters, the estimated data will follow the real data faster, but also easier to introduce noise and lead to instability.
-
-Note that \eqref{eq:external wrench estimation} estimates external forces and torques without using acceleration measurements, relying solely on the estimated linear and angular velocities. That means only by using built-in IMU data, we can realize getting the external wrench data.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,8 +16,9 @@ Note that \eqref{eq:external wrench estimation} estimates external forces and to
 
 % In this section, we will introduce how to adjust parameters to make the aerial robot to meet the require performance.
 % In this subsection, we will introduce the 
-Impedance control models the robot as a second-order system in the sight of environment, so that the robot can adjusting its own movement by external force. To meat different requirements, the dynamic parameters can be freely designed to achieve the desired interaction behavior.
-For example, by adjusting the stiffness parameters, the robot can be made resilient in certain directions to reject disturbances while remaining compliant in others to maintain safe interaction \cite{bodie_2020_active}. By using impedance control, we can redesign how the system performs. In this section, we will introduce the normal concept of impedance control, also discuss about the fundamental concept of impedance control, and the difference between the PID control and it. 
+Impedance control models the robot as a second-order system in the sight of environment, so that the robot can adjusting its own movement by external force\cite{hogan_1984_impedance}. To meat different requirements, the dynamic parameters can be freely designed to achieve the desired interaction behavior. For example, by adjusting the stiffness parameters, the robot can be made resilient in certain directions to reject disturbances while remaining compliant in others to maintain safe interaction \cite{bodie_2020_active}. By using impedance control, we can redesign how the system performs. In this section, we will introduce the normal concept of impedance control, also discuss about the fundamental concept of impedance control, and the difference between the PID control and it. 
+
+
 Here we will introduce how to get the command wrench equation of impedance control.
 The translational motion is expressed in the world frame $\{W\}$, whereas the rotational motion is expressed in the CoG frame $\{C\}$. Under this convention, the impedance equations are written as:
 \begin{subequations}
@@ -64,7 +40,7 @@ where ${\boldsymbol{M}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual mas
 \end{subequations}
 where we use the vee-operator $^\vee$ to extract a vector from a skew symmetric matrix.
 
-Next, by substituting \eqref{eq:dynamics} into \eqref{eq:impedance control 1} to eliminate $\ddot{\boldsymbol{p}}$ and $\dot{\boldsymbol{\omega}}$, the command wrench added on the CoG can be derived. The translational component can be written as
+Next, by substituting the dynamic equations \eqref{eq:dynamics} into the impedance control equations \eqref{eq:impedance control 1} in order to eliminate $\ddot{\boldsymbol{p}}$ and $\dot{\boldsymbol{\omega}}$, the command wrench added on the CoG can be derived. The translational component can be written as
 
 \begin{equation}
 \label{eq:imp cmd for trans1}
@@ -77,9 +53,9 @@ And the rotational component can be written as
 \label{eq:imp cmd for rot1}
     {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}\boldsymbol{I}^{-1}_d({\boldsymbol{C}_{rd}}{\boldsymbol{e}_\omega}+{\boldsymbol{K}_{rd}}{\boldsymbol{e}_R})+{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
+Here we obtain the command wrench that the rotor of the aerial robot must generate.
 
-
-Finally, we can rewrite the \ref{eq:imp cmd for trans1} and \ref{eq:imp cmd for rot1} as follow.  Here we define the normalized linear damping and stiffness as $\tilde{\boldsymbol{C}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{C}_{td}$ and $\tilde{\boldsymbol{K}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{K}_{td}$, respectively. Using these definitions, \eqref{eq:imp cmd for trans1} can be rewritten as
+Finally, for some reason we will introduce in the next section, we can rewrite the \ref{eq:imp cmd for trans1} and \ref{eq:imp cmd for rot1} as follow.  Here we define the normalized linear damping and stiffness as $\tilde{\boldsymbol{C}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{C}_{td}$ and $\tilde{\boldsymbol{K}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{K}_{td}$, respectively. Using these definitions, \eqref{eq:imp cmd for trans1} can be rewritten as
 \begin{equation}
 \label{eq:imp cmd for trans2}
     {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m(\tilde{\boldsymbol{C}}_{td}{\boldsymbol{e}_v}+{\tilde{\boldsymbol{K}}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
@@ -90,20 +66,8 @@ Also we define the normalized rotation damping and stiffness as $\tilde{\boldsym
     {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_\alpha})
     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
-Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
-
-For some reason we will introduce in the next section, we can rewrite the \ref{eq:imp cmd for trans1} and \ref{eq:imp cmd for rot1} as follow.  Here we define the normalized linear damping and stiffness as $\tilde{\boldsymbol{C}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{C}_{td}$ and $\tilde{\boldsymbol{K}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{K}_{td}$, respectively. Using these definitions, \eqref{eq:imp cmd for trans1} can be rewritten as
-\begin{equation}
-\label{eq:imp cmd for trans2}
-    {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m(\tilde{\boldsymbol{C}}_{td}{\boldsymbol{e}_v}+{\tilde{\boldsymbol{K}}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
-\end{equation}
-Also we define the normalized rotation damping and stiffness as $\tilde{\boldsymbol{C}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{C}_{rd}$ and $\tilde{\boldsymbol{K}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{K}_{rd}$, respectively. Equation (\ref{eq:imp cmd for rot1}) can then be rewritten as
-\begin{equation}
-\label{eq:imp cmd for rot2}
-    {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_\alpha})
-    +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
-\end{equation}
-Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
+These equations help generate the command wrench that we want the rotors to perform. In next section, we will explain why we rewrite the equation like these, and will introduce a new insight of impedance control.
+% Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
 
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parameter tuning discussion}
@@ -192,7 +156,8 @@ So in this insight, the impedance control can be consider as the upper lever of 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Impedance control on Hydrus}
+\section{Adaptation of Impedance Control for Multi-Link Aerial Robots}
+\subsection{Implementation on Hydrus}
 To use impedance control on Hydrus, we need do some special step. Due to Hydrus is an underactuated system, it must control the translation part and rotation part cascadely.
 To obtain the desired thrust vector, we first calculate the translational command force magnitude by
 \begin{equation}
@@ -236,7 +201,7 @@ Then the rotation thrust vector can be obtained by
 \label{eq:thrust rotation 1}
      \boldsymbol{\lambda}_r=\boldsymbol{Q}_r^{\dagger}{^{C}\boldsymbol{\tau}_{cmd}},
 \end{equation}
-where $\boldsymbol{Q}_r^{\dagger}$ is the Moore–Penrose pseudoinverse of $ \boldsymbol{Q}_r$.
+where $\boldsymbol{Q}_r^{\dagger}$ is the Moore--Penrose pseudoinverse of $ \boldsymbol{Q}_r$.
 
 Finally, the total thrust required to be generated by the rotors can be obtained as
 \begin{equation}
@@ -246,14 +211,28 @@ Finally, the total thrust required to be generated by the rotors can be obtained
 This gives the individual thrust values that each rotor needs to produce. 
 % The detail calculated of allocation process about the thrusts can be found in \cite{zhao_2021_singularity}.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Impedance control on Dragon}
-If we what to control the prior frame, we need to do frame transformation to get the error values used for impedance control. Usually, there are three important frames in the aerial robot: CoG frame, end effector frame and base link frame. Due to some kind of symmetry, there is no fundamental difference between the end effector frame and the base link frame. The reason why we set such kind of mode is to follow the kinematic modeling of the multi-link structure.
-In real world experience, the meaning we use those three frames are different: The CoG frame can be considered as the overall state of the whole multi-link aerial robot, and it is very convenient to calculate because the command wrench needed to be calculated in the CoG frame. So if the task requires to guarantee the overall pose of the aerial robot, the CoG centric mode can be used. However, due to the CoG point is usually in the air for the special structure of the multi-link aerial robot, it usually lacks certain meaning to control this frame in the air. On the other hand, the end effector frame and the base link frame have different meaning. They are the head and rear end of the whole serial link structure, therefore can be used as the contact point. Meanwhile, other complicated requirements can be put forward. for example, we can use the end effector as the contact point to the surface, and used the base link to mount a camera, radar or other sensor. Or we can access a power cable in the base link. At this situation, the pose of the base link is also need to be consider, but it is not as important as the contact point. 
-So in this thesis, we will choose the end effector frame as the prior frame and the base link frame as the secondary frame.
+\subsection{Implementation on Dragon}
+In Dragon's case, due to dragon is an overactuated system, the calculated command wrench can be directly excuted by the rotors after allocation. In detail, 
 
+After that, the thrust and the gimbal angle can be set.
+We need to get the command wrench of the aerial robot
+\begin{equation}
+\label{eq:command wrench dragon}
+^C\mathbf{w}_{cmd}=\begin{pmatrix}
+^C\!\boldsymbol{f}_{cmd} \\
+^C\!\boldsymbol{\tau}_{cmd}
+\end{pmatrix},
+\end{equation}
+here $^C\mathbf{w}_{cmd}$ is the command wrench in frame $\{C\}$.
+Because dragon is the overactuated system, the command wrench can be achieve by its rotors simultaneously(if we ignore the servo response time). Therefore, after gaining the command wrench in $\{C\}$, we can used the equation () to calculated the rotor thrusts and gimbal servo angles.
+% If we what to control the prior frame, we need to do frame transformation to get the error values used for impedance control. Usually, there are three important frames in the aerial robot: CoG frame, end effector frame and base link frame. Due to some kind of symmetry, there is no fundamental difference between the end effector frame and the base link frame. The reason why we set such kind of mode is to follow the kinematic modeling of the multi-link structure.
+% In real world experience, the meaning we use those three frames are different: The CoG frame can be considered as the overall state of the whole multi-link aerial robot, and it is very convenient to calculate because the command wrench needed to be calculated in the CoG frame. So if the task requires to guarantee the overall pose of the aerial robot, the CoG centric mode can be used. However, due to the CoG point is usually in the air for the special structure of the multi-link aerial robot, it usually lacks certain meaning to control this frame in the air. On the other hand, the end effector frame and the base link frame have different meaning. They are the head and rear end of the whole serial link structure, therefore can be used as the contact point. Meanwhile, other complicated requirements can be put forward. for example, we can use the end effector as the contact point to the surface, and used the base link to mount a camera, radar or other sensor. Or we can access a power cable in the base link. At this situation, the pose of the base link is also need to be consider, but it is not as important as the contact point. 
+% So in this thesis, we will choose the end effector frame as the prior frame and the base link frame as the secondary frame.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Task-Oriented Impedance Coordinate Selection}
 
 We only change the error in the impedance equations \ref{eq:imp cmd for trans2} and \ref{eq:imp cmd for rot2}
-\subsection{CoG centric mode}
+\subsubsection{CoG centric mode}
 In the CoG centric mode (short as cog-centric), the errors are defined as usual
 \begin{subequations}
 \label{eq:error cog mode}
@@ -265,7 +244,7 @@ In the CoG centric mode (short as cog-centric), the errors are defined as usual
 \end{align}
 \end{subequations}
 after calculated the command wrench in the CoG frame, the value can be directly allocated to the rotors.
-\subsection{end effector centric mode}
+\subsubsection{end effector centric mode}
 In the end effector centric mode (short as ee-centric).
 The rotational impedance control is considered in the $\{E\}$ frame.
 
@@ -301,7 +280,7 @@ The original point of the end effector frame to realize the impedance behavior i
     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
 
-\subsection{base effector centric mode}
+\subsubsection{base effector centric mode}
 In the base effector centric mode (short as be-centric), the errors are defined as
 \begin{subequations}
 \label{eq:error be mode}
@@ -323,18 +302,7 @@ As shown in Fig.~\ref{fig:admittance_changing}, the dragon choose different mode
     \label{fig:admittance_changing}
     \vspace{-5mm}
 \end{figure}
-\subsection{Allocation}
-After that, the thrust and the gimbal angle can be set.
-We need to get the command wrench of the aerial robot
-\begin{equation}
-\label{eq:command wrench dragon}
-^C\mathbf{w}_{cmd}=\begin{pmatrix}
-^C\!\boldsymbol{f}_{cmd} \\
-^C\!\boldsymbol{\tau}_{cmd}
-\end{pmatrix},
-\end{equation}
-here $^C\mathbf{w}_{cmd}$ is the command wrench in frame $\{C\}$.
-Because dragon is the overactuated system, the command wrench can be achieve by its rotors simultaneously(if we ignore the servo response time). Therefore, after gaining the command wrench in $\{C\}$, we can used the equation () to calculated the rotor thrusts and gimbal servo angles.
+
 % \begin{equation}
 % \begin{aligned}
 % \min_{\lambda,\,\theta,\,\phi} \quad & \|\boldsymbol{\lambda}\|^2 \\
@@ -349,4 +317,4 @@ Because dragon is the overactuated system, the command wrench can be achieve by 
 \section{Summary}
 In this chapter. We explain that the impedance control can help to change the dynamics parameters of the system, in order to have different performances in different directions. Also, the admittance control can help to adjust the distance between the end-effector and a reference point(es tl. CoG) on the aerial robot, and help to adapt to the geometric variation of the surface. Finally, we explain both the controllers can be added together on the multi-link aerial robot and achieve the surface sliding tasks.
 
-limitation
+Just like we discussion in this chapter, by using impedance controller, we can redesign the dynamic parameters to meet the task requirements. However, the impedance controller itself could only react to the external wrench by generate command wrench, which means if the . The limitation replies that we could not only use impedance control in our framework.

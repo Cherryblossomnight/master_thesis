@@ -40,7 +40,7 @@ The propose of we control two points on multi-link aerial robot is to imitate do
 We consider the two selected frame on the dragon as the adjusting frame. We can consider one of them as a prior frame and the other as the secondary frame. The pose of the prior frame is completely controlled by the impedance control, and the pose of the secondary frame related to the prior frame is controlled by the designed trajectory and admittance control. In this framework, the impedance control is used for stably control the prior frame to follow its trajectory, while the admittance control is used for adjust the unmodeled geometric part that the secondary frame may face to. Depending to task requirement, there will be a lot of choices. 
 Overall, the hybrid controller added in dragon is to imitate the double drones cooperation aerial manipulation by the single aerial robot.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Control Mechanism on Hydrus} 
+\section{Hybrid Control Mechanism for Multi-Link Aerial Robots}
 
 In surface-sliding tasks, the contact and sliding directions exhibit fundamentally different physical characteristics: the sliding directions are dominated by friction-induced disturbances, whereas the contact direction is shaped by geometric variations of the environment. Leveraging this distinction, the hybrid impedance--admittance controller assigns each axis the control behavior best suited to its interaction properties. As illustrated in Fig.~\ref{fig:hybrid_controller}, admittance control is applied along the contact direction ($x$ axis) to regulate geometry-driven variations, while impedance control governs the sliding directions ($y$ and $z$ axes) to accommodate friction-affected motion.
 
@@ -55,37 +55,37 @@ Through this task-aligned division of control responsibilities, the hybrid contr
     \vspace{-5mm}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Control Mechanism on Dragon} 
-\subsection{Inverse Kinematics on Dragon}
-In order to realize two trajectory in the air, we need to use inverse kinematics to get the joint angles of dragon. The prior trajectory is followed by the prior frame under impedance control. Depending the task requirements, we can calculated the relative transformation between the prior trajectory and the secondary trajectory, and regard it as the design position. For convenience, we only regard the transform from the $\{B\}$ frame to the $\{E\}$ frame, and represent it in the $\{B\}$ frame. The other part is the admittance distance. Therefore, we have to parts for theoretical position and unmodeled position compensation. As the following equation shows:
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Hybrid Control Mechanism on Dragon} 
+% \subsection{Inverse Kinematics on Dragon}
+% In order to realize two trajectory in the air, we need to use inverse kinematics to get the joint angles of dragon. The prior trajectory is followed by the prior frame under impedance control. Depending the task requirements, we can calculated the relative transformation between the prior trajectory and the secondary trajectory, and regard it as the design position. For convenience, we only regard the transform from the $\{B\}$ frame to the $\{E\}$ frame, and represent it in the $\{B\}$ frame. The other part is the admittance distance. Therefore, we have to parts for theoretical position and unmodeled position compensation. As the following equation shows:
 
 
-\begin{equation}
-\label{eq:IK distance dragon}
-\boldsymbol{r}_s = \boldsymbol{r}_{d} + \boldsymbol{r},
-\end{equation}
+% \begin{equation}
+% \label{eq:IK distance dragon}
+% \boldsymbol{r}_s = \boldsymbol{r}_{d} + \boldsymbol{r},
+% \end{equation}
 
-here $\boldsymbol{r}_s$ means the real position of the end-effector in frame $\{B\}$. 
-If we control the distance between the end effector frame and the base link frame, there will be six joints between them, which means the IK process can be considered as solve the IK problem in a six-dof robotic arms. Transparently, except some singular points, most of the pose can be reach by the serial link structure.
+% here $\boldsymbol{r}_s$ means the real position of the end-effector in frame $\{B\}$. 
+% If we control the distance between the end effector frame and the base link frame, there will be six joints between them, which means the IK process can be considered as solve the IK problem in a six-dof robotic arms. Transparently, except some singular points, most of the pose can be reach by the serial link structure.
 
-\begin{equation}
-\label{eq:IK dragon}
-\boldsymbol{q} = IK(^ER_{B,ref},\boldsymbol{r}_s),
-\end{equation}
-here the $^ER_{B,ref}$ is the desired rotation matrix from frame $\{B\}$ to frame $\{E\}$.
-After we design the trajectory and the position error of admittance control. We calculate the joint angles. Finally, we will get the joint angles by inverse kinematics.
-In theory, there will be more limitation. We need to consider whether the joints can execute the command, and the aerial robot may lose controllability at some configurations. In this work, we only attempt those configurations that successfully executed in simulation. The influence process hope to be solved in the future work.
+% \begin{equation}
+% \label{eq:IK dragon}
+% \boldsymbol{q} = IK(^ER_{B,ref},\boldsymbol{r}_s),
+% \end{equation}
+% here the $^ER_{B,ref}$ is the desired rotation matrix from frame $\{B\}$ to frame $\{E\}$.
+% After we design the trajectory and the position error of admittance control. We calculate the joint angles. Finally, we will get the joint angles by inverse kinematics.
+% In theory, there will be more limitation. We need to consider whether the joints can execute the command, and the aerial robot may lose controllability at some configurations. In this work, we only attempt those configurations that successfully executed in simulation. The influence process hope to be solved in the future work.
 
-As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure can follow the trajectory under inverse kinematics.
-\begin{figure}[h]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
-    \caption{Admittance changing.}
-    \label{fig:admittance_changing}
-    \vspace{-5mm}
-\end{figure}
+% As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure can follow the trajectory under inverse kinematics.
+% \begin{figure}[h]
+%     \centering
+%     % \parbox{3in}
+%     \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
+%     \caption{Admittance changing.}
+%     \label{fig:admittance_changing}
+%     \vspace{-5mm}
+% \end{figure}
 
 \subsection{Hybrid Control Mechanism} 
 
