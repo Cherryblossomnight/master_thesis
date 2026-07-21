@@ -8,13 +8,15 @@ In this thesis, we denote scalars by regular font $x \in \mathbb{R}$, vectors by
 Also, $\{W\}$ represents the world frame, $\{C\}$ represents the CoG frame, $\{E\}$ represents the end effector frame, $\{B\}$ represents the base link frame, and $\{F_i\}, i\in\{1,2,3,4\}$ is defined as the coordinate frame in each rotor.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Underactuated multi-link aerial robot}
-\subsection{Construction introduction}
-The underactuated multi-link aerial robot Hydrus Xi is shown in Fig.~\ref{fig:hydrus_model}. The platform consists of four links, each of which carries an independent propeller unit. The robot employs a serial-link structure with one rotational degree of freedom per joint, whose joint axes are aligned in parallel. Here, $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and a 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted by $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:hydrus_model}, was originally developed in \cite{anzai_2019_design}.
+
+\section{Modeling of Multi-Link Aerial Robots}
+
+\subsection{General Description of Multi-Link Aerial Robots}
+The mutli-link aerial robots, 
+\subsection{Dynamic Model}
 
 
-\subsection{Modeling}
-With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton–Euler equations, are given by:
+With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton--Euler equations, are given by:
 \begin{subequations}
 \label{eq:dynamics}
 \begin{align}
@@ -22,15 +24,10 @@ With the above definitions, the dynamics of the underactuated multi-link aerial 
     \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
 \end{align}
 \end{subequations}
-where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint and vectoring angles vary during motion, the inertial matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertial matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity}.
+where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint and vectoring angles vary during motion, the inertial matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertial matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/hydrus_model.png}
-    \caption{}
-    \label{fig:hydrus_model}
-    \vspace{-5mm}
-\end{figure}
+
+
 \subsection{Allocation}
 The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
 \begin{equation}
@@ -69,32 +66,25 @@ where $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) \in \mathbb{R}^{3\time
 
 In this thesis, the allocation matrices $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi})$ and  $\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi})$ is correspond to the joint angles $\boldsymbol{q}$ and the propeller units' vectoring rotation angle $\boldsymbol{\psi}$. To reduce the calculation complexity, we use optimization method introduced in \cite{zhao_2021_singularity} to calculate the vectoring angle automatically. By this way, we can only control the rotor's speed, and the vectoring angle become completely related to joint angles, which means it becomes a function of joint angles as $\boldsymbol{\psi}(\boldsymbol{q})$.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Overactuated multi-link aerial robot}
 
-\subsection{Construction introduction}
-The overactuated multi-link aerial robot Dragon is shown in Fig.~\ref{fig:dragon_mdoel}. The platform is consists of four links, each of which carries an independent vector propeller unit. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted  $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:dragon_mdoel}, was originally developed in \cite{anzai_2019_design}.
 
-\subsection{Modeling}
-With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton–Euler equations, are given by:
-\begin{subequations}
-\label{eq:dynamics of dragon}
-\begin{align}
-    m(^W\!\ddot{\boldsymbol{p}}+\boldsymbol{g})&= {^W\!\boldsymbol{f}_{cmd}} + {^W\!\boldsymbol{f}_{ext}}, \\[2pt]
-    \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
-\end{align}
-\end{subequations}
-where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively.
+\subsection{Underactuated Configuration: Hydrus}
+The underactuated multi-link aerial robot Hydrus Xi is shown in Fig.~\ref{fig:hydrus_model}. The platform consists of four links, each of which carries an independent propeller unit. The robot employs a serial-link structure with one rotational degree of freedom per joint, whose joint axes are aligned in parallel. Here, $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and a 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted by $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:hydrus_model}, was originally developed in \cite{anzai_2019_design}.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/dragon_model.png}
-    \caption{}
-    \label{fig:dragon_model}
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/hydrus_model.png}
+    \caption{Model of the Hydrus Xi robot.}
+    \label{fig:hydrus_model}
     \vspace{-5mm}
 \end{figure}
 
-\subsection{Allocation}
+
+
+\subsection{Overactuated Configuration: Dragon}
+The overactuated multi-link aerial robot Dragon is shown in Fig.~\ref{fig:dragon_model}. The platform is consists of four links, each of which carries an independent vector propeller unit. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each propeller unit features a fixed tilt angle $\beta$ and 1-DoF yaw rotation mechanism to vector the thrust direction, whose vectoring angle is denoted  $\psi_i$. The design of the thrust-vectoring unit, shown in the top-right of Fig.~\ref{fig:dragon_model}, was originally developed in \cite{anzai_2019_design}.
+
+
 
 The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
 \begin{equation}
