@@ -7,7 +7,11 @@ Recently, aerial manipulation has attracted a lot of attention in the robotic re
 
 On the other hand, one of the newest aerial robots for aerial manipulation is the multi-link aerial robots. Multi-link aerial robots are capable of actively deforming their articulated serial-link structures in the air, and this deformability provides additional degrees of freedom for manipulation during flight \cite{zhao_2021_singularity, zhao_2018_design, yang_2018_lasdra, hameed_2025_dragonfly}. Its structure is designed to go through narrow space or enhance the operation wrench \cite{zhao_2020_online, zhao_2022_forceful}. Owing to these structural advantages, multi-link aerial robots offer opportunities for applications, including inspection and search-and-rescue tasks. Their effectiveness has been demonstrated in a variety of experimental tasks, such as grasping objects \cite{hameed_2025_dragonfly, shi_2020_aerial, zhao_2023_versatile}, opening sliding door \cite{sugito_2022_aerial} and manipulating valves \cite{zhao_2022_forceful}.
 
-However, when facing a broader range of aerial manipulation tasks, conventional aerial manipulation systems are often insufficient. A representative interaction scenario is a contact-rich surface sliding task, in which an aerial robot is typically required to maintain a pressing contact between its end-effector and an unknown uneven surface while following a desired sliding trajectory \cite{bodie_2020_active, trujillo_2019_novel, tognon_2019_truly}. Such tasks inherently involve a coupling between unmodeled surface geometry and frictional effects, leading to significant uncertainties in both the external wrench and the contact geometry experienced by the robot. Additionally, in practical aerial applications such as bridge inspection and infrastructure maintenance, extra task-relevant structures on the robot may also be required to perform specific trajectory. For example, cameras mounted on the aerial platform may need to take video in a desired viewpoint, while power cable or sensors attach on the aerial platform may also need to preserve a specific position. Therefore, as the contact interaction situation varies during surface sliding, these position requirements are also needed to be considered by changing the configuration of the multi-link structure through requirements of tasks and external geometric disturbance. 
+However, when facing a broader range of aerial manipulation tasks, conventional aerial manipulation systems are often insufficient. A representative interaction scenario is a contact-rich surface sliding task, in which an aerial robot is typically required to maintain a pressing contact between its end-effector and an unknown uneven surface while following a desired sliding trajectory \cite{bodie_2020_active, trujillo_2019_novel, tognon_2019_truly}. Such tasks inherently involve a coupling between unmodeled surface geometry and frictional effects, leading to significant uncertainties in both the external wrench and the contact geometry experienced by the robot. Therefore, as the contact interaction situation varies during surface sliding, these position requirements are also needed to be considered by changing the configuration of the multi-link structure through requirements of tasks and external geometric disturbance.
+
+
+
+% Additionally, in practical aerial applications such as bridge inspection and infrastructure maintenance, extra task-relevant structures on the robot may also be required to perform specific trajectory. For example, cameras mounted on the aerial platform may need to take video in a desired viewpoint, while power cable or sensors attach on the aerial platform may also need to preserve a specific position. 
 
 As a result, the controller must exhibit both robustness and compliant behavior, enabling the end-effector to remain resilient to force disturbances while the relative configuration adaptation to changing contact conditions. Nevertheless, existing control methods for multi-link aerial robots remain limited in achieving this unified combination of robustness and compliant interaction \cite{ollero_2021_past}.  This limitation primarily stems from their lack of perception of external conditions, which prevents the controller from adapting its force and motion responses to uncertainties in the external wrench and contact conditions.
 
@@ -35,7 +39,18 @@ In this work, we propose a novel hybrid impedance--admittance control enabled by
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Previous Research}
 
-\subsection{Morphologies of aerial robot for aerial manipulation}
+\subsection{Surface Sliding Aerial Manipulation Tasks}
+The aerial manipulation tasks are very important. One of the most challenge task is the surface sliding tasks.
+
+All of these tasks have the following characteracstics: The task need the robot to realize (a) The end effector of aerial robot need to keep long time contact with the surface. (b) The end effector of the aerial robot need to generate related tangential movement related to the surface. The real enviroments bring the following difficulties to the tasks: (c) The contact force (including tangnetial and normal force) between the end effector and the surface may influence the performance of the aerial robot. (d) The surface geometry may be compex in the real world, the friction factor and the geometry is usually changing and unmodelled for the controller. Considering the above features, the surface sliding tasks need to . 
+
+In the current literatures, the aerial robots are require to solve the manipulation tasks like bridge inspection \cite{bodie_2020_active}, writing \cite{guo_2024_flying}, and. Apparently, the requirements in reality of surface sliding tasks are very high.
+
+Currently, although there are a lot of researches pay attention to surface sliding tasks, they (a) do not collect and summaize the main features of this kind of manipulation tasks;(b) did not express the effectice framework to solve the proposed problems. 
+
+
+
+\subsection{Morphologies of Aerial Robot for Aerial Manipulation}
 % Considering that the aeria manipulation is directly derived from the ground manipulation field, the morphology of the manipulatiors attached in the aerial robot is usually very similar with those in the ground robot. Obviously, we can used the mechanical design and control method that have been demonstrated in the ground robot field.
 %The morphology is very important for the aerial manipulation\cite{ollero_2021_past}. 
 We can briefly divide the morphologies of aerial manipulation into four types: single rigid body morphology, parallel morphology, series morphology and other specific morphology like multi-link aerial robot as illustrated in Fig.~\ref{fig:morphologies}. These morphologies have their own features for different type of tasks.
@@ -79,7 +94,7 @@ In conclusion, the morphologies of aerial robots would influence the abilities: 
 
 
 
-\subsection{control method used in aerial manipulation}
+\subsection{Interaction Control Method Used in Aerial Manipulation}
 For more and more interaction aerial manipulation tasks, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
 
 Both impedance and admittance control can be considered as can be considered as general impedance control \cite{valency_2003_accuracy}. The concept of impedance control is put forward by Hogan \cite{hogan_1984_impedance}. In his paper, the environment should be considered as an admittance, therefore if the robot performs like an impedance, the power flow will be reasonable. Currently, the conception of impedance and admittance controller becomes a little different. If the system perform like a compliant second order system, it can be called as impedance control. In detail, the impedance control wishes the system performs like a real second order system, the main idea of it is to design a second order system. On the other hand, the admittance control tries to imitate a second order system, whose position almost follow the design system. Transparently, both impedance and admittance control performs similarly, but their causalities are completely opposite. Due to their concern object, The impedance control is better used in the force control actuator, and the admittance control has better used in position control actuator, or perform as a filter to provide reference position command for lower layer controllers.
@@ -124,12 +139,13 @@ This thesis investigates the force control method of multi-link aerial robot. Th
 
 
 \begin{itemize}
-	\item Chapter 1 introduces the research background and motivation of this study, reviews related work about morphologies of aerial robots, force control methods used in aerial manipulation, and the current situation of cooperative aerial manipulation. Based on above discussion, the motivation, objectives and contributions of this thesis are introduced.
-	\item Chapter 2 presents the mechanical design of two different types of multi-link aerial robots. The modeling process is introduced.
-	\item Chapter 3 introduces the basic concepts of impedance control and admittance control, analyzes how the impedance control can redesign the dynamic parameters of a system, and how the admittance influence the distance between the CoG and the end effector. The effects of the hybrid controller is proved on the 2D multi-link aerial robot platform Hydrus Xi.
-	\item Chapter 4 introduces how to combined impedance control and admittance control together on the same system. The admittance control is used for adjust the internal configuration of the aerial robot, while perform adaptation to the external geometric variations. The effects of the intergrated hybrid controller is proved on the 3D multi-link aerial robot platform DRAGON.
-	\item Chapter 5 presents experimental results.
-	\item Finally, Chapter 6 concludes the thesis by summarizing the main findings and contributions of this work and outlining directions for future research
+	\item Chapter 1 introduces the research background, motivation and main contributions of this study, reviews related work about the current catagory of aerial manipulation tasks, morphologies of aerial robots and force control methods used in aerial manipulation. Based on above discussion, the motivation, objectives and contributions of this thesis are introduced.
+	\item Chapter 2 presents the preliminary of this thesis, including the notation defination, the modeling of multi-link aerial robots and the external wrench estimated algorithm.
+	\item Chapter 3 introduces the basic concepts of impedance control, analyzes how the impedance control can redesign the dynamic parameters of a system, and a new insight of the impedance parameters. The Implementation of the multi-link aerial robots and the task-oritation coordinate transformation method are also introduced. 
+	\item Chapter 4 introduces the basic concepts of admittance control. The admittance control is used for adjust the internal configuration of the aerial robot, while perform adaptation to the external geometric variations.
+	\item Chapter 5 introduces how to combined impedance control and admittance control together as the hybrid impedance--admittance control on the same system. The admittance control is used for adjust the internal configuration of the aerial robot, while perform adaptation to the external geometric variations. The effects of the intergrated hybrid controller is proved on the 3D multi-link aerial robot platform DRAGON.
+	\item Chapter 6 presents experimental results. The parameter is discussed. The Hydrus is selected to demonstrated the main concept, and Dragon is used for showing the adaptability of the proposed framework in multi-link aerial robots.
+	\item Finally, Chapter 7 concludes the thesis by summarizing the main findings and contributions of this work and outlining directions for future research.
 \end{itemize}
 
 
