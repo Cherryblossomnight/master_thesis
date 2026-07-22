@@ -1,4 +1,4 @@
-\chapter{Admittance Control}
+\chapter{Admittance Control for Joint Motion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In this chapter, we will introduce the basis concept of admittance control, as well as how can we realize it in the multi-link aerial robots. After that, the special setting on the 2D mutli-link aerial robot Hydrus Xi and on the 3D multi-link aerial robot Dragon will be introduced.
 
@@ -49,6 +49,8 @@ Given the desired end-effector pose, the joint angles are obtained by solving th
 In theory, if we choose appropriate parameters, the distance $r$ will not change rapidly, which will help to keep stable.
 
 Actually, consider we just what to realize displacement follow by force, we can choose to change linearly. But due to the effect of admittance control, it is adjustable by changing the parameters, which means that in different situation, we can provide different performance by tuning the parameters.
+
+The admittance control can react to the external force by actively generate position errors. The principle can be helpful if the external force is brought by the geometry variation. The geometry variation will introduce the external force change, while the force change will bring the position error, therefore express the adaptation to the geometry variations. The kind of features is also suit for the surface sliding tasks that have surface geometric variation while need the aerial robot to reduce the effect brought by the geometric variation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation for Multi-Link Aerial Robots}
 \subsection{Reduced-Dimensional Admittance}
@@ -115,6 +117,7 @@ Using this acceleration, the velocity and position can be updated iteratively ac
 \end{align}
 \end{subequations}
 where $\Delta t$ is the control period.
+In Dragon's situation, the admittance control can be realized in full-deimensional (3 axes), which means the position adaptation effect can be shown on all the three directions.
 
 
 
@@ -130,4 +133,5 @@ where $\Delta t$ is the control period.
 % \subsection{Admittance control}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+In this chapter, we discuss the concept of admittance control, and the specific implementation in the mutli-link aerial robots.
 % In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.

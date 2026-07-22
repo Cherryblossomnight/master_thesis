@@ -12,7 +12,16 @@ Also, $\{W\}$ represents the world frame, $\{C\}$ represents the CoG frame, $\{E
 \section{Modeling of Multi-Link Aerial Robots}
 
 \subsection{General Description of Multi-Link Aerial Robots}
-The mutli-link aerial robots, 
+The mutli-link aerial robots, which consists of multi serial links for deformation. The image of two typic multi-link aerial robots is shown in Fig.~\ref{fig:multi-link}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/multi-link.png}
+    \caption{Photographs of the multi-link aerial robots. Left: 2D multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. Right: 3D mutli-link aerial robot Dragon\cite{zhao_2018_design}.}
+    \label{fig:multi-link}
+    \vspace{-5mm}
+\end{figure}
+
 \subsection{Dynamic Model}
 
 
@@ -32,17 +41,17 @@ where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expre
 The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
 \begin{equation}
 \label{eq:allocation for force}
-    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\boldsymbol{b}_3,
+    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{F_i}\boldsymbol{b}_3,
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
 \label{eq:allocation for torque}
-    {^C\!\boldsymbol{\tau}_i}&=^C\!\!\boldsymbol{p}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\times^C\!\!\boldsymbol{f}_i+\kappa_i ^C\!\boldsymbol{f}_i\\
-    &=\lambda_i(^{C}\boldsymbol{\hat{p}}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})+\kappa_i\boldsymbol{E}_3)\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\boldsymbol{b}_3,
+    {^C\!\boldsymbol{\tau}_i}&=^C\!\!\boldsymbol{p}_{F_i}\times^C\!\!\boldsymbol{f}_i+\kappa_i ^C\!\boldsymbol{f}_i\\
+    &=\lambda_i(^{C}\boldsymbol{\hat{p}}_{F_i}+\kappa_i\boldsymbol{E}_3)\boldsymbol{R}_{F_i}\boldsymbol{b}_3.
 \end{aligned}
 \end{equation}
-where $i \in \{1, 2, 3, 4\}$. $\boldsymbol{q} \in \mathbb{R}^3$ and $\boldsymbol{\psi} \in \mathbb{R}^4$ correspond to joint angles and vectoring angles, respectively. The joint angles and vectoring angles determine $^{C}\boldsymbol{R}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}(\boldsymbol{q},\boldsymbol{\psi})\in \mathbb{R}^3$, which denoted the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
+Here $i \in \{1, 2, 3, 4\}$. The joint angles and vectoring angles determine $^{C}\boldsymbol{R}_{F_i}\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}\in \mathbb{R}^3$, which denoted the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
 
 Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the mapping from the the thrust vector $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$ to the command wrench is given by:
 \begin{equation}
@@ -216,4 +225,4 @@ Note that \eqref{eq:external wrench estimation} estimates external forces and to
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we introduce the notation used in this thesis and the modeling process of multi-link aerial robot. The fundamental assumption of multi-link dynamics is the quasi-static assumption, by using this, the Newton-Euler equation will establish. The different between the underactuated system and the overactuated system is the allocation process, and this will also affect the control part, which will be introduced in the following chapters later. In the next chapter, we will introduce how to use the modeling equation to help establish the control method.
+In this chapter, we introduce the notation used in this thesis and the modeling process of multi-link aerial robot. The fundamental assumption of multi-link dynamics is the quasi-static assumption, by using this, the Newton--Euler equation will establish. The different between the underactuated system and the overactuated system is the allocation process, and this will also affect the control part, which will be introduced in the following chapters later. In the next chapter, we will introduce how to use the modeling equation to help establish the control method.

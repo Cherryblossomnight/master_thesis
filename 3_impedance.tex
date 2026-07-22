@@ -1,4 +1,4 @@
-\chapter{Impedance Control}
+\chapter{Impedance Control for Centric Motion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In this chapter, we will introduce the basis concept of impedance control, as well as how can we realize it in the multi-link aerial robots. After that, the special setting on the 2D mutli-link aerial robot Hydrus Xi and on the 3D multi-link aerial robot Dragon will be introduced.
 % We will discuss a new concept of impedance controller.
@@ -69,7 +69,7 @@ Also we define the normalized rotation damping and stiffness as $\tilde{\boldsym
 These equations help generate the command wrench that we want the rotors to perform. In next section, we will explain why we rewrite the equation like these, and will introduce a new insight of impedance control.
 % Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
 
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parameter tuning discussion}
 Apparently, the performance of aerial robot is relied on the parameter matrices. Even though the parameter matrices usually have specific physical meaning, these physical interpretations do not directly provide a practical parameter selection procedure. Therefore, although the qualitative influence of each parameter is generally understood, determining suitable numerical values remains difficult in practice. 
 
@@ -126,6 +126,8 @@ And we can also get the tuning principle as follow. We can first tune $\tilde{c}
 % The reason we rewrite the equations is that we can consider it in another way.
 % The equation can be considered as being consist of three parts: the pure PD control term $-m({\tilde{c}_de_v+\tilde{k}_de_p})$, the compensation term $(\mu-1){{f}_{ext}}$ and the extreme term $g(e_v, e_p)$
 So in this insight, the impedance control can be consider as the upper lever of pure PD control and feedforward + PD control, or we can also consider the equation as PID controller whose integral term is replaced by estimated wrench term \cite{bodie_2023_omnidirectional}. If the parameter is set to $1$, the compensation term disappeared, and the equation di to pure PD control. By adjusting $\mu$, the performance will be different, and satisfy the requirements of tasks.
+
+In this section, we can see the fundamental concept of the impedance controller. The impedance controller can be considered as the mid situation of the PD controller and the PD controller with the feedforward compensation. The main idea is to adjust the parameter $\mu$ to realize different contact effect in order to meet the different tasks requirement. Due to the impedance controller consider the external force information, it is site to react to the tasks that has some force requirements, realizing both resist to the external force and keep safe. Apparently, the feature of impedance control is very suit for the surface sliding tasks that require force reaction.
 
 
 
@@ -319,4 +321,4 @@ As shown in Fig.~\ref{fig:admittance_changing}, the dragon choose different mode
 \section{Summary}
 In this chapter. We explain that the impedance control can help to change the dynamics parameters of the system, in order to have different performances in different directions. Also, the admittance control can help to adjust the distance between the end-effector and a reference point(es tl. CoG) on the aerial robot, and help to adapt to the geometric variation of the surface. Finally, we explain both the controllers can be added together on the multi-link aerial robot and achieve the surface sliding tasks.
 
-Just like we discussion in this chapter, by using impedance controller, we can redesign the dynamic parameters to meet the task requirements. However, the impedance controller itself could only react to the external wrench by generate command wrench, which means if the . The limitation replies that we could not only use impedance control in our framework.
+Just like we discussion in this chapter, by using impedance controller, we can redesign the dynamic parameters to meet the task requirements. In detail, in the surface sliding tasks, the impedance controller shoule be used in the diractions that require to adpat to the external force. However, the impedance controller itself could only react to the external wrench by generate command wrench, which means if the . The limitation replies that we could not only use impedance control in our framework.
