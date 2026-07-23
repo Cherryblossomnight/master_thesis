@@ -12,18 +12,11 @@ Also, $\{W\}$ represents the world frame, $\{C\}$ represents the CoG frame, $\{E
 \section{Modeling of Multi-Link Aerial Robots}
 
 \subsection{General Description of Multi-Link Aerial Robots}
-The mutli-link aerial robots, which consists of multi serial links for deformation. The image of two typic multi-link aerial robots is shown in Fig.~\ref{fig:multi-link}.
+The mutli-link aerial robots, which consists of multi serial links for deformation. The image of two typic multi-link aerial robots is shown in Fig.~\ref{fig:multi-link}. The serial links can change their raleted angles depending on the types, realizing a robotic arm-link movement in the air. To realize the dexterous flight, the rotors is arranged on the gimbal modules, which can change the vector direction of the rotors depending on types, therefore achieve vectoring thrust.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/multi-link.png}
-    \caption{Photographs of the multi-link aerial robots. Left: 2D multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. Right: 3D mutli-link aerial robot Dragon\cite{zhao_2018_design}.}
-    \label{fig:multi-link}
-    \vspace{-5mm}
-\end{figure}
+
 
 \subsection{Dynamic Model}
-
 
 With the above definitions, the dynamics of the underactuated multi-link aerial robot at its CoG, derived from the Newton--Euler equations, are given by:
 \begin{subequations}
@@ -35,7 +28,13 @@ With the above definitions, the dynamics of the underactuated multi-link aerial 
 \end{subequations}
 where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint and vectoring angles vary during motion, the inertial matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertial matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
 
-
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/multi-link.png}
+    \caption{Photographs of the multi-link aerial robots. Left: 2D multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. Right: 3D mutli-link aerial robot Dragon\cite{zhao_2018_design}.}
+    \label{fig:multi-link}
+    \vspace{-5mm}
+\end{figure}
 
 \subsection{Allocation}
 The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\boldsymbol{\tau}_{cmd}}$ are obtained by aggregating the contributions of the four propeller rotors, whose individual forces and torques are expressed in frame $\{C\}$. We compute each rotor's contribution as follows:
@@ -51,7 +50,7 @@ The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\bolds
     &=\lambda_i(^{C}\boldsymbol{\hat{p}}_{F_i}+\kappa_i\boldsymbol{E}_3)\boldsymbol{R}_{F_i}\boldsymbol{b}_3.
 \end{aligned}
 \end{equation}
-Here $i \in \{1, 2, 3, 4\}$. The joint angles and vectoring angles determine $^{C}\boldsymbol{R}_{F_i}\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}\in \mathbb{R}^3$, which denoted the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
+Here $i \in \{1, 2, 3, 4\}$ due to the current multi-link aerial robots are all 4-link. The joint angles and vectoring angles determine $^{C}\boldsymbol{R}_{F_i}\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}\in \mathbb{R}^3$, which denoted the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
 
 Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the mapping from the the thrust vector $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$ to the command wrench is given by:
 \begin{equation}
@@ -67,13 +66,13 @@ Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the 
 ^C\!\boldsymbol{\tau}_i
 \end{pmatrix} 
 =\begin{pmatrix}
-\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) \\
-\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi})
+\boldsymbol{Q}_t \\
+\boldsymbol{Q}_r
 \end{pmatrix}\boldsymbol{\lambda},
 \end{equation}
-where $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) \in \mathbb{R}^{3\times4}$ and $\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi}) \in \mathbb{R}^{3\times4}$ denote the translational and rotational components of the allocation matrix, respectively. The command force in world frame can be obtained by $^W\!\boldsymbol{f}_{cmd} = ^W\!\!\!\boldsymbol{R}_C{}^C\!\boldsymbol{f}_{cmd}$.
+where $\boldsymbol{Q}_t \in \mathbb{R}^{3\times4}$ and $\boldsymbol{Q}_r\in \mathbb{R}^{3\times4}$ denote the translational and rotational components of the allocation matrix, respectively. The command force in world frame can be obtained by $^W\!\boldsymbol{f}_{cmd} = ^W\!\!\!\boldsymbol{R}_C{}^C\!\boldsymbol{f}_{cmd}$.
 
-In this thesis, the allocation matrices $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi})$ and  $\boldsymbol{Q}_r(\boldsymbol{q},\boldsymbol{\psi})$ is correspond to the joint angles $\boldsymbol{q}$ and the propeller units' vectoring rotation angle $\boldsymbol{\psi}$. To reduce the calculation complexity, we use optimization method introduced in \cite{zhao_2021_singularity} to calculate the vectoring angle automatically. By this way, we can only control the rotor's speed, and the vectoring angle become completely related to joint angles, which means it becomes a function of joint angles as $\boldsymbol{\psi}(\boldsymbol{q})$.
+In this thesis, the allocation matrices $\boldsymbol{Q}_t$ and  $\boldsymbol{Q}_r$ is correspond to the joint angles and the propeller units' vectoring direction. To reduce the calculation complexity, we use optimization method introduced in \cite{zhao_2021_singularity} to calculate the vectoring angle automatically. By this way, we can only control the rotor's speed, and the vectoring angle become completely related to joint angles, which means it becomes a function of joint angles as $\boldsymbol{\psi}(\boldsymbol{q})$.
 
 
 
