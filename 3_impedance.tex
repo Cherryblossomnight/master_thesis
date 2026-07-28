@@ -235,6 +235,8 @@ Because dragon is the overactuated system, the command wrench can be achieve by 
 % So in this thesis, we will choose the end effector frame as the prior frame and the base link frame as the secondary frame.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Task-Oriented Impedance Coordinate Selection}
+The target of the impedance control in our proposed work is to control the whole body of the multi-link aerial robot. Currently, we only discuss about how to control the whole body by adjusting the CoG frame $\{C\}$. Actually, depending on the task requirement, the other frame in the multi-link aerial robot can also be chosen as the control frame. In our framework, the CoG frame represents the centric point of the multi-link aerial robot, and the allocation process is executed around the CoG frame, so it is convenient to select the CoG frame as the control frame. However, if we need to control the contact point more directly, we can also select the end effector frame $\{E\}$ as the control frame. In this section, we will discuss how to transform the impedance control into the other frame (using the end effector frame as an example), and also show the effect of the different control frame selection.
+
 
 We only change the error in the impedance equations \ref{eq:imp cmd for trans2} and \ref{eq:imp cmd for rot2}
 \subsubsection{CoG centric mode}
