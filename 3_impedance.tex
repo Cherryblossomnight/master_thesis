@@ -239,8 +239,8 @@ The target of the impedance control in our proposed work is to control the whole
 
 
 We only change the error in the impedance equations \ref{eq:imp cmd for trans2} and \ref{eq:imp cmd for rot2}
-\subsubsection{CoG centric mode}
-In the CoG centric mode (short as cog-centric), the errors are defined as usual
+% \subsubsection{CoG centric mode}
+In the CoG centric situation, (short as cog-centric), the errors are defined as usual
 \begin{subequations}
 \label{eq:error cog mode}
 \begin{align}
@@ -250,10 +250,9 @@ In the CoG centric mode (short as cog-centric), the errors are defined as usual
     {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
 \end{align}
 \end{subequations}
-after calculated the command wrench in the CoG frame, the value can be directly allocated to the rotors.
-\subsubsection{end effector centric mode}
-In the end effector centric mode (short as ee-centric).
-The rotational impedance control is considered in the $\{E\}$ frame.
+
+% \subsubsection{end effector centric mode}
+Meanwhile, in the end effector centric mode (short as ee-centric). The rotational impedance control is considered in the $\{E\}$ frame.
 
 \begin{equation}
 \label{eq:impedance ee}
@@ -287,28 +286,30 @@ The original point of the end effector frame to realize the impedance behavior i
     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
 
-\subsubsection{base effector centric mode}
-In the base effector centric mode (short as be-centric), the errors are defined as
-\begin{subequations}
-\label{eq:error be mode}
-\begin{align}
-    {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}} + ^W\!\!R_C{^C\!\boldsymbol{p}_B}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{B}}-({^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{B})^{\mathrm{T}}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
-    {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
-\end{align}
-\end{subequations}
-If we what to use the base link to do something, we can choose this mode.
+The Fig.~\ref{fig:impedance_control_mode} shows some different control frames selection.
 
-As shown in Fig.~\ref{fig:admittance_changing}, the dragon choose different modes.
-\begin{figure}[h]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
-    \caption{Admittance changing.}
-    \label{fig:admittance_changing}
-    \vspace{-5mm}
-\end{figure}
+% \subsubsection{base effector centric mode}
+% In the base effector centric mode (short as be-centric), the errors are defined as
+% \begin{subequations}
+% \label{eq:error be mode}
+% \begin{align}
+%     {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}} + ^W\!\!R_C{^C\!\boldsymbol{p}_B}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{B}}-({^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{B})^{\mathrm{T}}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
+%     {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
+% \end{align}
+% \end{subequations}
+% If we what to use the base link to do something, we can choose this mode.
+
+% As shown in Fig.~\ref{fig:admittance_changing}, the dragon choose different modes.
+% \begin{figure}[h]
+%     \centering
+%     % \parbox{3in}
+%     \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
+%     \caption{Admittance changing.}
+%     \label{fig:admittance_changing}
+%     \vspace{-5mm}
+% \end{figure}
 
 % \begin{equation}
 % \begin{aligned}
