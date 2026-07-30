@@ -234,59 +234,59 @@ Because dragon is the overactuated system, the command wrench can be achieve by 
 % In real world experience, the meaning we use those three frames are different: The CoG frame can be considered as the overall state of the whole multi-link aerial robot, and it is very convenient to calculate because the command wrench needed to be calculated in the CoG frame. So if the task requires to guarantee the overall pose of the aerial robot, the CoG centric mode can be used. However, due to the CoG point is usually in the air for the special structure of the multi-link aerial robot, it usually lacks certain meaning to control this frame in the air. On the other hand, the end effector frame and the base link frame have different meaning. They are the head and rear end of the whole serial link structure, therefore can be used as the contact point. Meanwhile, other complicated requirements can be put forward. for example, we can use the end effector as the contact point to the surface, and used the base link to mount a camera, radar or other sensor. Or we can access a power cable in the base link. At this situation, the pose of the base link is also need to be consider, but it is not as important as the contact point. 
 % So in this thesis, we will choose the end effector frame as the prior frame and the base link frame as the secondary frame.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Task-Oriented Impedance Coordinate Selection}
-The target of the impedance control in our proposed work is to control the whole body of the multi-link aerial robot. Currently, we only discuss about how to control the whole body by adjusting the CoG frame $\{C\}$. Actually, depending on the task requirement, the other frame in the multi-link aerial robot can also be chosen as the control frame. In our framework, the CoG frame represents the centric point of the multi-link aerial robot, and the allocation process is executed around the CoG frame, so it is convenient to select the CoG frame as the control frame. However, if we need to control the contact point more directly, we can also select the end effector frame $\{E\}$ as the control frame. In this section, we will discuss how to transform the impedance control into the other frame (using the end effector frame as an example), and also show the effect of the different control frame selection.
+% \section{Task-Oriented Impedance Coordinate Selection}
+% The target of the impedance control in our proposed work is to control the whole body of the multi-link aerial robot. Currently, we only discuss about how to control the whole body by adjusting the CoG frame $\{C\}$. Actually, depending on the task requirement, the other frame in the multi-link aerial robot can also be chosen as the control frame. In our framework, the CoG frame represents the centric point of the multi-link aerial robot, and the allocation process is executed around the CoG frame, so it is convenient to select the CoG frame as the control frame. However, if we need to control the contact point more directly, we can also select the end effector frame $\{E\}$ as the control frame. In this section, we will discuss how to transform the impedance control into the other frame (using the end effector frame as an example), and also show the effect of the different control frame selection.
 
 
-We only change the error in the impedance equations \ref{eq:imp cmd for trans2} and \ref{eq:imp cmd for rot2}
-% \subsubsection{CoG centric mode}
-In the CoG centric situation, (short as cog-centric), the errors are defined as usual
-\begin{subequations}
-\label{eq:error cog mode}
-\begin{align}
-    {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
-    {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
-\end{align}
-\end{subequations}
+% We only change the error in the impedance equations \ref{eq:imp cmd for trans2} and \ref{eq:imp cmd for rot2}
+% % \subsubsection{CoG centric mode}
+% In the CoG centric situation, (short as cog-centric), the errors are defined as usual
+% \begin{subequations}
+% \label{eq:error cog mode}
+% \begin{align}
+%     {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
+%     {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
+% \end{align}
+% \end{subequations}
 
-% \subsubsection{end effector centric mode}
-Meanwhile, in the end effector centric mode (short as ee-centric). The rotational impedance control is considered in the $\{E\}$ frame.
+% % \subsubsection{end effector centric mode}
+% Meanwhile, in the end effector centric mode (short as ee-centric). The rotational impedance control is considered in the $\{E\}$ frame.
 
-\begin{equation}
-\label{eq:impedance ee}
-{\boldsymbol{I}_{d}}{^C\!\dot{\boldsymbol{\omega}}}+{\boldsymbol{C}_{rd}}{\boldsymbol{e}_\omega}+{\boldsymbol{K}_{rd}}{\boldsymbol{e}_R}={^E\!\boldsymbol{\tilde{\tau}}_{ext}},
-\end{equation}
+% \begin{equation}
+% \label{eq:impedance ee}
+% {\boldsymbol{I}_{d}}{^C\!\dot{\boldsymbol{\omega}}}+{\boldsymbol{C}_{rd}}{\boldsymbol{e}_\omega}+{\boldsymbol{K}_{rd}}{\boldsymbol{e}_R}={^E\!\boldsymbol{\tilde{\tau}}_{ext}},
+% \end{equation}
 
-The errors are defined as
-\begin{subequations}
-\label{eq:error ee mode}
-\begin{align}
-    {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}} + ^W\!\!R_C{^C\!\boldsymbol{p}_E}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}+{}^C\boldsymbol{\omega}^\wedge{}^C\boldsymbol{p}_E-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
-    {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{E}}-({^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{E})^{\mathrm{T}}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
-    {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{R}^{\mathrm{T}}_E{}^C\!\boldsymbol{\omega}}-{^C\!\boldsymbol{R}^{\mathrm{T}}_E {}^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
-\end{align}
-\end{subequations} 
-where we use the wedge-operator $^\wedge$ to transform a vector into a skew symmetric matrix.
-Note that here we consider the joint variation is small enough in a control period, so we ignore some terms.
-TODO: think about this part. Is the equation correct?
+% The errors are defined as
+% \begin{subequations}
+% \label{eq:error ee mode}
+% \begin{align}
+%     {\boldsymbol{e}_p}&={^W\!\boldsymbol{p}} + ^W\!\!R_C{^C\!\boldsymbol{p}_E}-{^W\!\boldsymbol{p}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_v}&={^W\!\dot{\boldsymbol{p}}}+{}^C\boldsymbol{\omega}^\wedge{}^C\boldsymbol{p}_E-{^W\!\dot{\boldsymbol{p}}_{ref}}, \\[2pt]
+%     {\boldsymbol{e}_R}&=\frac{1}{2}({^W\!\boldsymbol{R}^{\mathrm{T}}_{C,ref}}{^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{E}}-({^W\!\boldsymbol{R}_{C}}{^C\!\boldsymbol{R}_{E})^{\mathrm{T}}}{^W\!\boldsymbol{R}_{C,ref}})^\vee, \\[2pt]
+%     {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{R}^{\mathrm{T}}_E{}^C\!\boldsymbol{\omega}}-{^C\!\boldsymbol{R}^{\mathrm{T}}_E {}^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
+% \end{align}
+% \end{subequations} 
+% where we use the wedge-operator $^\wedge$ to transform a vector into a skew symmetric matrix.
+% Note that here we consider the joint variation is small enough in a control period, so we ignore some terms.
+% TODO: think about this part. Is the equation correct?
 
-The original point of the end effector frame to realize the impedance behavior in the air, 
+% The original point of the end effector frame to realize the impedance behavior in the air, 
 
-\begin{equation}
-\label{eq:imp cmd for trans2}
-    {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m(\tilde{\boldsymbol{C}}_{td}{\boldsymbol{e}_v}+{\tilde{\boldsymbol{K}}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
-\end{equation}
+% \begin{equation}
+% \label{eq:imp cmd for trans2}
+%     {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m(\tilde{\boldsymbol{C}}_{td}{\boldsymbol{e}_v}+{\tilde{\boldsymbol{K}}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
+% \end{equation}
 
-\begin{equation}
-\label{eq:imp cmd for rot2}
-    {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}(^C\boldsymbol{R}_E\boldsymbol{I}_d)^{-1}-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}^C\boldsymbol{R}_E^{-1}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_\alpha})+^C\boldsymbol{R}_E^{-1}(^C\!\boldsymbol{p}_E^\wedge{}^C\boldsymbol{\tilde{f}}_{ext})
-    +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
-\end{equation}
+% \begin{equation}
+% \label{eq:imp cmd for rot2}
+%     {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}(^C\boldsymbol{R}_E\boldsymbol{I}_d)^{-1}-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}^C\boldsymbol{R}_E^{-1}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_\alpha})+^C\boldsymbol{R}_E^{-1}(^C\!\boldsymbol{p}_E^\wedge{}^C\boldsymbol{\tilde{f}}_{ext})
+%     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
+% \end{equation}
 
-The Fig.~\ref{fig:impedance_control_mode} shows some different control frames selection.
+% The Fig.~\ref{fig:impedance_control_mode} shows some different control frames selection.
 
 % \subsubsection{base effector centric mode}
 % In the base effector centric mode (short as be-centric), the errors are defined as

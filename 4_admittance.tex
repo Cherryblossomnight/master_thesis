@@ -1,10 +1,10 @@
 \chapter{Admittance Control for Joint Motion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-In this chapter, we will introduce the basic concept of admittance control, as well as how can we realize it in the multi-link aerial robots. After that, the special setting on the 2D multi-link aerial robot Hydrus Xi and on the 3D multi-link aerial robot Dragon will be introduced.
+In this chapter, we will introduce the basic concept of admittance control, as well as how can we realize it in the multi-link aerial robots. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Three-Dimensional Admittance Control}
+\section{Admittance Control Normal setup}
 Similar to impedance control, admittance control also regulates the system's response to external forces through a virtual dynamic relationship. However, impedance control generates a resisting force in response to displacement errors, whereas admittance control directly produces a compliant displacement in response to external forces. In this work, we employ admittance control to regulate the end-effector position error by adjusting the joint angles in response to the external forces induced by surface geometric variations, thereby mitigating both the force and position disturbances experienced by the CoG through deformation.  
 
 In general, due to the position error usually happens in all translational directions, we will consider the admittance control in $x$, $y$, and $z$ axes. The admittance dynamics can then be written as:
@@ -46,7 +46,6 @@ Given the desired end-effector pose, the joint angles are obtained by solving th
 % The admittance control can react to the external force by actively generate position errors. The principle can be helpful if the external force is brought by the geometry variation. The geometry variation will introduce the external force change, while the force change will bring the position error, therefore express the adaptation to the geometry variations. The kind of features is also suit for the surface sliding tasks that have surface geometric variation while need the aerial robot to reduce the effect brought by the geometric variation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation for Multi-Link Aerial Robots}
-\subsection{Single-Dimensional Admittance}
 Due to the admittance control will vary the robot's configuration, which could introduce instability, we first consider a simpler single-axis case. Here we suppose the $x$ axis as the admittance acting direction. 
 % For the surface-sliding task considered in this study, the $x$ axis of the world frame is defined as the contact direction, while the $y$ and $z$ axes represent the sliding directions.
 If the geometric variations mainly occur along the $x$ axis, only single-axis admittance control is employed along this direction. This design choice avoids additional structural motions in non-contact directions, which could adversely affect the stability of the aerial robot. The admittance dynamics along the $x$ axis can then be written as: 
@@ -90,17 +89,17 @@ In this section, to show the effect of admittance control more specifically, we 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Full-Dimensional Admittance}
+% \subsection{Full-Dimensional Admittance}
 
-Here the distance is considered as the distance between two selected frames. Usually, we will choose the distance between the end effector and base link as the admittance position. In detail, the distance $r$ is considered as the position of the origin of the $\{E\}$ frame with respect to the $\{B\}$ frame: 
-$\boldsymbol{r} = ^B\boldsymbol{p}_{BE}$. 
+% Here the distance is considered as the distance between two selected frames. Usually, we will choose the distance between the end effector and base link as the admittance position. In detail, the distance $r$ is considered as the position of the origin of the $\{E\}$ frame with respect to the $\{B\}$ frame: 
+% $\boldsymbol{r} = ^B\boldsymbol{p}_{BE}$. 
 
-In Dragon's situation, the admittance control can be realized in full-deimensional (3 axes), which means the position adaptation effect can be shown on all the three directions.
+% In Dragon's situation, the admittance control can be realized in full-deimensional (3 axes), which means the position adaptation effect can be shown on all the three directions.
 
 
 
 % the contact and sliding directions exhibit fundamentally 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we discuss the concept of admittance control, and the specific implementation in the mutli-link aerial robots. We will show more admittance effect in the experiment chapter.
+In this chapter, we discuss the concept of admittance control, and the specific implementation in the multi-link aerial robots. We will show more admittance effect in the experiment chapter.
 % In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
