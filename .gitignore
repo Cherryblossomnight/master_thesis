@@ -30,6 +30,7 @@
 *.lol
 *.loa
 *.toc
+*.synctex*
 
 # latexmk / editor temporary files
 latexmk_build.log
