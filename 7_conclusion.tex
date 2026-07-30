@@ -3,12 +3,20 @@
 \section{Conclusion of this thesis}
 In this thesis, we proposed a hybrid impedance--admittance control framework for a multi-link aerial robot performing surface-sliding tasks. By assigning impedance control to the force-sensitive sliding directions and admittance control to the geometry-sensitive contact direction, the method leverages the distinct interaction characteristics of each axis. Experiments demonstrated improved trajectory tracking, reduced contact forces, and smaller geometry-induced variation compared with a standard PID controller, validating the approach for real-world surface interaction.
 
-\begin{itemize}
-	\item your contribution 1
-	\item your contribution 2
-\end{itemize}
+The most important contribution of this thesis is not proposing a better control method. Instead, the controllor used in this thesis are all tranditional control methods. However, the framework and the insight about using two reverse control methods on the same platform is the most important contribution.
+
+% \begin{itemize}
+% 	\item your contribution 1
+% 	\item your contribution 2
+% \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Future work}
 
 
 In future work, we aim to extend the framework to an overactuated multi-link aerial robot, which introduces higher-dimensional admittance behavior and requires handling spatial contact forces. We also plan to validate the method on more complex curved surfaces with larger geometric variations and spatially varying friction.
+
+There are at least three aspect we can inprove. First is the parameter tuning. Currently, the parameters are tuned by author's experience, and the constant parameters can not adapt to more complex enviroment. We will improve the parameter tuning process by introduing learning-based methods.
+
+Second, we proposed the demonstration of the effect of 1-D admittance control both on the two types of multi-link aerial robots. However, the admittance control actually can be achieved in full-dimensional directions. The current surface sliding tasks defined in this thesis do not need use 3-D admittance control. But in the future, we will try more complex aerial manipulation tasks, such as grasping by the structure of the multi-link aerial robot.
+
+Thrid, the current hybrid control framework did not show more details about the contacting process, and the solution about the contactr problem in the real world. In author's experience, we had met at least so-called jumping problem when begin contact with the surface. The detials of the process remains unknown, and the solution has not been developed. In the future, we will spend more time to understand the contact process, as well as develop the suitable solution to the problem.
