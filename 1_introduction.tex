@@ -53,8 +53,16 @@ All of these tasks have the following characteracstics: The task need the robot 
 
 In the current literatures, the aerial robots are require to solve the manipulation tasks like bridge inspection \cite{bodie_2020_active}, writing \cite{guo_2024_flying}, and. Apparently, the requirements in reality of surface sliding tasks are very high.
 
-Currently, although there are a lot of researches pay attention to surface sliding tasks, they (a) do not collect and summaize the main features of this kind of manipulation tasks;(b) did not express the effectice framework to solve the proposed problems. 
+Currently, although there are a lot of researches pay attention to surface sliding tasks, they (a) do not collect and summaize the main features of this kind of manipulation tasks (b) did not express the effectice framework to solve the proposed problems. 
 
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/chapter1/surface_sliding.png}
+  \caption{Example scenario of surface sliding task, mainly derived from infrasturcture maintainese. (a) The aerial robot sliding on the bridge's curve surface to inspect the cracks. (b) The aerial robot sliding on the steel tube to inspect the weld seam. (c) (d).}
+  \label{fig:surface sliding}
+  \vspace{-7mm}
+\end{figure}
 
 
 \subsection{Morphologies of Aerial Robot for Aerial Manipulation}
@@ -106,6 +114,16 @@ For more and more interaction aerial manipulation tasks, it is important to intr
 
 Both impedance and admittance control can be considered as can be considered as general impedance control \cite{valency_2003_accuracy}. The concept of impedance control is put forward by Hogan \cite{hogan_1984_impedance}. In his paper, the environment should be considered as an admittance, therefore if the robot performs like an impedance, the power flow will be reasonable. Currently, the conception of impedance and admittance controller becomes a little different. If the system perform like a compliant second order system, it can be called as impedance control. In detail, the impedance control wishes the system performs like a real second order system, the main idea of it is to design a second order system. On the other hand, the admittance control tries to imitate a second order system, whose position almost follow the design system. Transparently, both impedance and admittance control performs similarly, but their causalities are completely opposite. Due to their concern object, The impedance control is better used in the force control actuator, and the admittance control has better used in position control actuator, or perform as a filter to provide reference position command for lower layer controllers.
 
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
+  \caption{Some example tasks that use impedance or admittance control. (a) The impedance controller is used as a adjustment. (b) The impedance controller's parameters are tuning by the learning-based method, which helps the aerial robot achieve sliding on the uneven surface. (c) The admittance controller as a filter to adapt to the external disturbance. (d)}
+  \label{fig:force control}
+  \vspace{-7mm}
+\end{figure}
+
+
 Among these strategies, impedance control has been extensively explored for aerial robots. 
 For the beginning of aerial manipulation research, the impedance control method was used \cite{ollero_2021_past}.
 Forte et al. \cite{forte_2012_impedance} calculated the 3D impedance control for a single rigid body aerial robot, and Lippiello et al. \cite{lippiello_2012_cartesian} put forward the impedance equation of an aerial robot with a serial arm. In his paper, the aerial robot itself and the 3-dof robotic arm is set different dynamic parameters, which also gives this thesis inspiration. After those work introduce impedance control into aerial manipulation tasks, the community more focused on the effect impedance control can realize.
@@ -122,10 +140,8 @@ Cataldi et al. \cite{cataldi_2016_impedance} used an admittance filter to calcul
 
 The admittance control is less than impedance control.
 
-In our framework ,admittance control is more like controlling a robotic arm instead of an aerial robot. Therefore, we will introduce admittance control used in controlling robotic arms. 
+In our framework, admittance control is more like controlling a robotic arm instead of an aerial robot. Therefore, we will introduce admittance control used in controlling robotic arms. 
 Admittance control has been used in robotics arm like
-
-
 
 
 In conclusion, while these studies demonstrate the potential of impedance- or admittance-based approaches for aerial manipulation tasks in interaction scenarios, each method inevitably inherits the limitations of its underlying control principle.
@@ -146,7 +162,7 @@ This thesis investigates the force control method of multi-link aerial robot. Th
 
 
 \begin{itemize}
-	\item Chapter 1 introduces the research background, motivation and main contributions of this study, reviews related work about the current catagory of aerial manipulation tasks, morphologies of aerial robots and force control methods used in aerial manipulation. Based on above discussion, the motivation, objectives and contributions of this thesis are introduced.
+	\item Chapter 1 introduces the research background, motivation and main contributions of this study, reviews related work about the defination and solution of surface sliding tasks, morphologies of aerial robots and force control methods used in aerial manipulation. Based on above discussion, the motivation, objectives and contributions of this thesis are introduced.
 	\item Chapter 2 presents the preliminary of this thesis, including the notation defination, the modeling of multi-link aerial robots and the external wrench estimated algorithm.
 	\item Chapter 3 introduces the basic concepts of impedance control, analyzes how the impedance control can redesign the dynamic parameters of a system, and a new insight of the impedance parameters. The Implementation of the multi-link aerial robots and the task-oritation coordinate transformation method are also introduced. 
 	\item Chapter 4 introduces the basic concepts of admittance control. The admittance control is used for adjust the internal configuration of the aerial robot, while perform adaptation to the external geometric variations.

@@ -15,6 +15,7 @@ In the experiment, we use the robot show in Fig.~\ref{fig:robot_hydrus}. The rob
 \end{figure}
 
 \subsection{3D Multi-Link aerial robot Dragon}
+In the experiment, we use the robot show in Fig.~\ref{fig:robot_hydrus}. The robot consists of 4 links. Different with hydrus, dragon has move DOF to deformate more 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental parameters adjustment}
 \subsection{Practical Parameter Design Considerations}
@@ -241,7 +242,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 \subsection{Compare on Admittance-related direction}
 
-Fig.~\ref{fig:admittance_plot} shows the CoG displacement and external force along the $x$ axis. As further quantified in Fig.~\ref{fig:admittance_box}, the PID and only impedance controllers produced similar CoG displacements ($0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$), both largely reflecting the board’s deformation. In contrast, the admittance and hybrid controllers reduced the CoG displacement to $0.088\,\mathrm{m}$ and $0.084\,\mathrm{m}$, demonstrating their effectiveness in mitigating geometric variation effects.
+Fig.~\ref{fig:admittance_plot} shows the CoG displacement and external force along the $x$ axis. As further quantified in Fig.~\ref{fig:admittance_box}, the PID and only impedance controllers produced similar CoG displacements ($0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$), both largely reflecting the board's deformation. In contrast, the admittance and hybrid controllers reduced the CoG displacement to $0.088\,\mathrm{m}$ and $0.084\,\mathrm{m}$, demonstrating their effectiveness in mitigating geometric variation effects.
 
 Fig.~\ref{fig:admittance_box} also shows that the median external forces on the CoG were approximately $-1.190\,\mathrm{N}$ for the PID controller, $-0.453\,\mathrm{N}$ for the only impedance controller, $-0.712\,\mathrm{N}$ for the only admittance controller, and $-0.328\,\mathrm{N}$ for the hybrid controller. The hybrid controller achieved the smallest median external force. In addition, the admittance and hybrid controllers exhibited relatively narrower force distributions than the PID controller, indicating more stable and adaptive interactions with the uncertain surface.
 

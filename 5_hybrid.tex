@@ -17,15 +17,15 @@ In this chapter, we will explain why we use the cooperative aerial manipulation 
 \begin{figure}[h]
     \centering
     % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm}, clip,width=\linewidth]{figures/chapter3/framework.png}
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/framework.png}
     \caption{Block diagram of the hybrid impedance-admittance control framework. Inputs for the admittance controller consist of the estimated external wre
     nch. Inputs for the impedance controller include the state reference, estimated CoG state, and estimated external wrench.}
     \label{fig:framework}
-    \vspace{-5mm}
+    \vspace{-3mm}
 \end{figure}
 
 The motivation for this hybrid impedance-admittance control framework is to provide both resilience and adaptivity when sliding on an unknown surface, where geometry and friction introduce significant uncertainties. As illustrated in Fig.~\ref{fig:framework}, impedance control manages the overall state of the aerial robot, which is represented by the pose of its CoG, while admittance control is applied to regulate the end-effector state, resulting in adjustment of the joint angles. Since variations in joint angles modify the robot's configuration and thus influence the thrust allocation, this dependency is taken into account in the thrust computation.
-As illustrated in Fig.~\ref{fig:hybrid_controller}, by combining both controllers, the multi-link aerial robot can regulate its interaction with the surface in both force and position. Detailed analysis of the advantages of this hybrid control is presented in the following section.
+
 
 % \begin{figure}[h]
 %     \centering
@@ -43,9 +43,9 @@ As illustrated in Fig.~\ref{fig:hybrid_controller}, by combining both controller
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hybrid Control Mechanism for Multi-Link Aerial Robots}
 
-In surface-sliding tasks, the contact and sliding directions exhibit fundamentally different physical characteristics: the sliding directions are dominated by friction-induced disturbances, whereas the contact direction is shaped by geometric variations of the environment. Leveraging this distinction, the hybrid impedance--admittance controller assigns each axis the control behavior best suited to its interaction properties. As illustrated in Fig.~\ref{fig:hybrid_controller}, admittance control is applied along the contact direction ($x$ axis) to regulate geometry-driven variations, while impedance control governs the sliding directions ($y$ and $z$ axes) to accommodate friction-affected motion.
+As illustrated in Fig.~\ref{fig:hybrid_controller}, by combining both controllers, the multi-link aerial robot can regulate its interaction with the surface in both force and position. Detailed analysis of the advantages of this hybrid control is presented in the following section.
 
-Through this task-aligned division of control responsibilities, the hybrid controller achieves what neither controller can provide alone: robust sliding performance in the sliding directions and adaptive behavior in the contact direction. This directional decomposition is enabled by the actuation structure of the multi-link aerial robot, which allows the two control paradigms to be realized simultaneously through independent actuation sources. This combination is therefore essential for achieving resilient interaction and adaptive contact behavior in surface-sliding tasks. The performance of the proposed hybrid impedance-admittance controller will be exhibited in the experiment chapter.
+In surface-sliding tasks, the contact and sliding directions exhibit fundamentally different physical characteristics: the sliding directions are dominated by friction-induced disturbances, whereas the contact direction is shaped by geometric variations of the environment. Leveraging this distinction, the hybrid impedance--admittance controller assigns each axis the control behavior best suited to its interaction properties. As illustrated in Fig.~\ref{fig:hybrid_controller}, admittance control is applied along the contact direction ($x$ axis) to regulate geometry-driven variations, while impedance control governs the sliding directions ($y$ and $z$ axes) to accommodate friction-affected motion.
 
 \begin{figure}[h]
     \centering
@@ -55,6 +55,10 @@ Through this task-aligned division of control responsibilities, the hybrid contr
     \label{fig:hybrid}
     \vspace{-5mm}
 \end{figure}
+
+Through this task-aligned division of control responsibilities, the hybrid controller achieves what neither controller can provide alone: robust sliding performance in the sliding directions and adaptive behavior in the contact direction. This directional decomposition is enabled by the actuation structure of the multi-link aerial robot, which allows the two control paradigms to be realized simultaneously through independent actuation sources. This combination is therefore essential for achieving resilient interaction and adaptive contact behavior in surface-sliding tasks. The performance of the proposed hybrid impedance-admittance controller will be exhibited in the experiment chapter.
+
+
 
 Natural, the admittance control can also be used in 3D directions. 
 % In detail, the Hydrus's case, the impedance controller and the admittance controller are deployed in different directions in order to meet the task's requirements. In Dragon's case, the impedance controller and admittance controller can be realized fully dut to the structure of Dragon.

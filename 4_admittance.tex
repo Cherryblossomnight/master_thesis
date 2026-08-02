@@ -45,10 +45,28 @@ Given the desired end-effector pose, the joint angles are obtained by solving th
 
 % The admittance control can react to the external force by actively generate position errors. The principle can be helpful if the external force is brought by the geometry variation. The geometry variation will introduce the external force change, while the force change will bring the position error, therefore express the adaptation to the geometry variations. The kind of features is also suit for the surface sliding tasks that have surface geometric variation while need the aerial robot to reduce the effect brought by the geometric variation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementation for Multi-Link Aerial Robots}
-Due to the admittance control will vary the robot's configuration, which could introduce instability, we first consider a simpler single-axis case. Here we suppose the $x$ axis as the admittance acting direction. 
-% For the surface-sliding task considered in this study, the $x$ axis of the world frame is defined as the contact direction, while the $y$ and $z$ axes represent the sliding directions.
+
+\section{Admittance in Surface Sliding Tasks}
+In the surface sliding tasks, the target of the admittance control is to adpat to the geometry variation of the surface. In this work, a simplified surface sliding scenario is considered. Instead of continuously changing the aerial robot's orientation to be normal to the surface, the robot is assumed to maintain a fixed $yaw$ direction, while the sliding direction is always defined to be perpendicular to the end effector. Under this task definition, different types of surface geometry variations, such as uneven surfaces or changes in surface inclination, can be equivalently represented project as variations along the direction of the end effector. Therefore, the geometry variation can be regarded as  mainly occuring along a single direction as illustrated in Fig.~\ref{fig:surface sliding}. 
+
+
+\begin{figure}[h]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter4/admittance_sliding.png}
+    \caption{Surface sliding task example. If we fix the $yaw$ direction and always slide to the vertial direction of the end effector, the geometry variation can be consider mainly occur on a single direction.}
+    \label{fig:admittance_sliding}
+\end{figure}
+
+
+To compliance the geometry variation, the admittance control need to be mainly achieve in this direction of geometry variation. On the other hand, the admittance control is achieved by deformation, which means the configuration of the multi-link aerial robot will change continuously at sliding. To reduce the instability, we will only apply the admittance control on one axis. In this work, the $x$ axis of the world frame $\{W\}$ is selected as the admittance acting direction.
+
+
+
+
+
 If the geometric variations mainly occur along the $x$ axis, only single-axis admittance control is employed along this direction. This design choice avoids additional structural motions in non-contact directions, which could adversely affect the stability of the aerial robot. The admittance dynamics along the $x$ axis can then be written as: 
+
 \begin{equation}
 \label{eq:admittance control2}
     m_a(\ddot{r}_{ref}-\ddot{r})+c_a(\dot{r}_{ref}-\dot{r})+k_a(r_{ref}-r)=\hat{f}_{ext,x}-f_{ref,x},
@@ -58,12 +76,17 @@ If the geometric variations mainly occur along the $x$ axis, only single-axis ad
 \label{eq:difference method1}
 \ddot{r}[k]=\frac{(\hat{f}_{ext,x}-f_{ref,x})-k_a(r_{ref}-r[k-1])+c_a\dot{r}[k-1]}{m_a}.
 \end{equation}
+
 Here all the variables and parameters are scalars. The position $r$ in this work is defined as the distance between the end effector and the CoG of the mutli-link aerial robot. 
 Naturally, the position can be derived from:
+
 \begin{equation}
 \label{eq:difference method2}
 r[k]=r[k-1]+\dot{r}[k]\Delta t,
 \end{equation}
+
+
+Due to the admittance control will vary the robot's configuration, which could introduce instability, we first consider a simpler single-axis case. 
 
 Consequently, variations in surface geometry induce corresponding changes in the contact forces. Due to the adaptation mechanism, the majority of geometric variations and external force disturbances are absorbed at the joints, while the portion transmitted to the CoG is significantly reduced, leading to more favorable overall motion behavior of the aerial robot.
 
@@ -101,5 +124,5 @@ In this section, to show the effect of admittance control more specifically, we 
 % the contact and sliding directions exhibit fundamentally 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we discuss the concept of admittance control, and the specific implementation in the multi-link aerial robots. We will show more admittance effect in the experiment chapter.
+In this chapter, we discuss the concept of admittance control, the special setting of admittance control in the surface sliding task, and the effector of the admittance control. We will show more admittance effect in the experiment chapter.
 % In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
