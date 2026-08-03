@@ -94,29 +94,6 @@ Consequently, variations in surface geometry induce corresponding changes in the
 In this section, to show the effect of admittance control more specifically, we use the 2D multi-link aerial robot Hydrus Xi as the configuration to test the admittance effect. As shown in Fig.~\ref{fig:admittance_config}, Hydrus Xi is set in a specific configuration. There is a rope attach at one of the joints. By pulling the rope to the negative direction of the $x$ axis, we can imitate an external force on the negative direction of the $x$ axis. As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure will change due to the external force. Fig.~\ref{fig:admittance_deformation_plot} shows the relationship between the external force and the joints angle. In the pink region when the admittance controller is activated and the multi-link aerial robot is dragged to the negative direction of $x$ axis, the plot shows that the external force estimated in the $x$ axis appears apparent negative value, and the joints angle value also changes to deformation according to the admittance controller. It shows that the multi-link aerial robot could deformation under external force on the admittance activated direction.
 
 
-\begin{figure}[h]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_config.png}
-    \caption{Admittance example configuration. A rope attaching at one of the joints to imitate an external force.}
-    \label{fig:admittance_config}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
-    \caption{(a)-(d): Admittance changing process. The multi-link structure varies due to the pulling force introduced by the rope.}
-    \label{fig:admittance_changing}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.3cm 0cm 0cm},clip,width=\linewidth]{figures/chapter4/admittance_deformation_plot.png}
-    \caption{Plot of external force on the CoG in the $x$ axis and joint angle variation. The yellow region denotes the admittance controller activing period, and the pink region indicates the interval the aerial is being dragged by the rope.}
-    \label{fig:admittance_deformation_plot}
-\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,3 +111,27 @@ In this section, to show the effect of admittance control more specifically, we 
 \section{Summary}
 In this chapter, we discuss the concept of admittance control, the special setting of admittance control in the surface sliding task, and the effector of the admittance control. We will show more admittance effect in the experiment chapter.
 % In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
+
+\begin{figure}[h]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_config.png}
+    \caption{Admittance example configuration. A rope attaching at one of the joints to imitate an external force.}
+    \label{fig:admittance_config}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter3/admittance_changing.png}
+    \caption{(a)-(d): Admittance changing process. The multi-link structure varies due to the pulling force introduced by the rope.}
+    \label{fig:admittance_changing}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter4/admittance_deformation_plot.png}
+    \caption{Plot of external force on the CoG in the $x$ axis and joint angle variation. The yellow region denotes the admittance controller activing period, and the pink region indicates the interval the aerial is being dragged by the rope.}
+    \label{fig:admittance_deformation_plot}
+\end{figure}

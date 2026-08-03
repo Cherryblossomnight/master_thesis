@@ -48,11 +48,10 @@ In this section, we will show the free flight effect after tuning the parameters
 % \end{table}
 
 
-
 \begin{figure}[t]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/free_flight_plot.png}
-    \caption{}
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/free_flight_plot.png}
+    \caption{Free flight of Hydrus Xi. The parameters are well tuned in the free flight. All is set to $1$ so that the controller can be considered as PD controller.}
     \label{fig:free_flight_plot}
     \vspace{-5mm}
 \end{figure}
@@ -86,7 +85,7 @@ Here we choose three different $\mu=0.5, 1, 2$, and measure the estimated extern
 
 \begin{figure}[t]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/admittance_plot.png}
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/admittance_plot.png}
     \caption{}
     \label{fig:drag_plot}
     \vspace{-5mm}
@@ -114,7 +113,7 @@ Here we measure the estimated external force in X axis and the corresponding dis
 
 \begin{figure}[t]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/admittance_plot.png}
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/admittance_plot.png}
     \caption{}
     \label{fig:drag_plot2}
     \vspace{-5mm}
@@ -175,6 +174,14 @@ As shown in Fig.~\ref{fig:admittance control}, the robot started from its nomina
 \end{equation}
 where $\theta$ is shown in Fig.~\ref{fig:admittance control}.
 
+Here we define the length of each link as $l$, the length of end effector is $d$, the mass of every link (with the propeller module) as $m_i, i \in {1, 2, 3, 4}$. We can cauculte the value $\theta$ as follow:
+
+\begin{equation}
+\label{eq:distance2joint}
+cos\theta = (r-d-l)/4
+\end{equation}
+
+After getting the $\theta$ .Note that the distance $r$ is constr between $1.08 m$ in order to avoid out range.
 
 
 The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A vertical board was placed at a known location within the testing area. The board’s surface provided sufficient friction for stable contact while still allowing smooth sliding of the end-effector (marker pen). The board’s surface was intentionally sloped by approximately $20^\circ$ with respect to the $y$ axis, and the inclination angle was kept unknown to the robot. Although the surface is planar, its unknown inclination introduces unmodeled geometric variations that serve the same role as curved surfaces in this study. The friction coefficient is also unknown. Consequently, both the contact forces and the surface geometry remain unmodeled in this experiment, which provides a challenging benchmark for evaluating the robot's adaptive sliding capability.
@@ -182,7 +189,7 @@ The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A verti
 \begin{figure}[t]
     \centering
     % \parbox{3in}
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/exp_scene.png}
+    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/exp_scene.png}
     \caption{Experiment setup: an board with \textbf{known} position, and \textbf{unknown} sloped angle to the robot controller to mimic an unknown surface geometric variation. The world frame is marked on the figure. (A) Front view. (b) Top view.}
     \label{fig:exp_scene}
     \vspace{-5mm}
@@ -196,7 +203,7 @@ To evaluate performance, we conducted comparative experiments between the propos
 \begin{figure*}[t]
     \centering
     % \parbox{3in}
-    \includegraphics[trim={1.5cm 2cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/exp_result.png}
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/experiment_trajectory.png}
     \caption{Tracking trajectory on the board. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
     \label{fig:impedance_result}
 \end{figure*}
@@ -207,7 +214,7 @@ Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robo
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
-    {figures/chapter5/admittance_exp.png}}
+    {figures/chapter6/admittance_exp.png}}
     \vspace*{-3mm}
     \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation.}
     \label{fig:admittance_exp}
@@ -223,7 +230,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
-    {figures/chapter5/imp_plot.png}}
+    {figures/chapter6/imp_plot.png}}
     \vspace*{-3mm}
     \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
     \label{fig:impedance_plot}
@@ -232,7 +239,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
-    {figures/chapter5/box_position.png}}
+    {figures/chapter6/box_position.png}}
     \vspace*{-3mm}
     \caption{Box plots of position errors along the sliding directions (the $y$ and $z$ axes) under the four controllers during the contact period.}
     \label{fig:impedance_box}
@@ -249,7 +256,7 @@ Fig.~\ref{fig:admittance_box} also shows that the median external forces on the 
 These improvements demonstrate that the admittance controller enables the robot to adjust its configuration in response to surface geometric variations, thereby reducing the influence of geometric variations on the CoG and improving the contact force behavior.
 
 \begin{figure}[t]
-    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter5/admittance_plot.png}}
+    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
     \vspace*{-3mm}
     \caption{Plot of position variation and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
@@ -258,7 +265,7 @@ These improvements demonstrate that the admittance controller enables the robot 
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
-    {figures/chapter5/box_force.png}}
+    {figures/chapter6/box_force.png}}
     \vspace*{-3mm}
     \caption{Box plots of CoG position and CoG external force along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
     \label{fig:admittance_box}
