@@ -134,68 +134,7 @@ where
 and $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$. Here $\boldsymbol{Q} \in \mathbb{R}^{6 \times 4}$ is the allocation matrix, $^C\boldsymbol{u}_i$,$^C\boldsymbol{v}_i$, and $\lambda_i$ correspond to equations \ref{eq:allocation for force dragon} and \ref{eq:allocation for torque dragon}.
 If we get the command wrench from controller, we need to calculate the rotors' thrust and the vectoring angles. Here we also accept optimization method, which try to make the possible command torque become largest \cite{zhao_2023_versatile}.
 
-The target of the optimization equation is too make the thrust become smallest
-\begin{equation}
-\label{eq:thrust least dragon}
-\begin{aligned}
-\min_{\lambda,\theta,\phi}\quad & \|\boldsymbol{\lambda}\|^2， \\
-\text{s.t.}\quad & ^C\!\boldsymbol{w}_{cmd}
-= \boldsymbol{Q}(\boldsymbol{\theta},\boldsymbol{\phi})\boldsymbol{\lambda}，
-\end{aligned}
-\end{equation}
-Actually, this process is completed by the follow process
 
-
-\begin{equation}
-\label{eq:thrust least2 dragon}
-\begin{aligned}
-\min_{\boldsymbol{F}} \quad &
-\left\| \boldsymbol{F} \right\|^2\\
-\text{s.t.} \quad &^C\!\boldsymbol{w}_{cmd}=\tilde{\boldsymbol{Q}}\boldsymbol{F}\\
-\tilde{\boldsymbol{Q}}&=\left[
-\tilde{\boldsymbol{Q}}_{col_1}
-\quad
-\tilde{\boldsymbol{Q}}_{col_2}
-\quad
-\cdots
-\quad
-\tilde{\boldsymbol{Q}}_{col_{N_l}}
-\right]\\
-\tilde{\boldsymbol{Q}}_{col_i}&=
-\begin{bmatrix}
-\boldsymbol{E}_{3 \times 3}
-\\
-\left[
-{}^{\{CoG\}}
-\boldsymbol{p}_{\{F_i\}}
-\times
-\right]
-\end{bmatrix}
-{}^{\{CoG\}}
-\boldsymbol{R}_{\{L_i\}}
-\end{aligned}
-\end{equation}
-here $\boldsymbol{F}
-=\begin{bmatrix}
-{}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&\cdots&{}^{\{L_{N_r}\}}\boldsymbol{f}_{N_r}^{\top}
-\end{bmatrix}^{\top}$.
-Then we get $\boldsymbol{F}$ by
-\begin{equation}
-\label{eq:thrust least3 dragon}
-\boldsymbol{F}=\tilde{\boldsymbol{Q}}^{\#}{}^C\!\boldsymbol{w}_{cmd},
-\end{equation}
-where $(\cdot)^{\#}$ denotes the MP-pseudo-inverse of a full-rank matrix.
-
-Then we can get the thrust force and gimbal angles
-\begin{subequations}
-\label{eq:thrust least4 dragon}
-\begin{align}
-\lambda_i&=\left\|{}^{\{L_i\}}\boldsymbol{f}_i\right\|\\
-\phi_i&=\tan^{-1}\left(\frac{-{}^{\{L_i\}}f_{iy}}{{}^{\{L_i\}}f_{iz}}\right)\\
-\theta_i&=\tan^{-1}\left(\frac{{}^{\{L_i\}}f_{ix}}{-{}^{\{L_i\}}f_{iy}\sin(\phi_i)+{}^{\{L_i\}}f_{iz}\cos(\phi_i)}\right)
-\end{align}
-\end{subequations}
-We can also know that the thrust force and gimbal angles will be calculated automatically by this process.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{External Wrench Estimation}
 

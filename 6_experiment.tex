@@ -227,13 +227,20 @@ During the experiment, the reference trajectory of the multi-link aerial robot w
 To evaluate performance, we conducted comparative experiments between the proposed hybrid controller and a manually tuned PID baseline. The PID gains were selected to provide the best stable tracking performance in free flight and were kept identical to the proportional and derivative gains used in the impedance controller. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes to improve sliding resilience, while admittance control was applied along the $x$ axis to enable adaptive surface interaction. Note that each controller is executed independently along its respective axis. To demonstrate the necessity of combining impedance control and admittance control, we additionally performed experiments using only impedance control (without admittance-based joint adaptation) and only admittance control (where the CoG state was regulated solely by PID).
 
 
-\begin{figure*}[t]
+\begin{figure}[t]
     \centering
     % \parbox{3in}
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/experiment_trajectory.png}
     \caption{Tracking trajectory on the board. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
     \label{fig:impedance_result}
-\end{figure*}
+\end{figure}
+
+\begin{figure}[h]
+    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
+    {figures/chapter6/trajectory_plot.png}}
+    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
+    \label{fig:trajectory_plot}
+\end{figure}
 Following this setup, four sets of experiments were performed. Fig.~\ref{fig:impedance_result} shows the final trajectories drawn on the board, and Fig.~\ref{fig:impedance_result} shows the reference and real trajectory data. Overall, the only impedance control produced a trajectory closest to the desired circle, while the hybrid controller showed a nearly circular path. In contrast, only admittance control and PID control resulted in noticeably smaller and more distorted trajectories. Fig.~\ref{fig:impedance_result} shows the RASE of the trajectory, we can also find that the impedance performs better in the experiments.
 
 Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robot deformed to accommodate geometric variations during contact under hybrid controller by taking the spotphoto. We can see that in the leftside where the geometry variation is small, the structure become long to keep contact with the broad. On the other hand, in the right side where the geometry variation is large, the structure shrink to adapt to the variation to reduce the CoG displacement in order to improve stability.
@@ -242,7 +249,6 @@ Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robo
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/admittance_exp.png}}
-    \vspace*{-3mm}
     \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation.}
     \label{fig:admittance_exp}
 \end{figure}
@@ -258,28 +264,17 @@ This part of the experiments shows that along the sliding directions, impedance 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/imp_plot.png}}
-    \vspace*{-3mm}
     \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
     \label{fig:impedance_plot}
-    \vspace{-7mm}
 \end{figure}
 
-\begin{figure}[t]
-    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
-    {figures/chapter6/trajectory_plot.png}}
-    \vspace*{-3mm}
-    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
-    \label{fig:trajectory_plot}
-    \vspace{-7mm}
-\end{figure}
 
-\begin{figure}[t]
+
+\begin{figure}[h]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_position.png}}
-    \vspace*{-3mm}
     \caption{Box plots of position errors along the sliding directions (the $y$ and $z$ axes) under the four controllers during the contact period.}
     \label{fig:impedance_box}
-    \vspace{-7mm}
 \end{figure}
 
 
@@ -291,21 +286,17 @@ Fig.~\ref{fig:admittance_box} also shows that the median external forces on the 
 
 These improvements demonstrate that the admittance controller enables the robot to adjust its configuration in response to surface geometric variations, thereby reducing the influence of geometric variations on the CoG and improving the contact force behavior.
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
-    \vspace*{-3mm}
     \caption{Plot of position variation and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
-    \vspace*{-3mm}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_force.png}}
-    \vspace*{-3mm}
     \caption{Box plots of CoG position and CoG external force along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
     \label{fig:admittance_box}
-    \vspace*{-5mm}
 \end{figure}
 
 \subsection{Compare on All Directions}

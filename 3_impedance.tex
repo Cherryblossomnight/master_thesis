@@ -230,6 +230,70 @@ We need to get the command wrench of the aerial robot
 \end{equation}
 here $^C\mathbf{w}_{cmd}$ is the command wrench in frame $\{C\}$.
 Because dragon is the overactuated system, the command wrench can be achieve by its rotors simultaneously(if we ignore the servo response time). Therefore, after gaining the command wrench in $\{C\}$, we can used the equation () to calculated the rotor thrusts and gimbal servo angles.
+
+The target of the optimization equation is too make the thrust become smallest
+\begin{equation}
+\label{eq:thrust least dragon}
+\begin{aligned}
+\min_{\lambda,\theta,\phi}\quad & \|\boldsymbol{\lambda}\|^2， \\
+\text{s.t.}\quad & ^C\!\boldsymbol{w}_{cmd}
+= \boldsymbol{Q}(\boldsymbol{\theta},\boldsymbol{\phi})\boldsymbol{\lambda}，
+\end{aligned}
+\end{equation}
+Actually, this process is completed by the follow process
+
+
+\begin{equation}
+\label{eq:thrust least2 dragon}
+\begin{aligned}
+\min_{\boldsymbol{F}} \quad &
+\left\| \boldsymbol{F} \right\|^2\\
+\text{s.t.} \quad &^C\!\boldsymbol{w}_{cmd}=\tilde{\boldsymbol{Q}}\boldsymbol{F}\\
+\tilde{\boldsymbol{Q}}&=\left[
+\tilde{\boldsymbol{Q}}_{col_1}
+\quad
+\tilde{\boldsymbol{Q}}_{col_2}
+\quad
+\cdots
+\quad
+\tilde{\boldsymbol{Q}}_{col_{N_l}}
+\right]\\
+\tilde{\boldsymbol{Q}}_{col_i}&=
+\begin{bmatrix}
+\boldsymbol{E}_{3 \times 3}
+\\
+\left[
+{}^{\{CoG\}}
+\boldsymbol{p}_{\{F_i\}}
+\times
+\right]
+\end{bmatrix}
+{}^{\{CoG\}}
+\boldsymbol{R}_{\{L_i\}}
+\end{aligned}
+\end{equation}
+here $\boldsymbol{F}
+=\begin{bmatrix}
+{}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&\cdots&{}^{\{L_{N_r}\}}\boldsymbol{f}_{N_r}^{\top}
+\end{bmatrix}^{\top}$.
+Then we get $\boldsymbol{F}$ by
+\begin{equation}
+\label{eq:thrust least3 dragon}
+\boldsymbol{F}=\tilde{\boldsymbol{Q}}^{\#}{}^C\!\boldsymbol{w}_{cmd},
+\end{equation}
+where $(\cdot)^{\#}$ denotes the MP-pseudo-inverse of a full-rank matrix.
+
+Then we can get the thrust force and gimbal angles
+\begin{subequations}
+\label{eq:thrust least4 dragon}
+\begin{align}
+\lambda_i&=\left\|{}^{\{L_i\}}\boldsymbol{f}_i\right\|\\
+\phi_i&=\tan^{-1}\left(\frac{-{}^{\{L_i\}}f_{iy}}{{}^{\{L_i\}}f_{iz}}\right)\\
+\theta_i&=\tan^{-1}\left(\frac{{}^{\{L_i\}}f_{ix}}{-{}^{\{L_i\}}f_{iy}\sin(\phi_i)+{}^{\{L_i\}}f_{iz}\cos(\phi_i)}\right)
+\end{align}
+\end{subequations}
+We can also know that the thrust force and gimbal angles will be calculated automatically by this process.
+
 % If we what to control the prior frame, we need to do frame transformation to get the error values used for impedance control. Usually, there are three important frames in the aerial robot: CoG frame, end effector frame and base link frame. Due to some kind of symmetry, there is no fundamental difference between the end effector frame and the base link frame. The reason why we set such kind of mode is to follow the kinematic modeling of the multi-link structure.
 % In real world experience, the meaning we use those three frames are different: The CoG frame can be considered as the overall state of the whole multi-link aerial robot, and it is very convenient to calculate because the command wrench needed to be calculated in the CoG frame. So if the task requires to guarantee the overall pose of the aerial robot, the CoG centric mode can be used. However, due to the CoG point is usually in the air for the special structure of the multi-link aerial robot, it usually lacks certain meaning to control this frame in the air. On the other hand, the end effector frame and the base link frame have different meaning. They are the head and rear end of the whole serial link structure, therefore can be used as the contact point. Meanwhile, other complicated requirements can be put forward. for example, we can use the end effector as the contact point to the surface, and used the base link to mount a camera, radar or other sensor. Or we can access a power cable in the base link. At this situation, the pose of the base link is also need to be consider, but it is not as important as the contact point. 
 % So in this thesis, we will choose the end effector frame as the prior frame and the base link frame as the secondary frame.
