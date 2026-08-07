@@ -84,7 +84,6 @@ As illustrated in Fig.\ref{fig:imp_drag}, the impedance could the dynamic perfor
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag.png}
     \caption{The multi-link aerial robot is dragged by a rope to simulate the external force on a single direction. The aerial robot move in order to generate enough consistant force.}
     \label{fig:drag}
-
 \end{figure}
 
 \begin{figure}[h]
@@ -338,6 +337,8 @@ The experiment highlights the complementary roles of the two strategies: impedan
 \subsection{Experimental Setup}
 Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{fig:robot}. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU, and the Robot Operating System (ROS) is utilized for communication. A motion capture system provides the full state of the robot throughout the experiments. A marker pen is attached to link 4 as shown in Fig.~\ref{fig:admittance control} and serves as the end-effector for maintaining contact with the environment.
 
+We also test the sliding expeirment by Dragon. The basic experiment setting is basically similar to Hydrus Xi's case. The parameters are shown in Table. Note that Dragon is a 3D deformable mutli-link aerial robot, which has 6 joints to realize full DOF. In this expeirment, we only simply test whether the hybrid controller used in Hydrus Xi can also be used in Dragon. Therefore, only 3 $Yaw$ joints were used.
+
 % The actual experimental parameters are as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
 % \begin{subequations}
 % \label{eq:damping rate}
@@ -358,16 +359,16 @@ Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{f
 
 As shown in Fig.~\ref{fig:admittance control}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. 
 
-During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. Due to the designed trajectory of the secondary frame is a static point, the prior trajectory is also a circle showed in the secondary frame. In detail, the trajectory function is showed in \ref{eq:circle equation}:
+During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. 
 
-% \begin{subequations}
-% \label{eq:circle equation}
-% \begin{align}
-%     x(t)&=sin(2\pi t), \\[2pt]
-%     y(t)&=1.037, \\[2pt]
-%     z(t)&=cos(2\pi t), 
-% \end{align}
-% \end{subequations}
+As shown in Fig.~\ref{fig:dragon_experiment}, 
+
+\begin{figure}[t]
+    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
+    {figures/chapter6/dragon_experiment.png}}
+    \caption{Three view figure of dragon in the expeirment. (a)Front view. (b)Side view. (c)Top view.}
+    \label{fig:dragon_experiment}
+\end{figure}
 and the orientation is required to stay at the initial rotation angle to keep the link4 be vertical with the $y-z$ plane.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}

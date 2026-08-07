@@ -86,6 +86,10 @@
 }
 
 
+\renewcommand{\contentsname}{}
+
+\renewcommand{\prechaptername}{Chapter~}
+\renewcommand{\postchaptername}{}
 
 \makeatletter
 
@@ -111,4 +115,6 @@
   \clearpage
 }
 
+\def\@makeschapterhead#1{}
+\renewcommand{\bibname}{References}
 \makeatother
