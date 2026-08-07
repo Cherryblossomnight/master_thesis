@@ -6,7 +6,7 @@ In this chapter, we will demonstrate the effects of the proposed framework. In o
 \subsection{2D Multi-Link aerial robot Hydrus Xi}
 In the experiment, we use the robot show in Fig.~\ref{fig:robot_hydrus}. The robot consists of 4 links.
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centering
     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_hydrus.png}
     \caption{The mechanical design of the 2D multi-link aerial robot Hydrus. (a) Whole mechanical structure. (b) End-effector. (c) Propeller vectoring module. (d) Joint module.}
@@ -29,26 +29,37 @@ The admittance mass $m_a$ is chosen depend on the sliding speed. If the sliding 
 The admittance damping $c_a$ is usually chosen depend on the other two parameters. we usually will set the damping rate $\zeta=\frac{c_a}{2\sqrt{m_ak_a}}$ a bit less than $1$ to make sure the performance is around critical damping.
 
 \subsection{Free flight parameter adjustment}
-In this section, we will show the free flight effect after tuning the parameters. Fig.~\ref{fig:free_flight_plot}.  shows the result. The robot is set at configuration that Fig. showed. We set the $x$, $y$, $z$ and $yaw$ axes. The effect in $z$ and $yaw$ shows well, but the performance of $x$ and $y$ is not so good. But it is hard to develop. The parameters are shown in the following Table \ref{tb:params1}.
+In this section, we will show the free flight effect after tuning the parameters. Fig.~\ref{fig:free_flight_plot} shows the result. We set the $x$, $y$, $z$ and $yaw$ axes. The effect in $z$ and $yaw$ shows well, but the performance of $x$ and $y$ is not so good. But it is hard to develop. The parameters are shown in the following Table \ref{tb:params1}. Note that in this period, we will set the parameter $\mu$ in each axis as $1$ so that the impedance controller will reduce to a PD controller, and we will not use admittance controller in this experiment.
 
-% \begin{table}[H]
-% 	\centering
-% 	\caption{Parameters of free flight.}
-% 	\begin{tabular}{l c c}\hline
-% 		 \toprule
-%         Name & Notation & Value \\
-%         \midrule
-%         p & $k_{pxy}$ & $2.5$ \\
-%         Maximum width  & $k_{px}$  & mm \\
-%         Maximum height & 128 & mm \\
-%         Total mass     & 2050 & g \\
-%         \bottomrule
-% 	\label{tb:params1}
-% 	\end{tabular}
-% \end{table}
+\begin{table}[H]
+    \centering
+    \caption{Parameters of free flight.}
+    \label{tb:params1}
+    \begin{tabular}{lcc}
+        \hline
+        Name & Notation & Value \\
+        \hline
+        XY stiffness & $k_{pxy}$ & 2.5 \\
+        Z stifness & $k_{pz}$ & 1.5 \\
+        RP stiffness & $k_{prollpitch}$ & 40 \\
+        Yaw stiffness & $k_{pyaw}$ & 10 \\
+        XY damping ratio & $\zeta_{xy}$ & 0.6 \\
+        Z damping ratio & $\zeta_{xy}$ & 0.7 \\
+        RP damping ratio & $\zeta_{xy}$ & 1.1 \\
+        Yaw damping ratio & $\zeta_{xy}$ & 0.8 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Here the parameter is given by damping ratio insteand of damping. We can calculate the damping parameter in each axis by \ref{eq:damping rate}
+\begin{equation}
+\label{eq:damping rate}
+c=2\zeta k^{\frac{1}{2}},
+\end{equation}
+where $c$ represents the damping, $k$ the stiffness, $\zeta$ the damping ratio in each axis. 
 
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centering
     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/free_flight_plot.png}
     \caption{Free flight of Hydrus Xi. The parameters are well tuned in the free flight. All is set to $1$ so that the controller can be considered as PD controller.}
@@ -58,68 +69,67 @@ In this section, we will show the free flight effect after tuning the parameters
 
 
 \subsection{Impedance control parameter adjustment}
-In this section, we will do a small experiment to valid the ability of impedance control. We can demonstrate that by varifying the parameter $\mu$, the performance of multi-link aerial robot will become different.
+In this section, we will do a experiment to valid the ability of impedance control. We can demonstrate that by varifying the parameter $\mu$, the performance of multi-link aerial robot will become different.
 
 
-In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is set in X axis as shown in Fig.\ref{fig:drag}. The other parameters are shown in the following Table \ref{tb:params2}.
+In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is set in X axis as shown in Fig.\ref{fig:imp_drag}. The other parameters is as the same with the former experiment, refer to Table \ref{tb:params1}.
 
-Here we choose three different $\mu=0.5, 1, 2$, and measure the estimated external force in X axis and the corresponding CoG displacement in X axis. The result is shown in Fig. \ref{fig:drag_plot}.
+Here we choose three different $\mu=0.5, 1, 2$, and measure the estimated external force in $x$ axis and the corresponding CoG displacement in $x$ axis. The result is shown in Fig. \ref{fig:drag_plot}. In the analysis in Sec, when $\mu$ is larger than $1$, the system can be considered as a rigid system. On the other hand,  when $\mu$ is smaller than $1$, the system can be considered as a soft system.
 
-\begin{table}[H]
-	\centering
-	\caption{Parameters.}
-	\begin{tabular}{ll}\hline
-		 訓練データの正答率&: $98\%$ \\
-		 テストデータの正答率&: $88\%$ \\
-	\label{tb:params2}
-	\end{tabular}
-\end{table}
+As illustrated in Fig.\ref{fig:imp_drag}, the impedance could the dynamic performance. The figure shows the relationship between the external force and the positon movement in the same direction.
 
-\begin{figure}[t]
+
+\begin{figure}[h]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter3/drag.png}
-    \caption{}
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag.png}
+    \caption{The multi-link aerial robot is dragged by a rope to simulate the external force on a single direction. The aerial robot move in order to generate enough consistant force.}
     \label{fig:drag}
-    \vspace{-5mm}
+
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_result.png}
+    \caption{The result of the dragging experiment. (a) $\mu = 2$. (b) $\mu = 1$. (c) $\mu = 0.5$.}
+    \label{fig:imp_drag_result}
 \end{figure}
 
 \begin{figure}[t]
     \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/admittance_plot.png}
-    \caption{}
-    \label{fig:drag_plot}
-    \vspace{-5mm}
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_plot.png}
+    \caption{The result of the dragging experiment. (a) rigid case ($\mu = 2$). (b) normal case ($\mu = 1$). (c) soft case ($\mu = 0.5$).}
+    \label{fig:imp_drag_plot}
 \end{figure}
 
-The result shows that the stiffness can be regarded as the tangential of the force-displacement figure. Apparently, the stiffness from low to high is $\mu=0.5, 1,2$.
+The result shows that the stiffness can be regarded as the tangential of the force-displacement figure. Apparently, the stiffness from low to high is $\mu=0.5, 1,2$. As shown in the trend line, the tengential of the three cases are $14$, $8$, $4$, respectivelt. It demostrates that by varying the parameter $\mu$, the aerial robot could change its performance. Therefore, according to the experiment's situation and task requirement, we can choose suitable parameter.
 
-\subsection{Admittance control parameters adjustment}
+% \subsection{Admittance control parameters adjustment}
 
-In this section, we will do a small experiment to valid the ability of admittance control. 
-In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is similar to the impedance part. The other parameters are shown in the following Table \ref{tb:params3}.
+% In this section, we will do a small experiment to valid the ability of admittance control. 
+% In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is similar to the impedance part. The other parameters are shown in the following Table \ref{tb:params3}.
 
-Here we measure the estimated external force in X axis and the corresponding displacement in X axis. The result is shown in Fig.\ref{fig:drag_plot2}.
+% Here we measure the estimated external force in X axis and the corresponding displacement in X axis. The result is shown in Fig.\ref{fig:drag_plot2}.
 
-\begin{table}[H]
-	\centering
-	\caption{Parameters.}
-	\begin{tabular}{ll}\hline
-		 訓練データの正答率&: $98\%$ \\
-		 テストデータの正答率&: $88\%$ \\
-	\label{tb:params1}
-	\end{tabular}
-\end{table}
+% \begin{table}[H]
+% 	\centering
+% 	\caption{Parameters.}
+% 	\begin{tabular}{ll}\hline
+% 		 訓練データの正答率&: $98\%$ \\
+% 		 テストデータの正答率&: $88\%$ \\
+% 	\label{tb:params1}
+% 	\end{tabular}
+% \end{table}
 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/admittance_plot.png}
-    \caption{}
-    \label{fig:drag_plot2}
-    \vspace{-5mm}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/admittance_plot.png}
+%     \caption{}
+%     \label{fig:drag_plot2}
+%     \vspace{-5mm}
+% \end{figure}
 
-The experiment result varify that the distance between CoG and end-effector can change with the external force. By setting parameters like this, we can guarantee stability and response speed, simultaneously
+% The experiment result varify that the distance between CoG and end-effector can change with the external force. By setting parameters like this, we can guarantee stability and response speed, simultaneously
 % \subsection{Hybrid control}
 % In this section, we show that the hybrid impedance-admittance controller can be used in the multi-link aerial robot. As shown in Fig.\ref{fig:hybrid_showing}, the robot realize consist to the friction and adapt to the surface variation, simultaneously.
 
@@ -137,15 +147,33 @@ The experiment result varify that the distance between CoG and end-effector can 
 \subsection{Experimental Setup}
 Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{fig:robot}. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU, and the Robot Operating System (ROS) is utilized for communication. A motion capture system provides the full state of the robot throughout the experiments. A marker pen is attached to link 4 as shown in Fig.~\ref{fig:admittance control} and serves as the end-effector for maintaining contact with the environment.
 
-The actual experimental parameters are as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
-\begin{subequations}
-\label{eq:damping rate}
-\begin{align}
-\tilde{\boldsymbol{C}}_{td}&=2\boldsymbol{Z}_{td}\tilde{\boldsymbol{K}}^{\frac{1}{2}}_{td}, \\[2pt]
-\tilde{\boldsymbol{C}}_{rd}&=2\boldsymbol{Z}_{rd}\tilde{\boldsymbol{K}}^{\frac{1}{2}}_{rd}.
-\end{align}
-\end{subequations}
-The admittance mass, damping and stiffness are given by $m_a=40\,\mathrm{kg}$, $c_a=55\,\mathrm{N\cdot s/m}$ and $k_a=16\,\mathrm{N/m}$. The reference external force is given by $f_{ref,x} = 0$.
+The actual experimental parameters are also same as the Table\ref{tb:params1}. Note that in $x$ axis, $\mu$ is chosen as $1$ so the impedance controller only performs PD part in this direction. Meanwhile, the admittance controller is only acting at $x$ axis. 
+as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
+
+The reference external force used in admittance controller is given by $f_{ref,x} = 0$.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameters of free flight.}
+    \label{tb:params4}
+    \begin{tabular}{lcc}
+        \hline
+        Name & Notation & Value \\
+        \hline
+
+        Linear mass ratio matrix & $\boldsymbol{M}_d/m$ & diag(1.0, 3.0, 1.0) \\
+        Y mass ratio & $/mu_{y}$ & diag(10.0, 10.0, 5.0) \\
+        Z mass ratio & $/mu_{z}$ & 1.0 \\
+        Roll mass ratio & $/mu_{x}$ & 1.0 \\
+        Pitch mass ratio & $/mu_{y}$ & 3.0 \\
+        Yaw mass ratio & $/mu_{z}$ & 1.0 \\
+        Admittance mass & $m_a$ & 40 \\
+        Admittance damping & $c_a$ & 55 \\
+        Admittance stiffness & $k_a$ & 16 \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \begin{figure}[t]
      \centering
     % \parbox{3in}
@@ -239,6 +267,15 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
+    {figures/chapter6/trajectory_plot.png}}
+    \vspace*{-3mm}
+    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
+    \label{fig:trajectory_plot}
+    \vspace{-7mm}
+\end{figure}
+
+\begin{figure}[t]
+    \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_position.png}}
     \vspace*{-3mm}
     \caption{Box plots of position errors along the sliding directions (the $y$ and $z$ axes) under the four controllers during the contact period.}
@@ -274,7 +311,23 @@ These improvements demonstrate that the admittance controller enables the robot 
 
 \subsection{Compare on All Directions}
 Table shows the data of the four controllers. The hybrid controller get the best performance.
-Fig.~\ref{fig:admittance_plot} shows the CoG displacement error compares with the tracking error in y axis.
+Table.~\ref{tb:hybrid} shows the CoG displacement error compares with the tracking error in y axis. We can see that in each, the hybrid controller performs as good as the only impedance controller or the only admittance controller. However, if we consider all the factor, the hybrid controller can achieve small CoG movement,simutenally. Therefore, the 
+
+\begin{table}[H]
+    \centering
+    \caption{Parameters of free flight.}
+    \label{tb:hybrid}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        & PD & Impedance & Admittance & Hybrid \\
+        \hline
+        Y position error & $0.134\mathrm{m}$ & \textcolor{red}{$0.079\mathrm{m}$} &$0.105\mathrm{m}$ & \textcolor{brown}{$0.083\mathrm{m}$} \\
+        Z position error & $0.026\mathrm{m}$ & \textcolor{brown}{$0.021\mathrm{m}$} & $0.024\mathrm{m}$ & \textcolor{red}{$0.020\mathrm{m}$} \\
+        X displacement & $0.133\mathrm{m}$ & $0.137\mathrm{m}$ & \textcolor{brown}{$0.088\mathrm{m}$} & \textcolor{red}{$0.084\mathrm{m}$} \\
+        X external & $-1.190\mathrm{N}$ & \textcolor{brown}{$-0.453\mathrm{N}$} & $-0.712\mathrm{N}$ & \textcolor{red}{$-0.328\mathrm{N}$} \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Section summary}
 The experiment highlights the complementary roles of the two strategies: impedance control improves sliding smoothness and reduces tracking error, whereas admittance control enhances adaptive interaction by decreasing both displacement and contact forces. Since neither only impedance controller nor only admittance controller alone can achieve both behaviors, the hybrid controller yields smaller trajectory deviations, reduced unintended CoG drift, and lower interaction forces compared with the baseline PID controller, confirming its effectiveness for compliant contact-rich tasks.
@@ -305,16 +358,16 @@ Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{f
 
 As shown in Fig.~\ref{fig:admittance control}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. 
 
-During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board’s unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. Due to the designed trajectory of the secondary frame is a static point, the prior trajectory is also a circle showed in the secondary frame. In detail, the trajectory function is showed in \ref{eq:circle equation}:
+During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. Due to the designed trajectory of the secondary frame is a static point, the prior trajectory is also a circle showed in the secondary frame. In detail, the trajectory function is showed in \ref{eq:circle equation}:
 
-\begin{subequations}
-\label{eq:circle equation}
-\begin{align}
-    x(t)&=sin(2\pi t), \\[2pt]
-    y(t)&=1.037, \\[2pt]
-    z(t)&=cos(2\pi t), 
-\end{align}
-\end{subequations}
+% \begin{subequations}
+% \label{eq:circle equation}
+% \begin{align}
+%     x(t)&=sin(2\pi t), \\[2pt]
+%     y(t)&=1.037, \\[2pt]
+%     z(t)&=cos(2\pi t), 
+% \end{align}
+% \end{subequations}
 and the orientation is required to stay at the initial rotation angle to keep the link4 be vertical with the $y-z$ plane.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
