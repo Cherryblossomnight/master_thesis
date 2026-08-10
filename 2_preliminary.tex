@@ -82,9 +82,10 @@ The underactuated multi-link aerial robot Hydrus Xi \cite{zhao_2021_singularity}
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/hydrus_model.png}
-    \caption{Model of the Hydrus Xi robot.}
+      \caption{Model of the 2D multi-link aerial robot Hydrus Xi. ${L_i}$ denotes the link frame, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction. The tilt angle between $z$ axes of ${L_i}$ and ${F_i}$ is $\beta$, and the vectoring angle is $\psi_i$. }
     \label{fig:hydrus_model}
 \end{figure}
+
 
 Note that the transform from $\{C\}$ to $\{F_i\}$ changes due to the joint angles $q_i$ and the vectoring angles $\psi_i$. Therefore, the command equations (\ref{eq:allocation for force}), (\ref{eq:allocation for torque}) and (\ref{eq:allocation for wrench}) can be rewritten as
 
@@ -132,9 +133,11 @@ The overactuated multi-link aerial robot Dragon \cite{zhao_2018_design, zhao_202
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/dragon_model.png}
-    \caption{Model of the 3D multi-link aerial robot Dragon. (a) Kinematics model of the aerial robot Dragon, $\{L_i\}$ is a frame attached to the start point of the $i$th link, and the $x$ axis is aligned with the direction of link rod. (b) two DoF joint module composed of two orthogonal joint axes ($q_{i_yaw}$, $q_{i_pitch}$). (c) two DoF force vectoring apparatus ($\theta_i$, $\phi_i$).  $\{G_i\}$ is a frame attached to the origin of vectoring apparatus, and the $x$ axis is aligned with the $x$ axis of $\{L_i\}$ and rotates around it with $\phi_i$.  $\{F_i\}$ is a frame in the middle of the dual rotors, and the $z$ axis, where the combining the thrust force $\lambda_i$ is attached, is parallel to the rotor rotation axis and is titled from the $z$ axis of $\{G_i\}$ with $\theta_i$.}
+    \caption{Model of the 3D multi-link aerial robot Dragon. (a) Kinematic model of Dragon, with ${L_i}$ denoting the link frame. (b) Two-DoF joint module with orthogonal yaw and pitch axes ($q_{i\_yaw}$, $q_{i\_pitch}$). (c) Two-DoF thrust-vectoring apparatus with gimbal angles $\theta_i$ and $\phi_i$. ${G_i}$ denotes the intermediate frame (gimbal roll frame) after the $\phi_i$ rotation, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction.}
     \label{fig:dragon_model}
 \end{figure}
+
+
 
 
 In Dragon's case, the command equations (\ref{eq:allocation for force}), (\ref{eq:allocation for torque}) and (\ref{eq:allocation for wrench}) can be rewritten as 
@@ -161,7 +164,7 @@ In Dragon's case, the command equations (\ref{eq:allocation for force}), (\ref{e
 ^C\!\boldsymbol{f}_i \\
 ^C\!\boldsymbol{\tau}_i
 \end{pmatrix} 
-=\boldsymbol{Q}\boldsymbol{\lambda},
+=\boldsymbol{Q}(\boldsymbol{q}, \boldsymbol{\phi}, \boldsymbol{\theta})\boldsymbol{\lambda},
 \end{equation}
 where 
 \begin{equation}
@@ -172,7 +175,8 @@ where
 ^C\!\boldsymbol{v}_1&^C\!\boldsymbol{v}_2&^C\!\boldsymbol{v}_3&^C\!\boldsymbol{v}_4
 \end{pmatrix}.
 \end{equation}
-Here $\boldsymbol{Q} \in \mathbb{R}^{6 \times 4}$ denotes the allocation matrix, whose columns are determined by $^C\boldsymbol{u}_i$ and $^C\boldsymbol{v}_i$. 
+Here $\boldsymbol{Q}(\boldsymbol{q}, \boldsymbol{\phi}, \boldsymbol{\theta}) \in \mathbb{R}^{6 \times 4}$ denotes the allocation matrix, which depends on the joint angles $\boldsymbol{q}$ and gimbal angles $\boldsymbol{\phi}$ and $\boldsymbol{\theta}$. For simplicity, its columns are denoted by $^C\boldsymbol{u}_i$ and $^C\boldsymbol{v}_i$.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{External Wrench Estimation}
