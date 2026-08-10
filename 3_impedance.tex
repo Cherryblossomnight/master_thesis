@@ -219,6 +219,8 @@ This gives the individual thrust values that each rotor needs to produce.
 \subsection{Implementation on Dragon}
 In Dragon's case, due to dragon is an overactuated system, the calculated command wrench can be directly excuted by the rotors after allocation. In detail, 
 
+If we get the command wrench from controller, we need to calculate the rotors' thrust and the vectoring angles. Here we also accept optimization method, which try to make the possible command torque become largest \cite{zhao_2023_versatile}.
+
 After that, the thrust and the gimbal angle can be set.
 We need to get the command wrench of the aerial robot
 \begin{equation}

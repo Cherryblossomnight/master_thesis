@@ -89,14 +89,14 @@ As illustrated in Fig.\ref{fig:imp_drag}, the impedance could the dynamic perfor
 \begin{figure}[h]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_result.png}
-    \caption{The result of the dragging experiment. (a) $\mu = 2$. (b) $\mu = 1$. (c) $\mu = 0.5$.}
+    \caption{The result of the dragging experiment. (a) rigid case ($\mu = 2$). (b) normal case ($\mu = 1$). (c) soft case ($\mu = 0.5$).}
     \label{fig:imp_drag_result}
 \end{figure}
 
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_plot.png}
-    \caption{The result of the dragging experiment. (a) rigid case ($\mu = 2$). (b) normal case ($\mu = 1$). (c) soft case ($\mu = 0.5$).}
+    \caption{The plot of the dragging experiment.}
     \label{fig:imp_drag_plot}
 \end{figure}
 
@@ -249,7 +249,7 @@ Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robo
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/admittance_exp.png}}
-    \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation.}
+    \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation. (a) Top view. (b) Front view.}
     \label{fig:admittance_exp}
 \end{figure}
 
@@ -270,7 +270,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_position.png}}
     \caption{Box plots of position errors along the sliding directions (the $y$ and $z$ axes) under the four controllers during the contact period.}
@@ -286,13 +286,13 @@ Fig.~\ref{fig:admittance_box} also shows that the median external forces on the 
 
 These improvements demonstrate that the admittance controller enables the robot to adjust its configuration in response to surface geometric variations, thereby reducing the influence of geometric variations on the CoG and improving the contact force behavior.
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
     \caption{Plot of position variation and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_force.png}}
     \caption{Box plots of CoG position and CoG external force along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
@@ -301,7 +301,7 @@ These improvements demonstrate that the admittance controller enables the robot 
 
 \subsection{Compare on All Directions}
 Table shows the data of the four controllers. The hybrid controller get the best performance.
-Table.~\ref{tb:hybrid} shows the CoG displacement error compares with the tracking error in y axis. We can see that in each, the hybrid controller performs as good as the only impedance controller or the only admittance controller. However, if we consider all the factor, the hybrid controller can achieve small CoG movement,simutenally. Therefore, the 
+Table.~\ref{tb:hybrid} shows the CoG displacement error compares with the tracking error in y axis. We can see that in each, the hybrid controller performs as good as the only impedance controller or the only admittance controller. However, if we consider all the factor, the hybrid controller can achieve small CoG movement,simutenally. Therefore, the hybrid
 
 \begin{table}[H]
     \centering
@@ -352,33 +352,36 @@ As shown in Fig.~\ref{fig:admittance control}, the robot started from its nomina
 
 During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. 
 
-As shown in Fig.~\ref{fig:dragon_experiment}, 
+
+As shown in Fig.~\ref{fig:dragon_experiment}. 
+
+The original displacement in x is $0.115m$, whereas the real displacement is $0.065$. We can see that the distance in x is reduce $0.08m$.
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_experiment.png}}
-    \caption{Three view figure of dragon in the expeirment. (a)Front view. (b)Side view. (c)Top view.}
+    \caption{Three view figure of dragon in the expeirment. (a) Front view. (b) Side view. (c) Top view.}
     \label{fig:dragon_experiment}
 \end{figure}
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_trajectory.png}}
-    \caption{Three view figure of dragon in the expeirment. (a)Front view. (b)Side view. (c)Top view.}
+    \caption{Three view figure of dragon in the expeirment. (a) End effector trajecotry. (b)CoG trajectory.}
     \label{fig:dragon_trajectory}
 \end{figure}
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_plot.png}}
-    \caption{Three view figure of dragon in the expeirment. (a)Front view. (b)Side view. (c)Top view.}
+    \caption{Three view figure of dragon in the expeirment.}
     \label{fig:dragon_plot}
 \end{figure}
 
 \begin{figure}[t]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_contact.png}}
-    \caption{Three view figure of dragon in the expeirment. (a)Front view. (b)Side view. (c)Top view.}
+    \caption{Three view figure of dragon in the expeirment. }
     \label{fig:dragon_contact}
 \end{figure}
 and the orientation is required to stay at the initial rotation angle to keep the link4 be vertical with the $y-z$ plane.
