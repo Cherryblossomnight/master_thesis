@@ -6,7 +6,7 @@ In this chapter, we will demonstrate the effects of the proposed framework. In o
 \subsection{2D Multi-Link aerial robot Hydrus Xi}
 In the experiment, we use the robot show in Fig.~\ref{fig:robot_hydrus}. The robot consists of 4 links.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_hydrus.png}
     \caption{The mechanical design of the 2D multi-link aerial robot Hydrus. (a) Whole mechanical structure. (b) End-effector. (c) Propeller vectoring module. (d) Joint module.}
@@ -59,7 +59,7 @@ c=2\zeta k^{\frac{1}{2}},
 where $c$ represents the damping, $k$ the stiffness, $\zeta$ the damping ratio in each axis. 
 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/free_flight_plot.png}
     \caption{Free flight of Hydrus Xi. The parameters are well tuned in the free flight. All is set to $1$ so that the controller can be considered as PD controller.}
@@ -79,21 +79,21 @@ Here we choose three different $\mu=0.5, 1, 2$, and measure the estimated extern
 As illustrated in Fig.\ref{fig:imp_drag}, the impedance could the dynamic performance. The figure shows the relationship between the external force and the positon movement in the same direction.
 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag.png}
     \caption{The multi-link aerial robot is dragged by a rope to simulate the external force on a single direction. The aerial robot move in order to generate enough consistant force.}
     \label{fig:drag}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_result.png}
     \caption{The result of the dragging experiment. (a) rigid case ($\mu = 2$). (b) normal case ($\mu = 1$). (c) soft case ($\mu = 0.5$).}
     \label{fig:imp_drag_result}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_plot.png}
     \caption{The plot of the dragging experiment.}
@@ -102,7 +102,62 @@ As illustrated in Fig.\ref{fig:imp_drag}, the impedance could the dynamic perfor
 
 The result shows that the stiffness can be regarded as the tangential of the force-displacement figure. Apparently, the stiffness from low to high is $\mu=0.5, 1,2$. As shown in the trend line, the tengential of the three cases are $14$, $8$, $4$, respectivelt. It demostrates that by varying the parameter $\mu$, the aerial robot could change its performance. Therefore, according to the experiment's situation and task requirement, we can choose suitable parameter.
 
-% \subsection{Admittance control parameters adjustment}
+\subsection{Admittance control exhibition}
+
+
+As shown in Fig.~\ref{fig:admittance_drag}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. Specifically, here we defined the configuration angle $\theta$ as the variable in the admittance controller to determine the configuration solely and then computed the corresponding joint angles analytically through inverse kinematics. The angle of each joint was satisfied as
+
+\begin{equation}
+\label{eq:joint angles}
+ \begin{bmatrix}
+    q_1 \\
+    q_2 \\
+    q_3
+    \end{bmatrix} 
+    =
+    \begin{bmatrix}
+    \frac{\pi}{2}-\theta \\
+    2\theta \\
+    -\theta
+    \end{bmatrix},
+\end{equation}
+where $\theta$ is shown in Fig.~\ref{fig:admittance_drag}.
+
+Here we define the length of each link as $l$, the length of end effector is $d$, the mass of every link (with the propeller module) as $m_i, i \in {1, 2, 3, 4}$. We can cauculte the value $\theta$ as follow:
+
+\begin{equation}
+\label{eq:distance2joint}
+cos\theta = (r-d-l)/4
+\end{equation}
+
+% After getting the $\theta$ .Note that the distance $r$ is constr between $1.08 m$ in order to avoid out range.
+
+Fig.~\ref{fig:admittance_deformation_plot} shows the relationship between the external force and the joints angle. In the pink region when the admittance controller is activated and the multi-link aerial robot is dragged to the negative direction of $x$ axis, the plot shows that the external force estimated in the $x$ axis appears apparent negative value, and the joints angle value also changes to deformation according to the admittance controller.
+
+
+\begin{figure}[!htbp]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_drag.png}
+    \caption{(a) The nominal surface-contact configuration of the multi-link aerial robot. The distance used in admittance controller is shown as the distance between the end effector and the CoG along the $x$ axis of $\{W\}$. The configuration angle $\theta = \pi /6$, and the joint angles $q_1$, $q_2$, $q_3$ are consequently $\pi /3, \pi /3,-\pi /6$, respectively. (b) The aerial robot is dragged by the rope to imitate the exteral force added on the $x$ axis.}
+    \label{fig:admittance_drag}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_changing.png}
+    \caption{Plot of external force on the CoG in the $x$ axis and joint angle variation. The yellow region denotes the admittance controller activing period, and the pink region indicates the interval the aerial is being dragged by the rope.}
+    \label{fig:admittance_changing}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_deformation_plot.png}
+    \caption{Plot of external force on the CoG in the $x$ axis and joint angle variation. The yellow region denotes the admittance controller activing period, and the pink region indicates the interval the aerial is being dragged by the rope.}
+    \label{fig:admittance_deformation_plot}
+\end{figure}
 
 % In this section, we will do a small experiment to valid the ability of admittance control. 
 % In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is similar to the impedance part. The other parameters are shown in the following Table \ref{tb:params3}.
@@ -173,47 +228,18 @@ The reference external force used in admittance controller is given by $f_{ref,x
     \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-     \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0.5cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/hydrus.png}
-    \caption{The nominal surface-contact configuration of the multi-link aerial robot. The configuration angle $\theta = \pi /6$, and the joint angles $q_1$, $q_2$, $q_3$ are consequently $\pi /3, \pi /3,-\pi /6$, respectively.}
-    \label{fig:admittance control}
-    \vspace{-5mm}
-\end{figure}
+% \begin{figure}[t]
+%      \centering
+%     % \parbox{3in}
+%     \includegraphics[trim={0cm 0.5cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/hydrus.png}
+%     \caption{The nominal surface-contact configuration of the multi-link aerial robot. The configuration angle $\theta = \pi /6$, and the joint angles $q_1$, $q_2$, $q_3$ are consequently $\pi /3, \pi /3,-\pi /6$, respectively.}
+%     \label{fig:admittance control}
+%     \vspace{-5mm}
+% \end{figure}
 
+The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A vertical board was placed at a known location within the testing area. The board’s surface provided sufficient friction for stable contact while still allowing smooth sliding of the end-effector (marker pen). The board's surface was intentionally sloped by approximately $20^\circ$ with respect to the $y$ axis, and the inclination angle was kept unknown to the robot. Although the surface is planar, its unknown inclination introduces unmodeled geometric variations that serve the same role as curved surfaces in this study. The friction coefficient is also unknown. Consequently, both the contact forces and the surface geometry remain unmodeled in this experiment, which provides a challenging benchmark for evaluating the robot's adaptive sliding capability.
 
-As shown in Fig.~\ref{fig:admittance control}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. Specifically, here we defined the configuration angle $\theta$ as the variable in the admittance controller to determine the configuration solely and then computed the corresponding joint angles analytically through inverse kinematics. The angle of each joint was satisfied as
-
-\begin{equation}
-\label{eq:joint angles}
- \begin{bmatrix}
-    q_1 \\
-    q_2 \\
-    q_3
-    \end{bmatrix} 
-    =
-    \begin{bmatrix}
-    \frac{\pi}{2}-\theta \\
-    2\theta \\
-    -\theta
-    \end{bmatrix},
-\end{equation}
-where $\theta$ is shown in Fig.~\ref{fig:admittance control}.
-
-Here we define the length of each link as $l$, the length of end effector is $d$, the mass of every link (with the propeller module) as $m_i, i \in {1, 2, 3, 4}$. We can cauculte the value $\theta$ as follow:
-
-\begin{equation}
-\label{eq:distance2joint}
-cos\theta = (r-d-l)/4
-\end{equation}
-
-After getting the $\theta$ .Note that the distance $r$ is constr between $1.08 m$ in order to avoid out range.
-
-
-The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A vertical board was placed at a known location within the testing area. The board’s surface provided sufficient friction for stable contact while still allowing smooth sliding of the end-effector (marker pen). The board’s surface was intentionally sloped by approximately $20^\circ$ with respect to the $y$ axis, and the inclination angle was kept unknown to the robot. Although the surface is planar, its unknown inclination introduces unmodeled geometric variations that serve the same role as curved surfaces in this study. The friction coefficient is also unknown. Consequently, both the contact forces and the surface geometry remain unmodeled in this experiment, which provides a challenging benchmark for evaluating the robot's adaptive sliding capability.
-
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centering
     % \parbox{3in}
     \includegraphics[trim={0cm 1cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/exp_scene.png}
@@ -227,7 +253,7 @@ During the experiment, the reference trajectory of the multi-link aerial robot w
 To evaluate performance, we conducted comparative experiments between the proposed hybrid controller and a manually tuned PID baseline. The PID gains were selected to provide the best stable tracking performance in free flight and were kept identical to the proportional and derivative gains used in the impedance controller. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes to improve sliding resilience, while admittance control was applied along the $x$ axis to enable adaptive surface interaction. Note that each controller is executed independently along its respective axis. To demonstrate the necessity of combining impedance control and admittance control, we additionally performed experiments using only impedance control (without admittance-based joint adaptation) and only admittance control (where the CoG state was regulated solely by PID).
 
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centering
     % \parbox{3in}
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/experiment_trajectory.png}
@@ -235,7 +261,7 @@ To evaluate performance, we conducted comparative experiments between the propos
     \label{fig:impedance_result}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/trajectory_plot.png}}
     \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
@@ -246,7 +272,7 @@ Following this setup, four sets of experiments were performed. Fig.~\ref{fig:imp
 Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robot deformed to accommodate geometric variations during contact under hybrid controller by taking the spotphoto. We can see that in the leftside where the geometry variation is small, the structure become long to keep contact with the broad. On the other hand, in the right side where the geometry variation is large, the structure shrink to adapt to the variation to reduce the CoG displacement in order to improve stability.
 
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/admittance_exp.png}}
     \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation. (a) Top view. (b) Front view.}
@@ -261,7 +287,7 @@ Fig.~\ref{fig:impedance_plot} presents the CoG trajectories together with the re
 This part of the experiments shows that along the sliding directions, impedance control provided a resilient response to frictional disturbances, enabling more accurate sliding without requiring explicit friction values while still approximately following the desired trajectory.
 
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/imp_plot.png}}
     \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
@@ -270,7 +296,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 
 
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_position.png}}
     \caption{Box plots of position errors along the sliding directions (the $y$ and $z$ axes) under the four controllers during the contact period.}
@@ -286,13 +312,13 @@ Fig.~\ref{fig:admittance_box} also shows that the median external forces on the 
 
 These improvements demonstrate that the admittance controller enables the robot to adjust its configuration in response to surface geometric variations, thereby reducing the influence of geometric variations on the CoG and improving the contact force behavior.
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
     \caption{Plot of position variation and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_force.png}}
     \caption{Box plots of CoG position and CoG external force along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
@@ -357,28 +383,28 @@ As shown in Fig.~\ref{fig:dragon_experiment}.
 
 The original displacement in x is $0.115m$, whereas the real displacement is $0.065$. We can see that the distance in x is reduce $0.08m$.
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_experiment.png}}
     \caption{Three view figure of dragon in the expeirment. (a) Front view. (b) Side view. (c) Top view.}
     \label{fig:dragon_experiment}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_trajectory.png}}
     \caption{Three view figure of dragon in the expeirment. (a) End effector trajecotry. (b)CoG trajectory.}
     \label{fig:dragon_trajectory}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_plot.png}}
     \caption{Three view figure of dragon in the expeirment.}
     \label{fig:dragon_plot}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_contact.png}}
     \caption{Three view figure of dragon in the expeirment. }

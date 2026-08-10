@@ -199,9 +199,7 @@ Next, we define the following allocation relationship:
 \boldsymbol{Q}_r
 \end{pmatrix}\boldsymbol{\lambda}_t,
 \end{equation}
-where $\boldsymbol{Q}_{tz} \in \mathbb{R}^{1 \times 4}$ is the third row of $\boldsymbol{Q}_t$. Solving \eqref{eq:thrust translation 2} yields the translational thrust vector $\boldsymbol{\lambda}_t$. Note that the purpose of the translational command force is to counteract gravity and generate the required translational acceleration, while ensuring that it does not affect the rotational direction.
-
-Then the rotation thrust vector can be obtained by
+where $\boldsymbol{Q}_{tz} \in \mathbb{R}^{1 \times 4}$ is the third row of $\boldsymbol{Q}_t$. Solving \eqref{eq:thrust translation 2} yields the translational thrust vector $\boldsymbol{\lambda}_t$. Note that the purpose of the translational command force is to counteract gravity and generate the required translational acceleration, while ensuring that it does not affect the rotational direction. Then the rotation thrust vector can be obtained by
 \begin{equation}
 \label{eq:thrust rotation 1}
      \boldsymbol{\lambda}_r=\boldsymbol{Q}_r^{\dagger}{^{C}\boldsymbol{\tau}_{cmd}},
@@ -255,9 +253,9 @@ Actually, this process is completed by the follow process
 \quad
 \tilde{\boldsymbol{Q}}_{col_2}
 \quad
-\cdots
+\tilde{\boldsymbol{Q}}_{col_3}
 \quad
-\tilde{\boldsymbol{Q}}_{col_{N_l}}
+\tilde{\boldsymbol{Q}}_{col_{4}}
 \right]\\
 \tilde{\boldsymbol{Q}}_{col_i}&=
 \begin{bmatrix}
@@ -275,7 +273,7 @@ Actually, this process is completed by the follow process
 \end{equation}
 here $\boldsymbol{F}
 =\begin{bmatrix}
-{}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&\cdots&{}^{\{L_{N_r}\}}\boldsymbol{f}_{N_r}^{\top}
+{}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&{}^{\{L_3\}}\boldsymbol{f}_3^{\top}&{}^{\{L_4\}}\boldsymbol{f}_{4}^{\top}
 \end{bmatrix}^{\top}$.
 Then we get $\boldsymbol{F}$ by
 \begin{equation}
@@ -389,6 +387,4 @@ We can also know that the thrust force and gimbal angles will be calculated auto
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
 
-In this chapter, we explain that the impedance control can help to change the dynamics parameters of the system, in order to have different performances in different directions. Also, the admittance control can help to adjust the distance between the end-effector and a reference point(es tl. CoG) on the aerial robot, and help to adapt to the geometric variation of the surface. Finally, we explain both the controllers can be added together on the multi-link aerial robot and achieve the surface sliding tasks.
-
-Just like we discussion in this chapter, by using impedance controller, we can redesign the dynamic parameters to meet the task requirements. In detail, in the surface sliding tasks, the impedance controller shoule be used in the diractions that require to adpat to the external force. However, the impedance controller itself could only react to the external wrench by generate command wrench, which means if the . The limitation replies that we could not only use impedance control in our framework.
+In this chapter, we explained how impedance control can modify the dynamic response of the system. We also discussed the difference between the PID controller and impedance controller, focusing on how impedance control can regulate the dynamic response of the system through the desired impedance parameters, especially the mass ratio $\mu$. Finally, the implementation of impedance control for the multi-link aerial robot was presented.
