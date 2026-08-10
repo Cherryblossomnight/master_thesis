@@ -73,27 +73,27 @@ If the geometric variations mainly occur along the $x$ axis, only single-axis ad
 \end{equation}
 
 \begin{equation}
-\label{eq:difference method1}
+\label{eq:difference method3}
 \ddot{r}[k]=\frac{(\hat{f}_{ext,x}-f_{ref,x})-k_a(r_{ref}-r[k-1])+c_a\dot{r}[k-1]}{m_a}.
 \end{equation}
 
 Here all the variables and parameters are scalars. The position $r$ in this work is defined as the distance between the end effector and the CoG of the mutli-link aerial robot. 
 Naturally, the position can be derived from:
 
-\begin{equation}
-\label{eq:difference method2}
-r[k]=r[k-1]+\dot{r}[k]\Delta t,
-\end{equation}
+\begin{subequations}
+\begin{align}
+\label{eq:difference method4}
+\dot{r}[k]&=\dot{r}[k-1]+\ddot{r}[k]\Delta t,
+r[k]&=r[k-1]+\dot{r}[k]\Delta t,
+\end{align}
+\end{subequations}
 
 
-Due to the admittance control will vary the robot's configuration, which could introduce instability, we first consider a simpler single-axis case. 
 
-Consequently, variations in surface geometry induce corresponding changes in the contact forces. Due to the adaptation mechanism, the majority of geometric variations and external force disturbances are absorbed at the joints, while the portion transmitted to the CoG is significantly reduced, leading to more favorable overall motion behavior of the aerial robot.
-
-
-In this section, to show the effect of admittance control more specifically, we use the 2D multi-link aerial robot Hydrus Xi as the configuration to test the admittance effect. As shown in Fig.~\ref{fig:admittance_figure}, Hydrus Xi is set in a specific configuration. There is a rope attach at one of the joints. By pulling the rope to the negative direction of the $x$ axis, we can imitate an external force on the negative direction of the $x$ axis. The multi-link structure will change due to the external force. It shows that the multi-link aerial robot could deformation under external force on the admittance activated direction.
+Through the admittance controller, variations in surface geometry induce corresponding changes in the contact forces. Due to the adaptation mechanism, the majority of geometric variations and external force disturbances are absorbed at the joints, while the portion transmitted to the CoG is significantly reduced, leading to more favorable overall motion behavior of the aerial robot.
 
 
+As shown in Fig.~\ref{fig:admittance_figure}, the multi-link structure changes its configuration to adapt to the external force. It shows that the multi-link aerial robot can deform under an external force applied along the admittance activated direction. When a relative pulling force is applied, the structure becomes elongated compared with its original configuration, and vice versa. In the surface sliding task,variations in the surface geometry along the $x$ axis generally induce corresponding changes in the external force along the $x$ axis. With the admittance controller, these force variations result in the elongation or contraction of the multi-link structure, allowing its configuration to follow the corresponding geometric variations and thereby adapt to changes in the surface geometry.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,8 +109,9 @@ In this section, to show the effect of admittance control more specifically, we 
 % the contact and sliding directions exhibit fundamentally 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we discuss the concept of admittance control, the special setting of admittance control in the surface sliding task, and the effector of the admittance control. We will show more admittance effect in the experiment chapter.
+In this chapter, we discuss the concept of admittance control, the specific implementation of admittance control in the surface sliding task, and its effect on the configuration of the multi-link aerial robots. The relationship between the external force and the resulting deformation of multi-link aerial robots was also explained. The effects of admittance control will be further demonstrated and evaluated in the experiments presented in the following chapter.
 % In this chapter, we realize the hybrid control of dragon. We first discuss the necessity of using the hybrid control. We express the different impedance control mode. Finally use it in the dragon. Transparently, the kind of control method can be promoted to solve more complicated aerial manipulation tasks.
+
 
 \begin{figure}[h]
     \centering
