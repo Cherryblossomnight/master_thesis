@@ -39,17 +39,14 @@ In this section, we will show the free flight effect after tuning the parameters
         \hline
         Name & Notation & Value \\
         \hline
-        XY stiffness & $k_{pxy}$ & 2.5 \\
-        Z stifness & $k_{pz}$ & 1.5 \\
-        RP stiffness & $k_{prollpitch}$ & 40 \\
-        Yaw stiffness & $k_{pyaw}$ & 10 \\
-        XY damping ratio & $\zeta_{xy}$ & 0.6 \\
-        Z damping ratio & $\zeta_{xy}$ & 0.7 \\
-        RP damping ratio & $\zeta_{xy}$ & 1.1 \\
-        Yaw damping ratio & $\zeta_{xy}$ & 0.8 \\
+        Normalized linear stiffness matrix & $\tilde{\boldsymbol{K}}_{td}$ & $diag(2.5, 2.5, 1.5)$ \\
+        Normalized rotational stiffness matrix & $\tilde{\boldsymbol{K}}_{rd}$ & $diag(40.0, 40.0, 10.0)$ \\
+        Normalized linear damping matrix & $\boldsymbol{Z}_{td}$ & $diag(0.6, 0.6, 0.7)$ \\
+        Normalized rotational damping matrix  & $\boldsymbol{Z}_{rd}$ & $diag(1.1, 1.1, 0.8)$ \\
         \hline
     \end{tabular}
 \end{table}
+
 
 Here the parameter is given by damping ratio insteand of damping. We can calculate the damping parameter in each axis by \ref{eq:damping rate}
 \begin{equation}
@@ -202,25 +199,22 @@ Fig.~\ref{fig:admittance_deformation_plot} shows the relationship between the ex
 Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{fig:robot}. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU, and the Robot Operating System (ROS) is utilized for communication. A motion capture system provides the full state of the robot throughout the experiments. A marker pen is attached to link 4 as shown in Fig.~\ref{fig:admittance control} and serves as the end-effector for maintaining contact with the environment.
 
 The actual experimental parameters are also same as the Table\ref{tb:params1}. Note that in $x$ axis, $\mu$ is chosen as $1$ so the impedance controller only performs PD part in this direction. Meanwhile, the admittance controller is only acting at $x$ axis. 
-as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
+% as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
 
 The reference external force used in admittance controller is given by $f_{ref,x} = 0$.
 
 \begin{table}[H]
     \centering
-    \caption{Parameters of free flight.}
+    \caption{Parameters of surface sliding experiment.}
     \label{tb:params4}
     \begin{tabular}{lcc}
         \hline
         Name & Notation & Value \\
         \hline
-
-        Linear mass ratio matrix & $\boldsymbol{M}_d/m$ & diag(1.0, 3.0, 1.0) \\
-        Y mass ratio & $/mu_{y}$ & diag(10.0, 10.0, 5.0) \\
-        Z mass ratio & $/mu_{z}$ & 1.0 \\
-        Roll mass ratio & $/mu_{x}$ & 1.0 \\
-        Pitch mass ratio & $/mu_{y}$ & 3.0 \\
-        Yaw mass ratio & $/mu_{z}$ & 1.0 \\
+        Estimator translation gain matrix & $\boldsymbol{K}_{ti}$ & $diag(3.0, 3.0, 3.0)$ \\
+        Estimator rotation gain matrix & $\boldsymbol{K}_{ri}$ & $diag(1.0, 1.0, 1.0)$ \\
+        Linear mass ratio matrix & $\boldsymbol{M}_d/m$ & $diag(1.0, 3.0, 1.0)$ \\
+        Inerai ratio matrix & $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ & $diag(10.0, 10.0, 5.0)$ \\
         Admittance mass & $m_a$ & 40 \\
         Admittance damping & $c_a$ & 55 \\
         Admittance stiffness & $k_a$ & 16 \\
