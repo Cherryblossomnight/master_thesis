@@ -1,7 +1,7 @@
 \chapter{Preliminary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this chapter, we will introduces the notation used throughout this thesis, the modeling of multi-link aerial robots, and the external wrench estimation method. In the modeling part, two types of multi-link aerial robots will be presented. One is the underactuated multi-link aerial robot Hydrus Xi, which can achieve 2D deformation while retaining the overall actuation of a conventional quadrotor. The other is the overactuated multi-link aerial robot Dragon, which can deform in a 3D workspace. The basic constructions, dynamics and allocation modeling process will be introduced.
+In this chapter, we will introduces the notation used throughout this thesis, the modeling of multi-link aerial robots, and the external wrench estimation method. In the modeling part, two types of multi-link aerial robots will be presented. One is the underactuated multi-link aerial robot Hydrus Xi, which can achieve 2D deformation while retaining the overall actuation of a conventional quadrotor. The other is the overactuated multi-link aerial robot DRAGON, which can deform in a 3D workspace. The basic constructions, dynamics and allocation modeling process will be introduced.
 
 
 \section{Notation}
@@ -32,7 +32,7 @@ where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expre
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/multi-link.png}
-    \caption{Photographs of the multi-link aerial robots. Left: 2D multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. Right: 3D mutli-link aerial robot Dragon\cite{zhao_2018_design}.}
+    \caption{Photographs of the multi-link aerial robots. Left: 2D multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. Right: 3D mutli-link aerial robot DRAGON\cite{zhao_2018_design}.}
     \label{fig:multi-link}
 \end{figure}
 
@@ -126,22 +126,22 @@ where $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) $ and $\boldsymbol{Q}_
 
 
 
-\subsection{Overactuated Configuration: Dragon}
-The overactuated multi-link aerial robot Dragon \cite{zhao_2018_design, zhao_2023_versatile} is shown in Fig.~\ref{fig:dragon_model}. The platform also consists of four links, each of which is equipped with an independent gimbal module. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each gimbal module has two gimbal angles, $\phi_i$ and $\theta_i$, which provide two degrees of freedom for changing the thrust direction relative to the corresponding link. More details of the robot structure can be found in \cite{zhao_2018_design}.
+\subsection{Overactuated Configuration: DRAGON}
+The overactuated multi-link aerial robot DRAGON \cite{zhao_2018_design, zhao_2023_versatile} is shown in Fig.~\ref{fig:dragon_model}. The platform also consists of four links, each of which is equipped with an independent gimbal module. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each gimbal module has two gimbal angles, $\phi_i$ and $\theta_i$, which provide two degrees of freedom for changing the thrust direction relative to the corresponding link. More details of the robot structure can be found in \cite{zhao_2018_design}.
 
 
 
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/dragon_model.png}
-    \caption{Model of the 3D multi-link aerial robot Dragon. (a) Kinematic model of Dragon, with ${L_i}$ denoting the link frame. (b) Two-DoF joint module with orthogonal yaw and pitch axes ($q_{i\_yaw}$, $q_{i\_pitch}$). (c) Two-DoF thrust-vectoring apparatus with gimbal angles $\theta_i$ and $\phi_i$. ${G_i}$ denotes the intermediate frame (gimbal roll frame) after the $\phi_i$ rotation, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction.}
+    \caption{Model of the 3D multi-link aerial robot DRAGON. (a) Kinematic model of DRAGON, with ${L_i}$ denoting the link frame. (b) Two-DoF joint module with orthogonal yaw and pitch axes ($q_{i\_yaw}$, $q_{i\_pitch}$). (c) Two-DoF thrust-vectoring apparatus with gimbal angles $\theta_i$ and $\phi_i$. ${G_i}$ denotes the intermediate frame (gimbal roll frame) after the $\phi_i$ rotation, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction.}
     \label{fig:dragon_model}
 \end{figure}
 
 
 
 
-In Dragon's case, the command equations (\ref{eq:allocation for force}), (\ref{eq:allocation for torque}) and (\ref{eq:allocation for wrench}) can be rewritten as 
+In DRAGON's case, the command equations (\ref{eq:allocation for force}), (\ref{eq:allocation for torque}) and (\ref{eq:allocation for wrench}) can be rewritten as 
 
 \begin{equation}
 \label{eq:allocation for force dragon}
