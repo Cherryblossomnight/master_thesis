@@ -6,7 +6,7 @@ In this chapter, we will demonstrate the effects of the proposed framework. In o
 In our experiment, both the 2D multi-link aerial robot Hydrus Xi and the 3D multi-link aerial robot DRAGON are used as the experimental platforms. Both platforms use the Robot Operating System (ROS) for communication and sim-to-real development. A motion capture system is used together with the IMU measurements on the robots, and a Kalman filter is employed to obtain the estimated states throughout the experiments.
 
 
-\subsection{2D Multi-Link aerial robot Hydrus Xi}
+\subsection{2D Multi-Link Aerial Robot Hydrus Xi}
 The 2D multi-link aerial robot Hydrus Xi used in the experiments is shown in Fig.~\ref{fig:robot_hydrus}. The robot consists of four serial links connected by three rotational joints. All joint axes are parallel, so that the deformation is constrained in a plane. Each link is equipped with a gimbal mudule with a propeller, which enables thrust vectoring through the 1-DoF yaw rotation mechanism. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU for onboard computation. 
 
 \begin{figure}[!htbp]
@@ -16,13 +16,13 @@ The 2D multi-link aerial robot Hydrus Xi used in the experiments is shown in Fig
     \label{fig:robot_hydrus}
 \end{figure}
 
-\subsection{3D Multi-Link aerial robot DRAGON}
+\subsection{3D Multi-Link Aerial Robot DRAGON}
 The 3D multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\ref{fig:robot_dragon}. Similar to Hydrus Xi, DRAGON also consists of four serial links, but adjacent links are connected by two orthogonal joints, resulting in a total of six joint DoFs. Due to this robotic-arm-like mechanism, DRAGON can deform in three-dimensional space and achieve more complex configurations than Hydrus Xi. Each link is equipped with an independent gimbal module with two ducted rotors. The gimbal module provides 2-DoF to realize more flexible thrust vectoring thrust under complex deformations. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x7-Z8700 quad-core CPU for onboard computation.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_hydrus.png}
-    \caption{The mechanical design of the 3D multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) End-effector used in surface sliding experiments. (c) Gimbal module. (d) Joints.}
+    \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_dragon.png}
+    \caption{The mechanical design of the 3D multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) End-effector used in surface sliding experiments. (c) 2-DoF Gimbal module. (d) 2-DoF Joints.}
     \label{fig:robot_dragon}
 \end{figure}
 
@@ -32,9 +32,9 @@ The 3D multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\
 \label{sec:parameter_selection}
 
 
-In this work, the 2D mult-link aerial robot Hydrus Xi is used as the primary experimental platform, so that its controller parameters were selected according to the following practical considerations. These parameters will be tuned during preliminary experiments before conducting the main surface sliding experiments.
+In this work, the 2D mult-link aerial robot Hydrus Xi is used as the primary experimental platform, so that its controller parameters were selected according to the following practical considerations. These parameters were tuned during preliminary experiments before conducting the main surface sliding experiments.
 
-Since Hydrus Xi is an underactuated system, the rotational and translational parameters need to be tuned cascadely. Accoding to the principle mentioned in Sec~\ref{sec:imp_param_tuning}, the PD parameters are considered first. To achieve fast convergence to the desired orientation, $\tilde{c}_d$ in roll and pitch axes was set to a relatively large value. Meanwhile, to avoid oscillation, the damping ratio $\zeta$ in these two axes was tuned to approximately $1.2-1.4$. The remaining parameters were then adjusted according to the experimental conditions.
+Since Hydrus Xi is an underactuated system, the rotational and translational parameters need to be tuned cascadely. Accoding to the principle mentioned in Sec~\ref{sec:imp_param_tuning}, the PD parameters were considered first. To achieve fast convergence to the desired orientation, $\tilde{c}_d$ in roll and pitch axes was set to a relatively large value. Meanwhile, to avoid oscillation, the damping ratio $\zeta$ in these two axes was tuned to approximately $1.2-1.4$. The remaining parameters were then adjusted according to the experimental conditions.
 
 Next, the mass ratio $\mu$ in each direction needs to be taken into acconut. To reduce the influence of external torques on the orientation, the mass ratio $\mu$ in these directions was set relatively large, typically around $5-10$ in our experiments. For the translation directions, the selection depends on the task requirement. In the surface sliding task, it is usually need to contact in one direction and sliding in the other two directions as shown in Fig~\ref{fig:hybrid_controller}. In the sliding directions, it is imporant to resist to the friction-induced disturbances. Therefore. the $\mu$ is set larger than $1$,  typically around $1$--$3$ in our experiments. In the contact direction, only admittance behavior is required, while the impedance characteristic is not introduced. Therefore, $\mu$ is set exactly to $1$.
 
@@ -48,7 +48,7 @@ Finally, the admittance damping $c_a$ was usually selected depend together with 
 
 
 \subsection{Free Flight Parameter Tuning}
-
+\label{sec:free_flight}
 
 According to the parameter tuning principle mentioned in Sec~\ref{sec:imp_param_tuning}, the PD parameters are first tuned under free flight conditions before introducing contact interaction. Note that in this stage, the mass ratio $\mu$ in all directions is set to $1$, such that no additional impedance characteristic is introduced. Meanwhile, the admittance controller is deactivated. Therefore, the controller in this experiment can be regarded as the baseline PD controller.
 
@@ -79,7 +79,7 @@ Here, the damping parameters are represented by the damping ratio instead of the
 \end{align}
 \end{subequations}
 
-The free flight result is shown in in Fig.~\ref{fig:free_flight_plot}. Here, the $z$ position and $yaw$ angle show relatively good tracking performance, whereas larger tracking errors can be observed in the $x$ and $y$ directions. Nevertheless, this experiment showed that under the impedance control framework, the overall flight of the multi-link aerial robot can remain stable. After the free flight tuning process, these tuned parameters will be used as the basic controller parameters for the following contact experiments.
+The free flight result is shown in in Fig.~\ref{fig:free_flight_plot}. Here, the $z$ position and $yaw$ angle show relatively good tracking performance, whereas larger tracking errors can be observed in the $x$ and $y$ directions. Nevertheless, this experiment showed that under the impedance control framework, the overall flight of the multi-link aerial robot can remain stable. After the free flight tuning process, these tuned parameters were used as the basic controller parameters for the following contact experiments.
 
 \begin{figure}[!htbp]
     \centering
@@ -90,11 +90,12 @@ The free flight result is shown in in Fig.~\ref{fig:free_flight_plot}. Here, the
 \end{figure}
 
 \subsection{Impedance Parameter Adjustment under External Force}
+\label{sec:impedance_parameter}
 
 In this experiment, the effect of the mass ratio $\mu$ will be investigated. Accoding to Sec.~\ref{sec:imp_param_tuning}, the mass ration $\mu$ will redesigned the performance. In particular, $\mu>1$ provides a more rigid response to external disturbances, whereas $\mu<1$ provides a softer response.
 
 
-As shown in Fig.~\ref{fig:imp_drag}, a rope is used to horizontally drag Hydrus Xi and generate an external force along the $x$ axis. Pulling the rope along the positive direction of the $x$ axis can be regarded as applying a positive external force along this direction. The other controller parameters are kept the same as those used in the free flight experiment, as listed in Table~\ref{tb:params1}. Three different mass ratios, $\mu=0.5$, $1$, and $2$, are tested, corresponding to the soft, normal, and rigid cases, respectively. 
+As shown in Fig.~\ref{fig:imp_drag}, a rope was used to horizontally drag Hydrus Xi and generate an external force along the $x$ axis. Pulling the rope along the positive direction of the $x$ axis can be regarded as applying a positive external force along this direction. The other controller parameters were kept the same as those used in the free flight experiment, as listed in Table~\ref{tb:params1}. Three different mass ratios, $\mu=0.5$, $1$, and $2$, were tested, corresponding to the soft, normal, and rigid cases, respectively. 
 
 
 % we will do a experiment to valid the ability of impedance control. We can demonstrate that by varifying the parameter $\mu$, the performance of multi-link aerial robot will become different.
@@ -107,13 +108,9 @@ As shown in Fig.~\ref{fig:imp_drag}, a rope is used to horizontally drag Hydrus 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag.png}
-    \caption{The multi-link aerial robot is dragged by a rope to simulate the external force on a single direction. The aerial robot move in order to generate enough consistant force to the external dragging force along the $x$ axis.}
+    \caption{The multi-link aerial robot was dragged by a rope to simulate the external force on a single direction. The aerial robot moved in order to generate enough consistant force to the external dragging force along the $x$ axis.}
     \label{fig:imp_drag}
 \end{figure}
-
-As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus Xi is gradually dragged away from its reference position until larger position error becomes hard to achieve. A larger position error can be observed in the soft case, whereas the rigid case exhibits a smaller position error. Although the same external force is not guaranteed in different cases, the results intuitively show that a larger $\mu$ leads to a more rigid response, and demonstate that the impedance controller can modify the dynamic performance of the multi-link aerial robot.
-
-
 
 \begin{figure}[!htbp]
     \centering
@@ -121,6 +118,11 @@ As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus 
     \caption{Results of the dragging experiment with different mass ratios: (a) rigid case ($\mu = 2$). (b) normal case ($\mu = 1$). (c) soft case ($\mu = 0.5$).}
     \label{fig:imp_drag_result}
 \end{figure}
+
+
+As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus Xi was gradually dragged away from its reference position until larger position errors became hard to achieve. A larger position error can be observed in the soft case, whereas the rigid case exhibited a smaller position error. Although the same external force was not guaranteed in different cases, the results intuitively showed that a larger $\mu$ leads to a more rigid response, and demonstated that the impedance controller can modify the dynamic performance of the multi-link aerial robot.
+
+
 
 
 \begin{figure}[!htbp]
@@ -136,11 +138,7 @@ The result in Fig.\ref{fig:imp_drag_plot} shows the relationship between the est
 
 \subsection{Admittance Control under External Force}
 
-In this experiment, the deformation behavior generated by the admittance controller is demonstrated using the 2D multi-link aerial robot Hydrus Xi. As shown in Fig.~\ref{fig:admittance_drag}, Hydrus Xi starts from its nominal configuration, which a rope attach at one of the joints. By pulling the rope to the negative direction of the $x$ axis, an external force on the negative direction of the $x$ axis can be imitated. We need to emphasize that in this and the following experiments, as shown in Fig.~\ref{fig:admittance_drag}, the distance $r$ used in admittance controller \ref{eq:admittance control2} is defined as the distance between the end effector and the CoG projected onto the $x$ axis.
-
-
-The admittance parameters were selected according to the practical considerations introduced in Sec.~\ref{sec:parameter_selection}. The purpose of this experiment is to demonstrate the structural deformation induced by the admittance controller under an external force.
-
+In this experiment, the deformation behavior generated by the admittance controller was demonstrated using the 2D multi-link aerial robot Hydrus Xi. As shown in Fig.~\ref{fig:admittance_drag}, Hydrus Xi starts from its nominal configuration, which a rope attach at one of the joints. By pulling the rope to the negative direction of the $x$ axis, an external force on the negative direction of the $x$ axis can be imitated. We need to emphasize that in this and the following experiments, as shown in Fig.~\ref{fig:admittance_drag}, the distance $r$ used in admittance controller \ref{eq:admittance control2} is defined as the distance between the end effector and the CoG projected onto the $x$ axis.
 
 \begin{figure}[!htbp]
     \centering
@@ -150,7 +148,16 @@ The admittance parameters were selected according to the practical consideration
     \label{fig:admittance_drag}
 \end{figure}
 
+\begin{figure}[!htbp]
+    \centering
+    % \parbox{3in}
+    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_changing.png}
+    \caption{Snapshots of the top view of the multi-link aerial robot, in which the deformation under admittance control can be observed. (a)--(d) show the deformation process of the multi-link aerial robot in response to the pulling force applied through the rope.}
+    \label{fig:admittance_changing}
+\end{figure}
 
+
+The admittance parameters were selected according to the practical considerations introduced in Sec.~\ref{sec:parameter_selection}. The purpose of this experiment is to demonstrate the structural deformation induced by the admittance controller under an external force.
 
 As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure changes in response to the applied external force. The snapshots provide a visualization of the deformation process under the admittane controller. The relationship among the external force, the end effector--CoG distance, and the joint angles is shown in Fig.~\ref{fig:admittance_deformation_plot}. During the interval indicated by the pink region, the admittance controller is activated and the multi-link aerial robot is dragged along the negative direction of $x$ axis. The estimated external force along the $x$ axis consequently shows an apparent negative value, and the end effector--CoG distance varies in response to the external force. Through the inverse kinematics, the variation in distance is further converted into changes in the joint angles, resulting in deformation of the multi-link structure. This result demonstrates that the multi-link aerial robot could deformation under external force on the admittance controller activated direction.
 
@@ -164,13 +171,6 @@ As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure changes
 
 % After getting the $\theta$ .Note that the distance $r$ is constr between $1.08 m$ in order to avoid out range.
 
-\begin{figure}[!htbp]
-    \centering
-    % \parbox{3in}
-    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_changing.png}
-    \caption{Snapshots of the top view of the multi-link aerial robot, in which the deformation under admittance control can be observed. (a)--(d) show the deformation process of the multi-link aerial robot in response to the pulling force applied through the rope.}
-    \label{fig:admittance_changing}
-\end{figure}
 
 
 \begin{figure}[!htbp]
@@ -199,8 +199,9 @@ As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure changes
 \section{Hybrid Control Experiment on Hydrus Xi}
 \subsection{Experimental Setup}
 
+In the hybrid control experiment, we used Hydrus Xi as the expeirmental platform. The basic PD parameters were kept the same as those listed Table~\ref{tb:params1}. Based on the experimental results demonstrated in Sec.~\ref{sec:impedance_parameter}, the mass ratio $\mu$ in each direction was selected according to the experiment requirement. For the orientation, $\mu$ was chosen to be sufficiently large to resist external torques generated during the contact and sliding. For the sliding directions, especially the $y$ axis, $\mu$ was selected to be larger than $1$ to resist external disturbances. Along the contact direction $x$ axis, the mass ratio $\mu$ was set to $1$. The resulting parameters are summarized in Table~\ref{tb:params4}. Note that the diagonal elements of the linear mass ratio matrix $\boldsymbol{M}_d/m$ and the inertia ratio matrix $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ represent the mass ratios $\mu$ in the corresponding translational and rotational directions, respectively. Meanwhile, the admittance controller was activated only along the $x$ axis, whose parameters shown also in Table~\ref{tb:params4}. The reference external force used in the admittance controller was set to $f_{ref,x}=0$. The parameters used for external wrench estimation are also summarized in the same table.
 
-The actual experimental parameters are also same as the Table\ref{tb:params1}. Note that in $x$ axis, $\mu$ is chosen as $1$ so the impedance controller only performs PD part in this direction. Meanwhile, the admittance controller is only acting at $x$ axis, and the reference external force used in admittance controller is given by $f_{ref,x} = 0$. The other used parameters are shown in Table\ref{tb:params4}.
+
 % as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
 
 
@@ -223,17 +224,9 @@ The actual experimental parameters are also same as the Table\ref{tb:params1}. N
     \end{tabular}
 \end{table}
 
-% \begin{figure}[t]
-%      \centering
-%     % \parbox{3in}
-%     \includegraphics[trim={0cm 0.5cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/hydrus.png}
-%     \caption{The nominal surface-contact configuration of the multi-link aerial robot. The configuration angle $\theta = \pi /6$, and the joint angles $q_1$, $q_2$, $q_3$ are consequently $\pi /3, \pi /3,-\pi /6$, respectively.}
-%     \label{fig:admittance control}
-%     \vspace{-5mm}
-% \end{figure}
 
-Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. Specifically, here we defined the configuration angle $\theta$ as the variable in the admittance controller to determine the configuration solely and then computed the corresponding joint angles analytically through inverse kinematics. The angle of each joint was satisfied as
 
+Throughout the experiment, a constant yaw angle was maintained, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. Specifically, here we defined the configuration angle $\theta$ as the variable in the admittance controller to determine the configuration solely and then computed the corresponding joint angles analytically through inverse kinematics. The angle of each joint was satisfied as
 \begin{equation}
 \label{eq:joint angles}
  \begin{bmatrix}
@@ -252,6 +245,7 @@ where $\theta$ is shown in Fig.~\ref{fig:admittance_drag}.
 
 The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A vertical board was placed at a known location within the testing area. The board's surface provided sufficient friction for stable contact while still allowing smooth sliding of the end-effector (marker pen). The board's surface was intentionally sloped by approximately $20^\circ$ with respect to the $y$ axis, and the inclination angle was kept unknown to the robot. Although the surface is planar, its unknown inclination introduces unmodeled geometric variations that serve the same role as curved surfaces in this study. The friction coefficient is also unknown. Consequently, both the contact forces and the surface geometry remain unmodeled in this experiment, which provides a challenging benchmark for evaluating the robot's adaptive sliding capability.
 
+
 \begin{figure}[!htbp]
     \centering
     % \parbox{3in}
@@ -263,47 +257,52 @@ The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A verti
 
 During the experiment, the reference trajectory of the multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact.
 
-To evaluate performance, we conducted comparative experiments between the proposed hybrid controller and a manually tuned PID baseline. The PID gains were selected to provide the best stable tracking performance in free flight and were kept identical to the proportional and derivative gains used in the impedance controller. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes to improve sliding resilience, while admittance control was applied along the $x$ axis to enable adaptive surface interaction. Note that each controller is executed independently along its respective axis. To demonstrate the necessity of combining impedance control and admittance control, we additionally performed experiments using only impedance control (without admittance-based joint adaptation) and only admittance control (where the CoG state was regulated solely by PID).
-
-
 \begin{figure}[!htbp]
     \centering
     % \parbox{3in}
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/experiment_trajectory.png}
-    \caption{Tracking trajectory on the board. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
+    \caption{Tracking trajectory on the board. (a) Baseline PD controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
     \label{fig:impedance_result}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/trajectory_plot.png}}
-    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
+    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) Baseline PD controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller.}
     \label{fig:trajectory_plot}
 \end{figure}
-Following this setup, four sets of experiments were performed. Fig.~\ref{fig:impedance_result} shows the final trajectories drawn on the board, and Fig.~\ref{fig:impedance_result} shows the reference and real trajectory data. Overall, the only impedance control produced a trajectory closest to the desired circle, while the hybrid controller showed a nearly circular path. In contrast, only admittance control and PID control resulted in noticeably smaller and more distorted trajectories. Fig.~\ref{fig:impedance_result} shows the RASE of the trajectory, we can also find that the impedance performs better in the experiments.
 
-Fig.~\ref{fig:admittance_exp} further illustrates how the multi-link aerial robot deformed to accommodate geometric variations during contact under hybrid controller by taking the spotphoto. We can see that in the leftside where the geometry variation is small, the structure become long to keep contact with the broad. On the other hand, in the right side where the geometry variation is large, the structure shrink to adapt to the variation to reduce the CoG displacement in order to improve stability.
+
+To evaluate the proposed hybrid control framework, comparative experiments were conducted among four controller: the baseline PD controller, impedance controller, admittance controller, and the proposed hybrid impedance--admittance controller. The baseline PD controller corresponds to the reduced form of impedance controller, so the PD gains were manually tuned to provide stable tracking to tracking performance in free flight as described in Sec.~\ref{sec:free_flight}. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes to improve sliding resilience, while admittance control was applied along the $x$ axis to enable adaptive surface interaction. Note that each controller is executed independently along its respective axis. To demonstrate the necessity of combining impedance control and admittance control, we performed experiments using impedance-only controller (without admittance-based joint adaptation) and admittance-only controller (where the CoG state was regulated solely by the baseline PD controller).
 
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/admittance_exp.png}}
-    \caption{The hybrid controller enabled the multi-link aerial robot to deform appropriately when encountering surface geometric variation. (a) Top view. (b) Front view.}
+    \caption{Snapshots of the multi-link aerial robots under hybrid control. The multi-link aerial robot deform to  adapt to surface geometric variations. (a) Top view. (b) Front view.}
     \label{fig:admittance_exp}
 \end{figure}
 
 
-\subsection{Compare on Impedance-related direction}
+Following this setup, four sets of experiments were performed. Fig.~\ref{fig:impedance_result} shows the end effector trajectories drawn on the board during sliding, while Fig.~\ref{fig:trajectory_plot} shows the reference and measured CoG trajectories. The CoG and end effector trajectories have the similar trends. Overall, the impedance-only controller produced a CoG trajectory closest to the desired circle, while the hybrid controller also maintained a nearly circular trajectory. In contrast, the admittance-only and baseline PD controllers resulted in noticeably smaller and more distorted trajectories.
 
-Fig.~\ref{fig:impedance_plot} presents the CoG trajectories together with the reference path under the four controllers. Note that during the sliding task, the $y$ and $z$ axes corresponded to the sliding directions, where friction-induced disturbances were dominant. Although Fig.~\ref{fig:impedance_plot} illustrates the overall trajectories of the four controllers, their performance differences become more evident in the tracking error distributions shown in Fig.~\ref{fig:impedance_box}. The figure shows the distributions of tracking errors of the CoG in the $y$ and $z$ axes. In particular, the median $y$ axis errors were approximately $0.134\,\mathrm{m}$ for PID control, $0.079\,\mathrm{m}$ for only impedance control, $0.105\,\mathrm{m}$ for only admittance control, and $0.083\,\mathrm{m}$ for the hybrid controller. These results indicate that impedance-based methods provided more stable tracking performance than the conventional PID controller when sliding under friction.
+
+Fig.~\ref{fig:admittance_exp} further illustrates through snapshots how the multi-link aerial robot deformed to accommodate surface  geometric variations during contact under the hybrid controller. It shows the configuration changes of Hydrus Xi as the end effector slid along the board in response to the surface geometric variations.
+
+
+
+\subsection{Compare on Impedance-Related Directions}
+
+Fig.~\ref{fig:impedance_plot} presents the CoG trajectories together with the reference path under the four controllers. Note that during the sliding task, the $y$ and $z$ axes corresponded to the sliding directions, where friction-induced disturbances were dominant. Although Fig.~\ref{fig:impedance_plot} illustrates the overall trajectories of the four controllers, their performance differences become more evident in the tracking error distributions shown in Fig.~\ref{fig:impedance_box}. The figure shows the distributions of tracking errors of the CoG in the $y$ and $z$ axes, in which smaller tracking errors indicate better trajectory tracking performance. In particular, the median $y$ axis errors were approximately $0.134\,\mathrm{m}$ for PD controller, $0.079\,\mathrm{m}$ for only impedance controller, $0.105\,\mathrm{m}$ for only admittance controller, and $0.083\,\mathrm{m}$ for the hybrid controller. 
+
+The impedance-only controller achieved the smallest tracking error. The results showed the importance of the mass ratio $\mu$ in regulating the response to external disturbances during contact experiments. The hybrid controller achieved a similar result to the impedance-only controller, indicating that the introduction of admittance control in the contact direction did not significantly affect the impedance behavior in the sliding directions.
 
 This part of the experiments shows that along the sliding directions, impedance control provided a resilient response to frictional disturbances, enabling more accurate sliding without requiring explicit friction values while still approximately following the desired trajectory.
-
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/imp_plot.png}}
-    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) PID controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance-admittance controller. The yellow region denotes the contacting period. }
+    \caption{Circle trajectory tracking result of the CoG under four controllers. (a) Baseline PD controller. (b) Only impedance controller. (c) Only admittance controller. (d) Hybrid impedance--admittance controller. The yellow region denotes the contacting period. }
     \label{fig:impedance_plot}
 \end{figure}
 
@@ -317,75 +316,65 @@ This part of the experiments shows that along the sliding directions, impedance 
 \end{figure}
 
 
-\subsection{Compare on Admittance-related direction}
+\subsection{Compare on Admittance-Related Direction}
 
-Fig.~\ref{fig:admittance_plot} shows the CoG displacement and external force along the $x$ axis. As further quantified in Fig.~\ref{fig:admittance_box}, the PID and only impedance controllers produced similar CoG displacements ($0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$), both largely reflecting the board's deformation. In contrast, the admittance and hybrid controllers reduced the CoG displacement to $0.088\,\mathrm{m}$ and $0.084\,\mathrm{m}$, demonstrating their effectiveness in mitigating geometric variation effects.
+Fig.~\ref{fig:admittance_plot} presents the CoG position and estimated external force along the $x$ axis. As further quantified in Fig.~\ref{fig:admittance_box}, the PD and impedance-only controllers showed relatively larger variations in the CoG position, with interquartile ranges of $0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$, respectively. In contrast, the interquartile ranges were reduced to $0.088,\mathrm{m}$ and $0.084,\mathrm{m}$ for the admittance-only and hybrid controllers, respectively. A smaller interquartile range indicates that the CoG position was less affected by the geometric variation introduced by the inclined board.
 
-Fig.~\ref{fig:admittance_box} also shows that the median external forces on the CoG were approximately $-1.190\,\mathrm{N}$ for the PID controller, $-0.453\,\mathrm{N}$ for the only impedance controller, $-0.712\,\mathrm{N}$ for the only admittance controller, and $-0.328\,\mathrm{N}$ for the hybrid controller. The hybrid controller achieved the smallest median external force. In addition, the admittance and hybrid controllers exhibited relatively narrower force distributions than the PID controller, indicating more stable and adaptive interactions with the uncertain surface.
+Fig.~\ref{fig:admittance_box} also shows the distributions of the estimated external force along the $x$ axis. Here the  median value reflects the overall force influence on the CoG during the sliding process. A median value closer to zero indicates that the CoG was less affected by the external force induced by the surface geometric variation. The median external forces were approximately $-1.190\,\mathrm{N}$ for the PD controller, $-0.453\,\mathrm{N}$ for the impedance-only controller, $-0.712\,\mathrm{N}$ for the admittance-only controller, and $-0.328\,\mathrm{N}$ for the hybrid controller.  Among the four cases, the hybrid controller exhibited the median force closest to zero, indicating the smallest overall influence of the surface interaction on the CoG.
 
-These improvements demonstrate that the admittance controller enables the robot to adjust its configuration in response to surface geometric variations, thereby reducing the influence of geometric variations on the CoG and improving the contact force behavior.
+The admittance-only and hybrid controllers exhibited similar reductions in CoG position variation, indicating that the configuration adaptation introduced by admittance control reduced the influence of surface geometric variation transmitted to the CoG. Meanwhile, the hybrid controller achieved the median external force closest to zero while maintaining this adaptation behavior. These results demonstrate that admittance control enabled the multi-link structure to deform in response to surface geometric variations, thereby reducing their influence on the CoG, while the hybrid controller combined this adaptation with improved contact force behavior.
+
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
-    \caption{Plot of position variation and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
+    \caption{Plot of position variation and estimated external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_force.png}}
-    \caption{Box plots of CoG position and CoG external force along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
+    \caption{Box plots of CoG position and estimated external force on the CoG along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
     \label{fig:admittance_box}
 \end{figure}
 
+
 \subsection{Compare on All Directions}
-Table shows the data of the four controllers. The hybrid controller get the best performance.
-Table.~\ref{tb:hybrid} shows the CoG displacement error compares with the tracking error in y axis. We can see that in each, the hybrid controller performs as good as the only impedance controller or the only admittance controller. However, if we consider all the factor, the hybrid controller can achieve small CoG movement,simutenally. Therefore, the hybrid
+We use the data shown in Table.~\ref{tb:hybrid} to comprehensively compare the resilience and adaptability of the four controllers. The best and second-best results for each metric are highlighted in red and brown, respectively. The data show that the impedance-only controller achieved well in tracking performance along the $y$ axis and $z$ axis, whereas the admittance-only controller achieved well in a relatively small CoG position variation along the $x$ axis. In comparison, the hybrid controller maintained competitive performance across all four metrics. 
+
+Therefore, although the individual impedance and admittance controllers exhibited advantages in their corresponding directions, the hybrid controller combined these characteristics and simultaneously maintained good performance in both the sliding and contact directions. This result demonstrates the advantage of combining impedance and admittance control for the contact-rich surface sliding task.
+
 
 \begin{table}[H]
     \centering
-    \caption{Parameters of free flight.}
+    \caption{Performance comparison of the four controllers in the surface sliding experiment. The best and second-best results for each metric are highlighted in red and brown, respectively.}
     \label{tb:hybrid}
     \begin{tabular}{|l|c|c|c|c|}
         \hline
         & PD & Impedance & Admittance & Hybrid \\
         \hline
-        Y position error & $0.134\mathrm{m}$ & \textcolor{red}{$0.079\mathrm{m}$} &$0.105\mathrm{m}$ & \textcolor{brown}{$0.083\mathrm{m}$} \\
-        Z position error & $0.026\mathrm{m}$ & \textcolor{brown}{$0.021\mathrm{m}$} & $0.024\mathrm{m}$ & \textcolor{red}{$0.020\mathrm{m}$} \\
-        X displacement & $0.133\mathrm{m}$ & $0.137\mathrm{m}$ & \textcolor{brown}{$0.088\mathrm{m}$} & \textcolor{red}{$0.084\mathrm{m}$} \\
-        X external & $-1.190\mathrm{N}$ & \textcolor{brown}{$-0.453\mathrm{N}$} & $-0.712\mathrm{N}$ & \textcolor{red}{$-0.328\mathrm{N}$} \\
+        Median CoG $y$ tracking error & $0.134\mathrm{m}$ & \textcolor{red}{$0.079\mathrm{m}$} &$0.105\mathrm{m}$ & \textcolor{brown}{$0.083\mathrm{m}$} \\
+        \hline
+        Median CoG $z$ tracking error & $0.026\mathrm{m}$ & \textcolor{brown}{$0.021\mathrm{m}$} & $0.024\mathrm{m}$ & \textcolor{red}{$0.020\mathrm{m}$} \\
+        \hline
+        CoG $x$ position IQR & $0.133\mathrm{m}$ & $0.137\mathrm{m}$ & \textcolor{brown}{$0.088\mathrm{m}$} & \textcolor{red}{$0.084\mathrm{m}$} \\
+        \hline
+        Median CoG $x$ external force & $-1.190\mathrm{N}$ & \textcolor{brown}{$-0.453\mathrm{N}$} & $-0.712\mathrm{N}$ & \textcolor{red}{$-0.328\mathrm{N}$} \\
         \hline
     \end{tabular}
 \end{table}
 
-\subsection{Section summary}
+
+\subsection{Section Summary}
 The experiment highlights the complementary roles of the two strategies: impedance control improves sliding smoothness and reduces tracking error, whereas admittance control enhances adaptive interaction by decreasing both displacement and contact forces. Since neither only impedance controller nor only admittance controller alone can achieve both behaviors, the hybrid controller yields smaller trajectory deviations, reduced unintended CoG drift, and lower interaction forces compared with the baseline PID controller, confirming its effectiveness for compliant contact-rich tasks.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Extension Experiment on DRAGON}
 \subsection{Experimental Setup}
-Experiments are conducted using the multi-link aerial robot shown in Fig.~\ref{fig:robot}. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU, and the Robot Operating System (ROS) is utilized for communication. A motion capture system provides the full state of the robot throughout the experiments. A marker pen is attached to link 4 as shown in Fig.~\ref{fig:admittance control} and serves as the end-effector for maintaining contact with the environment.
 
 We also test the sliding expeirment by DRAGON. The basic experiment setting is basically similar to Hydrus Xi's case. The parameters are shown in Table. Note that DRAGON is a 3D deformable mutli-link aerial robot, which has 6 joints to realize full DOF. In this expeirment, we only simply test whether the hybrid controller used in Hydrus Xi can also be used in DRAGON. Therefore, only 3 $Yaw$ joints were used.
 
-% The actual experimental parameters are as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
-% \begin{subequations}
-% \label{eq:damping rate}
-% \begin{align}
-% \tilde{\boldsymbol{C}}_{td}&=2\boldsymbol{Z}_{td}\tilde{\boldsymbol{K}}^{\frac{1}{2}}_{td}, \\[2pt]
-% \tilde{\boldsymbol{C}}_{rd}&=2\boldsymbol{Z}_{rd}\tilde{\boldsymbol{K}}^{\frac{1}{2}}_{rd}.
-% \end{align}
-% \end{subequations}
-% The admittance mass, damping and stiffness are given by $m_a=40\,\mathrm{kg}$, $c_a=55\,\mathrm{N\cdot s/m}$ and $k_a=16\,\mathrm{N/m}$. The reference external force is given by $f_{ref,x} = 0$.
-% \begin{figure}[t]
-%      \centering
-%     % \parbox{3in}
-%     \includegraphics[trim={0cm 0.5cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter5/hydrus.png}
-%     \caption{The nominal surface-contact configuration of the multi-link aerial robot. The configuration angle $\theta = \pi /6$, and the joint angles $q_1$, $q_2$, $q_3$ are consequently $\pi /3, \pi /3,-\pi /6$, respectively.}
-%     \label{fig:admittance control}
-%     \vspace{-5mm}
-% \end{figure}
 
 As shown in Fig.~\ref{fig:admittance control}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. 
 

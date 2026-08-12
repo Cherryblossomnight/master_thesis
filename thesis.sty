@@ -89,9 +89,11 @@
 \renewcommand{\contentsname}{}
 
 \renewcommand{\prechaptername}{Chapter~}
-\renewcommand{\postchaptername}{\hphantom{00000}}
+\renewcommand{\postchaptername}{}
 
 \makeatletter
+
+
 
 \renewcommand{\chapter}{%
   \if@openright\cleardoublepage\else\clearpage\fi
@@ -130,6 +132,15 @@
 \renewcommand{\bibname}{References}
 
 \newcommand{\makecontents}{%
+  \settowidth\jsc@tocl@width{\headfont\prechaptername\postchaptername}%
+  \settowidth\@tempdima{\headfont\appendixname}%
+  \ifdim\jsc@tocl@width<\@tempdima
+    \setlength\jsc@tocl@width{\@tempdima}%
+  \fi
+  \ifdim\jsc@tocl@width<2zw
+    \divide\jsc@tocl@width by 2
+    \advance\jsc@tocl@width 1zw
+  \fi
   \vspace*{\fill}
   \begin{center}
     {\Huge\bfseries Contents\par}
