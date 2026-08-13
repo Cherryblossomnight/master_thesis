@@ -45,23 +45,22 @@ In this work, we propose a novel hybrid impedance--admittance control enabled by
 \section{Previous Research}
 
 \subsection{Surface Sliding Aerial Manipulation Tasks}
-The aerial manipulation tasks are very important. One of the most challenge task is the surface sliding tasks.
 
-All of these tasks have the following characteracstics: The task need the robot to realize (a) The end effector of aerial robot need to keep long time contact with the surface. (b) The end effector of the aerial robot need to generate related tangential movement related to the surface. The real enviroments bring the following difficulties to the tasks: (c) The contact force (including tangnetial and normal force) between the end effector and the surface may influence the performance of the aerial robot. (d) The surface geometry may be compex in the real world, the friction factor and the geometry is usually changing and unmodelled for the controller. Considering the above features, the surface sliding tasks need to . 
+Aerial manipulation tasks, as introduced before, play an important role in the development of aerial robots. Here, the surface sliding task is one of the most challenging tasks. In this work, we need to deal with the unmodeled surface which may provide uncertainties in force and geometry. Such similar conditions and some solutions can be found in previous research.
 
-In the current literatures, the aerial robots are require to solve the manipulation tasks like bridge inspection \cite{bodie_2020_active}, infrastructure inspection \cite{guo_2024_flying}, tube inspection \cite{trujillo_2019_novel} and writing \cite{guo_2024_flying}, and. Apparently, the requirements in reality of surface sliding tasks are very high.
+Based on the existing research on surface sliding, we can find that this kind of task has the following characteristics: (a) the end effector of the aerial robot needs to maintain contact with the surface for a long time; (b) the end effector of the aerial robot needs to generate tangential motion related to the surface. Meanwhile, the real environments bring the following difficulties to the tasks: (c) the contact force, including both tangential and normal forces, may influence the performance of the aerial robot; (d) the surface geometry may be complex and unknown, in the real world, while the friction condition and geometry may also change during the task. Considering the above features, the surface sliding tasks require the aerial robots to deal with external force disturbances and  varying contact conditions. 
 
-Currently, although there are a lot of researches pay attention to surface sliding tasks, they (a) do not collect and summaize the main features of this kind of manipulation tasks (b) did not express the effectice framework to solve the proposed problems. 
+In the existing literature, aerial robots have been developed to deal with the real-world requirements. Typical applications include bridge inspection \cite{bodie_2020_active}, infrastructure inspection \cite{trujillo_2019_novel}, tube inspection \cite{tognon_2019_truly} and aerial writing \cite{guo_2024_flying} as shown in Fig.~\ref{fig:surface_sliding}. These tasks usually need to deal with curved or soft surfaces while  maintaining contact and sliding along the surface. Therefore, the disturbances brought by uncertain contact conditions must be taken into account.
+
+Currently, although many studies have paid attention to surface sliding tasks, the main features of this kind of manipulation tasks have not been systematically summarized,and an effective framework to address the above challenges has not been clearly established.  Therefore, further development of both the control method and the aerial robot structure is required to deal with the challenges in the surface sliding tasks. 
 
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/chapter1/surface_sliding.png}
-  \caption{Example scenario of surface sliding task, mainly derived from infrasturcture maintainese. (a) The aerial robot sliding on the bridge's curve surface to inspect the cracks. (b) The aerial robot sliding on the steel tube to inspect the weld seam. (c) (d).}
-  \label{fig:surface sliding}
-  \vspace{-7mm}
+  \caption{Example scenario of surface sliding tasks. (a) An aeial robot slides along the curved outer surface of an infrastructure building to inspect its condition \cite{trujillo_2019_novel}. (b) An aerial robot slides along the steel tube to inspect the weld seam \cite{tognon_2019_truly}. (c) An aerial robot slides along the curved surface of a bridge to inspect cracks \cite{bodie_2020_active}. (d) An aerial robot is commanded to draw letters on paper \cite{guo_2024_flying}.}
+  \label{fig:surface_sliding}
 \end{figure}
-
 
 \subsection{Morphologies of Aerial Robot for Aerial Manipulation}
 % Considering that the aeria manipulation is directly derived from the ground manipulation field, the morphology of the manipulatiors attached in the aerial robot is usually very similar with those in the ground robot. Obviously, we can used the mechanical design and control method that have been demonstrated in the ground robot field.
@@ -84,7 +83,7 @@ The above application demonstrate that the parallel morphology can perform well 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
-  \caption{Four morphologies of aerial robots. (a) Single rigid body morphology. (b) Sseries morphology. (c) Parallel morphology. (d) multi-link morphology}
+  \caption{Four morphologies of aerial robots. (a) Single rigid body morphology \cite{bodie_2020_active}. (b) Series morphology \cite{he_2025_flying}. (c) Parallel morphology \cite{deng_2025_whole}. (d) Multi-link morphology \cite{zhao_2023_versatile}.}
   \label{fig:morphologies}
   \vspace{-7mm}
 \end{figure}
@@ -107,43 +106,42 @@ In conclusion, the morphologies of aerial robots would influence the abilities: 
 
 
 
-\subsection{Interaction Control Method Used in Aerial Manipulation}
-For more and more interaction aerial manipulation tasks, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
 
-Both impedance and admittance control can be considered as can be considered as general impedance control \cite{valency_2003_accuracy}. The concept of impedance control is put forward by Hogan \cite{hogan_1984_impedance}. In his paper, the environment should be considered as an admittance, therefore if the robot performs like an impedance, the power flow will be reasonable. Currently, the conception of impedance and admittance controller becomes a little different. If the system perform like a compliant second order system, it can be called as impedance control. In detail, the impedance control wishes the system performs like a real second order system, the main idea of it is to design a second order system. On the other hand, the admittance control tries to imitate a second order system, whose position almost follow the design system. Transparently, both impedance and admittance control performs similarly, but their causalities are completely opposite. Due to their concern object, The impedance control is better used in the force control actuator, and the admittance control has better used in position control actuator, or perform as a filter to provide reference position command for lower layer controllers.
+\subsection{Interaction Control Method Used in Aerial Manipulation}
+For increasingly complex conditions that contact-rich aerial manipulation tasks need to deal with, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
+
+Both impedance and admittance control can be considered as the general impedance control \cite{valency_2003_accuracy}. The concept of impedance control was proposed by Hogan \cite{hogan_1984_impedance}. In his work, the environment should be considered as an admittance; therefore, if the robot performs like an impedance, a reasonable interaction relationship can be realized. 
+
+Currently, impedance and admittance control are usually distinguished according to their different causalities \cite{valency_2003_accuracy, ott_2010_unified}. The impedance control use the motion error as the input and determines the corresponding force command as the response, while admittance control takes the interaction force as the input and generates the corresponding motion response. Due to this difference, impedance control is more naturally applied to systems with force actuators, while admittance control is commonly realized by utilizing position actuators or used as an outer-loop filter to provide reference position commands for lower-level controllers.
 
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
-  \caption{Some example tasks that use impedance or admittance control. (a) The impedance controller is used as a adjustment. (b) The impedance controller's parameters are tuning by the learning-based method, which helps the aerial robot achieve sliding on the uneven surface. (c) The admittance controller as a filter to adapt to the external disturbance. (d)}
-  \label{fig:force control}
-  \vspace{-7mm}
+  \includegraphics[width=\linewidth]{figures/chapter1/force_control.png}
+  \caption{Some example tasks that use impedance or admittance control. (a) The impedance control adjusts the impedance gains according to surface proximity for surface sliding \cite{bodie_2020_active}. (b) The impedance parameters are tuning by the learning-based method, which helps the aerial robot achieve sliding on an uneven surface \cite{zhang_2022_learning}. (c) The admittance controller is used as filter to adapt to the external disturbances \cite{ryll_2019_6d}. (d) The admittance control is applied to a robotic arm to achieve sliding on a curved surface \cite{solanes_2018_adaptive}.}
+  \label{fig:force_control}
 \end{figure}
 
-
 Among these strategies, impedance control has been extensively explored for aerial robots. 
-For the beginning of aerial manipulation research, the impedance control method was used \cite{ollero_2021_past}.
-Forte et al. \cite{forte_2012_impedance} calculated the 3D impedance control for a single rigid body aerial robot, and Lippiello et al. \cite{lippiello_2012_cartesian} put forward the impedance equation of an aerial robot with a serial arm. In his paper, the aerial robot itself and the 3-dof robotic arm is set different dynamic parameters, which also gives this thesis inspiration. After those work introduce impedance control into aerial manipulation tasks, the community more focused on the effect impedance control can realize.
+In the early stage of aerial manipulation research, the impedance control method was widely used \cite{ollero_2021_past}. Forte et al. \cite{forte_2012_impedance} developed a 3D impedance controller for a single rigid-body aerial robot, and Lippiello et al. \cite{lippiello_2012_cartesian} proposed an the impedance controller for an aerial robot with a serial robotic arm. After these works introduced impedance control into aerial manipulation tasks, later studies focused more on the interaction behaviors that impedance control can realize.
+
 In recent years, the impedance control has been used in more complicated tasks.
-Bodie et al. \cite{bodie_2020_active} introduced a six-DOF axis-selective impedance controller capable of adjusting impedance gains based on surface proximity. In this work, the impedance control is considered as the adjusting part. This work realized sliding on the surface, following a specific trajectory, which can be used for bridge inspection task.
-Zhang et al. \cite{zhang_2022_learning} employed learning-based techniques to adapt the impedance parameters, which helps the aerial robot sliding on an uneven plane. Both work pay attention to use impedance control as a adjusting part to adapt to the unknown external environment that has different force requirements. 
-We can see that using impedance control in aerial robot is relatively mature. However, current literatures are mainly focusing on designing a useful control framework instead analyzing how the impedance controller perform in different tasks, or analyzing how the parameters effect the performance of aerial manipulation.
-These methods can effectively respond to external force disturbances through gain modulation. However, there is limited evidence that they remain effective in environments with uneven or irregular surfaces by adapt to the geometric variations. 
+Bodie et al. \cite{bodie_2020_active} introduced a six-DOF axis-selective impedance controller capable of adjusting impedance gains based on surface proximity, which realized sliding along the surface while following a specific trajectory and can be used for bridge inspection tasks. Zhang et al. \cite{zhang_2022_learning} employed learning-based techniques to adapt the impedance parameters, which helps the aerial robot slide on an uneven plane. Both work paid attention to use impedance control as an adjustment mechanism to adapt to the unknown external environments with different interaction-force requirements.
 
-In addition to impedance approaches, admittance control has also been applied in aerial manipulation tasks. 
-Someone uses admittance control as a filter, and the framework use PID control as the inner controller.
-Ryll et al. \cite{ryll_2019_6d} enabled an aerial robot to follow variations in the contact-plane geometry, yet the induced lateral force disturbances caused noticeable rotational deviations.
-Cataldi et al. \cite{cataldi_2016_impedance} used an admittance filter to calculate the reference values.
 
-The admittance control is less than impedance control.
+The application of impedance control to aerial robots has become relatively mature. However, current literatures still mainly focus on designing a useful control frameworks instead of analyzing how the impedance controller performs under different interaction conditions, or how its parameters affect the performance of aerial manipulation. These methods can effectively respond to external force disturbances through gain modulation. However, there is limited evidence that they remain effective in environments with uneven or irregular surfaces by adapt to the geometric variations. 
 
-In our framework, admittance control is more like controlling a robotic arm instead of an aerial robot. Therefore, we will introduce admittance control used in controlling robotic arms. 
-Admittance control has been used in robotics arm like
 
+
+In addition to impedance approaches, admittance control has also been applied in aerial manipulation tasks. In some studies, the admittance control was utilized as an outer-loop filter, while some tranditional position controller such as PID controller is used as the inner controller. Ryll et al. \cite{ryll_2019_6d} applied admittance control by enabling an aerial robot to follow variations in the contact-plane geometry, while the induced lateral force disturbances caused noticeable rotational deviations. Cataldi et al. \cite{cataldi_2016_impedance} an admittance filter to calculate the reference for the lower-level controller. Compared with the impedance control, the admittance control has been less widely used in the aerial manipulation tasks.
+
+
+Admittance control has been widely used for robotic manipulators to generate compliant motion during physical interaction. For example, Solanes et al. \cite{solanes_2018_adaptive} applied admittance control command the joint angles, in response to the interaction with curved surface. In our framework, admittance control is applied to the multi-link structure as a regulator for apapt to external geometric variation by joint motion. The mechanism is therefore more similar to controlling a robotic manipulator than controlling the aerial robot itself, making methods from the robotic manipulator control field more relevant to our framework.
 
 In conclusion, while these studies demonstrate the potential of impedance- or admittance-based approaches for aerial manipulation tasks in interaction scenarios, each method inevitably inherits the limitations of its underlying control principle.
-This thesis tries to combine these two controllers together on the same platform in order to gain both of their strengths.
+This thesis tries to combine these two controllers together on the same platform in order to exploit their respective strengths in dealing with different interaction requirements.
+
+
 % \subsection{cooperative aerial manipulation}
 % In the surface sliding task, besides the contact requirements, there must be some secondary task, such as taking photos or keep the cable stable. This kind of requirements are not the essential problem in surface sliding, but it will effect whether we can use the whole system into the real application. In this thesis, we can also answer how to use the multi-link structure to achieve the secondary requirements.
 
@@ -160,12 +158,12 @@ This thesis investigates the force control method of multi-link aerial robot. Th
 
 
 \begin{itemize}
-	\item Chapter 1 introduces the research background, motivation and main contributions of this study, reviews related work about the defination and solution of surface sliding tasks, morphologies of aerial robots and force control methods used in aerial manipulation. Based on above discussion, the motivation, objectives and contributions of this thesis are introduced.
-	\item Chapter 2 presents the preliminary of this thesis, including the notation defination, the modeling of multi-link aerial robots and the external wrench estimated algorithm.
-	\item Chapter 3 introduces the basic concepts of impedance control, analyzes how the impedance control can redesign the dynamic parameters of a system, and a new insight of the impedance parameters. The Implementation of the multi-link aerial robots and the task-oritation coordinate transformation method are also introduced. 
-	\item Chapter 4 introduces the basic concepts of admittance control. The admittance control is used for adjust the internal configuration of the aerial robot, while perform adaptation to the external geometric variations.
-	\item Chapter 5 introduces how to combined impedance control and admittance control together as the hybrid impedance--admittance control on the same system. The effects of the intergrated hybrid controller is showed on the multi-link aerial robots.
-	\item Chapter 6 presents experimental results. The parameter is discussed. The Hydrus is selected to demonstrated the main concept, and DRAGON is used for showing the adaptability of the proposed framework in multi-link aerial robots.
+	\item Chapter 1 introduces the research background and reviews related work about the defination and solution of surface sliding tasks, morphologies of aerial robots and force-control methods used in aerial manipulation. Based on above discussion, the motivation, objectives and main contributions of this thesis are introduced.
+	\item Chapter 2 presents the preliminary materials of this thesis, including the notation definations, the modeling of multi-link aerial robots and the external wrench estimation algorithm.
+	\item Chapter 3 introduces the basic concepts of impedance control, analyzes how the impedance control can redesign the dynamic parameters of a system, and provides a new insight into the impedance parameters. The implementation of the multi-link aerial robots is also introduced.
+	\item Chapter 4 introduces the basic concepts of admittance control. Admittance control is used to adapt to external geometric variations through structural deformation by adjusting the configuration of the aerial robot.
+	\item Chapter 5 introduces how to combine impedance control and admittance control as hybrid impedance--admittance control in the same system. The effects of the integrated hybrid controller are explained.
+	\item Chapter 6 presents the experimental results, discusses the controller parameters, and exhibits the preliminary experiments on the impedance and admittance responses to external forces. Hydrus Xi is selected to demonstrated the main concepts, while DRAGON is used to showing the applicability of the proposed framework to different multi-link aerial robots.
 	\item Finally, Chapter 7 concludes the thesis by summarizing the main findings and contributions of this work and outlining directions for future research.
 \end{itemize}
 
