@@ -1,5 +1,5 @@
 \chapter{Experiment}
-In this chapter, we will demonstrate the effects of the proposed framework. In our experiment, Hydrus is selected as the primary experimental platform to demonstrate the proposed hybrid impedance--admittance control framework, while DRAGON is used for additional evaluation of the adaptability of this framework in multi-link aerial robots.
+In this chapter, we will demonstrate the effects of the proposed hybrid impedance--admittance control framework. In our experiment, Hydrus is selected as the primary experimental platform to demonstrate the proposed hybrid impedance--admittance control framework, while DRAGON is used  as an extension platform to demonstrate the capability of the proposed framework. The experimental setup, preliminary experiments, parameter adjustment, and experimental results are presented in the following sections.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Platforms}
@@ -27,7 +27,7 @@ The 3D multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experimental parameters adjustment}
+\section{Preliminary Experiments}
 \subsection{Parameter Effects and Selection for Hydrus Xi}
 \label{sec:parameter_selection}
 
@@ -56,7 +56,7 @@ The parameters obtained from the free flight tuning are summarized in Table~\ref
 
 \begin{table}[H]
     \centering
-    \caption{Parameters for free flight.}
+    \caption{Parameters of Hydrus Xifor free flight.}
     \label{tb:params1}
     \begin{tabular}{ccc}
         \hline
@@ -207,7 +207,7 @@ In the hybrid control experiment, we used Hydrus Xi as the expeirmental platform
 
 \begin{table}[H]
     \centering
-    \caption{Parameters of surface sliding experiment.}
+    \caption{Parameters of Hydrus Xi for surface sliding experiment.}
     \label{tb:params4}
     \begin{tabular}{lcc}
         \hline
@@ -217,12 +217,13 @@ In the hybrid control experiment, we used Hydrus Xi as the expeirmental platform
         Estimator rotation gain matrix & $\boldsymbol{K}_{ri}$ & $diag(1.0, 1.0, 1.0)$ \\
         Linear mass ratio matrix & $\boldsymbol{M}_d/m$ & $diag(1.0, 3.0, 1.0)$ \\
         Inertia ratio matrix & $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ & $diag(10.0, 10.0, 5.0)$ \\
-        Admittance mass & $m_a$ & 40 \\
-        Admittance damping & $c_a$ & 55 \\
-        Admittance stiffness & $k_a$ & 16 \\
+        Admittance mass & $m_a$ & $40\,\mathrm{kg}$ \\
+        Admittance damping & $c_a$ & $55\,\mathrm{N\cdot s/m}$ \\
+        Admittance stiffness & $k_a$ & $16\,\mathrm{N/m}$ \\
         \hline
     \end{tabular}
 \end{table}
+
 
 
 
@@ -373,17 +374,39 @@ The experiment highlights the complementary roles of the two strategies: impedan
 \section{Extension Experiment on DRAGON}
 \subsection{Experimental Setup}
 
-We also test the sliding expeirment by DRAGON. The basic experiment setting is basically similar to Hydrus Xi's case. The parameters are shown in Table. Note that DRAGON is a 3D deformable mutli-link aerial robot, which has 6 joints to realize full DOF. In this expeirment, we only simply test whether the hybrid controller used in Hydrus Xi can also be used in DRAGON. Therefore, only 3 $Yaw$ joints were used.
 
+To demonstrate that the proposed hybrid impedance--admittance control framework can be used in diifferent types of multi-link aerial robot, the surface sliding experiment was also conducted using the 3D multi-link aerial robot DRAGON, in addition to the primary experiments using the 2D platform Hydrus Xi. The basic experimental setup and control framework were kept similar to those used in the Hydrus Xi experiments. In DARGON's case, the parameters were listed in Table~\ref{tb:params5}.
 
-As shown in Fig.~\ref{fig:admittance control}, the robot started from its nominal configuration. Throughout the experiment, a constant yaw angle was commanded, implemented by keeping link 4 aligned with the $x$ axis in order to reduce external torque applied on the CoG. 
+\begin{table}[H]
+    \centering
+    \caption{Parameters of DRAGON for surface sliding experiment.}
+    \label{tb:params5}
+    \begin{tabular}{lcc}
+        \hline
+        Name & Notation & Value \\
+        \hline
+        Estimator translation gain matrix & $\boldsymbol{K}_{ti}$ & $diag(2.0, 2.0, 2.0)$ \\
+        Estimator rotation gain matrix & $\boldsymbol{K}_{ri}$ & $diag(2.5, 2.5, 2.5)$ \\
+        Normalized linear stiffness matrix & $\tilde{\boldsymbol{K}}_{td}$ & $diag(3.6, 3.6, 3.6)$ \\
+        Normalized rotational stiffness matrix & $\tilde{\boldsymbol{K}}_{rd}$ & $diag(15.0, 15.0, 10.0)$ \\
+        Normalized linear damping ratio matrix & $\boldsymbol{Z}_{td}$ & $diag(0.8, 0.8, 0.9)$ \\
+        Normalized rotational damping ratio matrix  & $\boldsymbol{Z}_{rd}$ & $diag(0.85, 0.85, 0.75)$ \\
+        Linear mass ratio matrix & $\boldsymbol{M}_d/m$ & $diag(1.0, 2.0, 2.0)$ \\
+        Inertia ratio matrix & $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ & $diag(2.0, 2.0, 2.0)$ \\
+        Admittance mass & $m_a$ & $15\,\mathrm{kg}$ \\
+        Admittance damping & $c_a$ & $24\,\mathrm{N\cdot s/m}$ \\
+        Admittance stiffness & $k_a$ & $10\,\mathrm{N/m}$ \\
+        Reference external force & $f_{ref,x}$ & $0$ \\
+        \hline
+    \end{tabular}
+\end{table}
 
-During the experiment, the reference trajectory of the end effector of multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. Meanwhile, the base link is set to stay at a static point in the frame of $\{W\}$. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact. It can be considered that the prior frame is requested to draw a circle in the board, and the secondary frame is requested to keep static in the air. 
+In the DRAGON surface sliding experiment, the admittance setting and experiment scenario  were kept similar to those of Hydrus Xi. The configuration of DRAGON was also designed to be similar to that of Hydrus Xi. The pitch joints remained at zero, while the other yaw joint angles were given to follow the same logic as Hydrus Xi. Therefore, although DRAGON can complete 3D deformation, in this experiment, the deformation was constrained to a 2D plane similar to Hydrus Xi. Such a setting helped to simplify the defomation complexity and avoided introducing unnecessary structural motion that may bring instability.
 
+\subsection{Experimental Results}
 
-As shown in Fig.~\ref{fig:dragon_experiment}. 
+As shown in Fig.~\ref{fig:dragon_experiment}, DRAGON successfully performed the surface sliding experiment under the proposed hybrid impedance--admittance controller. Fig.~\ref{fig:dragon_trajectory} shows the end effector and CoG trajectories during the surface sliding experiment. Both trajectories were close to the desired circular trajectory, which shows the trajectory-following ability. The flight response of DRAGON is shown in Fig.~\ref{fig:dragon_plot}, while the response during surface contact is shown in Fig.~\ref{fig:dragon_contact}. These results provide an additional demonstration of the proposed control framework on the 3D multi-link aerial robot.
 
-The original displacement in x is $0.115m$, whereas the real displacement is $0.065$. We can see that the distance in x is reduce $0.08m$.
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
@@ -395,24 +418,29 @@ The original displacement in x is $0.115m$, whereas the real displacement is $0.
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_trajectory.png}}
-    \caption{Three view figure of DRAGON in the expeirment. (a) End effector trajecotry. (b)CoG trajectory.}
+    \caption{Trajectories of DRAGON during surface sliding. (a) End-effector trajectory. (b) CoG trajectory.}
     \label{fig:dragon_trajectory}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_plot.png}}
-    \caption{Three view figure of DRAGON in the expeirment.}
+    \caption{Free flight response of DRAGON.}
     \label{fig:dragon_plot}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_contact.png}}
-    \caption{Three view figure of DRAGON in the expeirment. }
+    \caption{Surface sliding response of DRAGON.}
     \label{fig:dragon_contact}
 \end{figure}
-and the orientation is required to stay at the initial rotation angle to keep the link4 be vertical with the $y-z$ plane.
+
+Overall, the results show that the hybrid impedance--admittance control framework can also be used in DRAGON. The purpose of this extension experiment was not to repeat the performance conducted on Hydrus Xi, but to demonstrate the capability of the proposed framework to another type of multi-link aerial robots.
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, we show the hybrid impedance-admittance control.
+In this chapter, the proposed hybrid impedance--admittance control framework was experimentally evaluated on multi-link aerial robots. In the preliminary experiments, the parameter adjustment experience was discussed, the performance under free flight was evaluated, and the effects of impedance and admittance effects were demonstrated. The Hydrus Xi experiments compared four types of controller, demonstrating that the hybrid controller combined the resilience of impedance controller and the adaptation of admittance controller, showing good performance in both the sliding and contact directions.
+Finally, the extension experiment on DRAGON demonstrated that the proposed framework could also be applied to another type of multi-link aerial robot.
