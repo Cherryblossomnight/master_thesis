@@ -1,0 +1,95 @@
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{cite}
+\usepackage{float}
+
+% Page layout: IEEE-like two-column layout
+\usepackage[
+  top=18mm,
+  bottom=18mm,
+  left=16mm,
+  right=16mm,
+  columnsep=6mm
+]{geometry}
+
+% Main text
+\renewcommand{\normalsize}{%
+  \@setfontsize\normalsize{10pt}{12pt}%
+}
+\normalsize
+
+% Figure / table names
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+% References
+\renewcommand{\refname}{References}
+
+% Reference commands
+\def\figref#1{\figurename~\ref{#1}}
+\def\tabref#1{\tablename~\ref{#1}}
+\def\equref#1{(\ref{#1})}
+
+% Section style
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+  {1.5ex \@plus .5ex \@minus .2ex}%
+  {0.8ex \@plus .2ex}%
+  {\normalfont\large\bfseries}%
+}
+
+% Subsection style
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {1.2ex \@plus .4ex \@minus .2ex}%
+  {0.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}%
+}
+
+% Title information
+\def\teacher#1{\gdef\@teacher{#1}}
+\def\keywords#1{\gdef\@keywords{#1}}
+
+% Title spans both columns
+\renewcommand{\maketitle}{%
+  \twocolumn[
+    \begin{center}
+
+      {\Large\bfseries
+        \@title\par
+      }
+
+      \vspace{0.7em}
+
+      {\normalsize
+        \@author
+        \hspace{2em}
+        Supervisor: \@teacher
+        \par
+      }
+
+      \vspace{0.4em}
+
+      {\small
+        \textbf{Keywords:} \@keywords
+        \par
+      }
+
+      \vspace{1em}
+
+    \end{center}
+  ]
+}
+
+% For IEEEtran bibliography style compatibility
+\def\bstctlcite#1{\@bsphack
+  \@for\@citeb:=#1\do{%
+    \edef\@citeb{\expandafter\@firstofone\@citeb}%
+    \if@filesw
+      \immediate\write\@auxout{\string\citation{\@citeb}}%
+    \fi
+  }%
+  \@esphack
+}
+
+\pagestyle{empty}
