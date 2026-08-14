@@ -1,22 +1,36 @@
-\usepackage[dvipdfmx]{graphicx}
+\PassOptionsToPackage{dvipdfmx}{graphicx}
+\PassOptionsToPackage{dvipdfmx}{xcolor}
+
+% Packages
+\usepackage{newtxtext}
 \usepackage{amsmath,amssymb,bm}
 \usepackage{cite}
 \usepackage{float}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tabularx}
 
-% Page layout: IEEE-like two-column layout
+% Page layout
 \usepackage[
-  top=18mm,
-  bottom=18mm,
-  left=16mm,
-  right=16mm,
-  columnsep=6mm
+  top=20mm,
+  bottom=20mm,
+  left=15mm,
+  right=15mm,
+  columnsep=10mm
 ]{geometry}
 
-% Main text
+% Main text: 10 pt
 \renewcommand{\normalsize}{%
-  \@setfontsize\normalsize{10pt}{12pt}%
+  \@setfontsize\normalsize{10pt}{13pt}%
 }
 \normalsize
+
+% Paragraph formatting
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1.5em}
+
+% Prevent excessive vertical stretching
+\raggedbottom
 
 % Figure / table names
 \renewcommand{\figurename}{Fig.}
@@ -30,19 +44,19 @@
 \def\tabref#1{\tablename~\ref{#1}}
 \def\equref#1{(\ref{#1})}
 
-% Section style
+% Section style: 12 pt
 \renewcommand{\section}{%
   \@startsection{section}{1}{\z@}%
-  {1.5ex \@plus .5ex \@minus .2ex}%
-  {0.8ex \@plus .2ex}%
+  {0.6ex \@plus .2ex \@minus .1ex}%
+  {0.4ex \@plus .1ex}%
   {\normalfont\large\bfseries}%
 }
 
-% Subsection style
+% Subsection style: 10 pt
 \renewcommand{\subsection}{%
   \@startsection{subsection}{2}{\z@}%
-  {1.2ex \@plus .4ex \@minus .2ex}%
-  {0.5ex \@plus .2ex}%
+  {0.5ex \@plus .2ex \@minus .1ex}%
+  {0.3ex \@plus .1ex}%
   {\normalfont\normalsize\bfseries}%
 }
 
@@ -55,27 +69,33 @@
   \twocolumn[
     \begin{center}
 
-      {\Large\bfseries
+      % English + Japanese title
+      {\Large
+        \setlength{\baselineskip}{14pt}%
         \@title\par
       }
 
-      \vspace{0.7em}
+      \vspace{0.25em}
 
+      % Author and supervisor
+    {\normalsize\gtfamily
+      \setlength{\baselineskip}{11pt}%
+      \@author
+      \hspace{2em}
+      指導教員 \@teacher
+      \par
+    }
+
+      \vspace{0.10em}
+
+      % Keywords
       {\normalsize
-        \@author
-        \hspace{2em}
-        Supervisor: \@teacher
+        \setlength{\baselineskip}{11pt}%
+        \textit{Keywords:} \@keywords
         \par
       }
 
-      \vspace{0.4em}
-
-      {\small
-        \textbf{Keywords:} \@keywords
-        \par
-      }
-
-      \vspace{1em}
+      \vspace{0.45em}
 
     \end{center}
   ]
@@ -92,4 +112,12 @@
   \@esphack
 }
 
+% Compact equation spacing
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\setlength{\jot}{2pt}
+
+% No page numbers
 \pagestyle{empty}
