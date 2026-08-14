@@ -167,4 +167,11 @@
   {1.5ex \@plus .2ex}%
   {\normalfont\large\bfseries\rmfamily}%
 }
+
+\let\oldbibitem\bibitem
+\renewcommand{\bibitem}{%
+  \vspace{10pt}%
+  \oldbibitem
+}
+
 \makeatother
