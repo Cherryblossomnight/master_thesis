@@ -119,18 +119,12 @@ In the context of interaction, due to the contact condition, we may encounter it
 
 Considering in other side, the impedance control still has a lot of similarities to the PID control, so we can get some inspiration form PID parameters tuning process. Here we can divide the impedance equation it into PD control part $-m({\frac{c_d}{m_d}e_v+\frac{c_d}{k_d}e_p})$ and external force part $(\frac{m}{m_d}-1){{f}_{ext}}$. If there is no external force, the external force part should disappear, and only PD control part left. So we can use PID turning method to find the parameters $\tilde{c}_d$ and $\tilde{k}_d$, now they are consider as the $k_p$ and $k_d$.
 
-After we tuning the parameters in free flight, it must be consider in contact situation. Let us consider the mass ratio parameter $\mu$. If $\mu$ is set to $0$, the compensation term is exactly the estimated external wrench, so the command will completed compensate the external force. If $\mu$ is set to $1$, the external force term will also disappear, in which situation the impedance controller degenerate to a PD controller. If $\mu > 1$, the external force term has the same direction with the external force, so the command will help to push the aerial robot to the direction of external force, which means the aerial robot will follow the external force. In this situation, the aerial robot can be regarded as compliance, the stiffness is relatively low. On the other hand, if $\mu >1$, the external force term has the reverse direction with the external force, which means the command will help to resist the external force. In this situation, the aerial robot will try to reduce its movement at the direction of external force, the stiffness is relatively high. 
-
-In summary, by setting $\mu$ larger or less than $1$, the aerial robot can perform relatively compliant or rigid. By tuning parameters depend on the task requirements and environment situation, the aerial robot can perform differently in each axis. 
+After we tuning the parameters in free flight, it must be consider in contact situation. Let us consider the mass ratio parameter $\mu$. If $\mu$ is set to $0$, the compensation term is exactly the estimated external wrench, so the command will completed compensate the external force. If $\mu$ is set to $1$, the external force term will also disappear, in which situation the impedance controller degenerate to a PD controller. If $\mu > 1$, the external force term has the same direction with the external force, so the command will help to push the aerial robot to the direction of external force, which means the aerial robot will follow the external force. In this situation, the aerial robot can be regarded as compliance, the stiffness is relatively low. On the other hand, if $\mu < 1$, the external force term has the reverse direction with the external force, which means the command will help to resist the external force. In this situation, the aerial robot will try to reduce its movement at the direction of external force, the stiffness is relatively high. In summary, by setting $\mu$ larger or less than $1$, the aerial robot can perform relatively compliant or rigid. By tuning parameters depend on the task requirements and environment situation, the aerial robot can perform differently along different axes.
 % The impedance control usually set the parameter between $0$ and $\inf$. If the parameter
 
-And we can also get the tuning principle as follow. We can first tune $\tilde{c}_d$ and $\tilde{k}_d$ as the PD controller in free flight, the design the value of $\mu$ to realize what the task what to achieve. Because we use the same set of parameters both in free flight and contact, it is not necessary to switch mode before and after contacting.
+Based on this discussion, a practical tuning principle can also be obtained. We can first tune $\tilde{c}_d$ and $\tilde{k}_d$ as the PD controller in free flight, the design the value of $\mu$ to realize what the task what to achieve. Because we use the same set of parameters both in free flight and contact, it is not necessary to switch mode before and after contact.
 
-% This is how we can get the command force and torque.
-
-% The reason we rewrite the equations is that we can consider it in another way.
-% The equation can be considered as being consist of three parts: the pure PD control term $-m({\tilde{c}_de_v+\tilde{k}_de_p})$, the compensation term $(\mu-1){{f}_{ext}}$ and the extreme term $g(e_v, e_p)$
-So in this insight, the impedance control can be consider as the upper lever of pure PD control and feedforward + PD control, or we can also consider the equation as PID controller whose integral term is replaced by estimated wrench term \cite{bodie_2023_omnidirectional}. If the parameter is set to $1$, the compensation term disappeared, and the equation degenerate to pure PD control. By adjusting $\mu$, the performance will be different, and satisfy the requirements of tasks.
+From this perspective, the impedance control can be consider as the upper lever of pure PD control and feedforward + PD control, or we can also consider the equation as PID controller whose integral term is replaced by estimated wrench term \cite{bodie_2023_omnidirectional}. If the parameter $\mu$ is set to $1$, the compensation term disappeared, and the equation degenerate to a pure PD control. By adjusting $\mu$, the performance will be different, and satisfy the requirements of tasks.
 
 In this section, we can see the fundamental concept of the impedance controller using in multi-link aerial robot. The impedance controller can be considered as the mid situation of the PD controller and the PD controller with the feedforward compensation. The main idea is to adjust the parameter $\mu$ to realize different contact effect in order to meet the different tasks requirement. Due to the impedance controller consider the external force information, it is site to react to the tasks that has some force requirements, realizing both resist to the external force and keep safe. Apparently, the feature of impedance control is very suit for the surface sliding tasks that require force reaction.
 
@@ -218,21 +212,10 @@ This gives the individual thrust values that each rotor needs to produce. In the
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Implementation on DRAGON}
 
-In DRAGON's case, due to it is an overactuated system, the calculated command wrench can be directly excuted by the rotors after allocation. If we get the command wrench from controller, we need to calculate the rotors' thrust and the vectoring angles. Here we also accept optimization method, which try to make the possible command torque become largest \cite{zhao_2023_versatile}.
+In DRAGON's case, the platform is an overactuated system, and the calculated command wrench can be directly excuted by the rotors after allocation. Given the command wrench $^C\boldsymbol{w}_{cmd}$ from the controller, the required rotor thrusts and gimbal angles are calculated through an optimization-based allocation method \cite{zhao_2023_versatile}. Ignoring the servo response time, the command wrench can be simultaneously generated by the vectoring thrusts of the rotors.
 
+In principle, the control allocation can be formulated as an optimization problem with the rotor thrust magnitudes and gimbal angles as the optimization variables:
 
-We need to get the command wrench of the aerial robot
-\begin{equation}
-\label{eq:command wrench dragon}
-^C\mathbf{w}_{cmd}=\begin{pmatrix}
-^C\!\boldsymbol{f}_{cmd} \\
-^C\!\boldsymbol{\tau}_{cmd}
-\end{pmatrix},
-\end{equation}
-here $^C\mathbf{w}_{cmd}$ is the command wrench in frame $\{C\}$.
-Because DRAGON is the overactuated system, the command wrench can be achieve by its rotors simultaneously(if we ignore the servo response time). Therefore, after gaining the command wrench in $\{C\}$, we can used the equation () to calculated the rotor thrusts and gimbal servo angles.
-
-The target of the optimization equation is too make the thrust become smallest
 \begin{equation}
 \label{eq:thrust least dragon}
 \begin{aligned}
@@ -241,8 +224,8 @@ The target of the optimization equation is too make the thrust become smallest
 = \boldsymbol{Q}(\boldsymbol{\theta},\boldsymbol{\phi})\boldsymbol{\lambda},
 \end{aligned}
 \end{equation}
-Actually, this process is completed by the follow process
-
+However, instead of directly solving for $\boldsymbol{\lambda}$, $\boldsymbol{\theta}$, and $\boldsymbol{\phi}$,
+the actual implementation first calculates the thrust force vector $\boldsymbol{F}$ by solving
 
 \begin{equation}
 \label{eq:thrust least2 dragon}
@@ -276,7 +259,7 @@ Actually, this process is completed by the follow process
 here $\boldsymbol{F}
 =\begin{bmatrix}
 {}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&{}^{\{L_3\}}\boldsymbol{f}_3^{\top}&{}^{\{L_4\}}\boldsymbol{f}_{4}^{\top}
-\end{bmatrix}^{\top}$.
+\end{bmatrix}^{\top} \in \mathbb{R}^{12}$.
 Then we get $\boldsymbol{F}$ by
 \begin{equation}
 \label{eq:thrust least3 dragon}
@@ -284,7 +267,8 @@ Then we get $\boldsymbol{F}$ by
 \end{equation}
 where $(\cdot)^{\#}$ denotes the MP-pseudo-inverse of a full-rank matrix.
 
-Then we can get the thrust force and gimbal angles
+After obtaining $\boldsymbol{F}$, the rotor thrust forces and gimbal angles can be obtained as
+
 \begin{subequations}
 \label{eq:thrust least4 dragon}
 \begin{align}
@@ -293,7 +277,8 @@ Then we can get the thrust force and gimbal angles
 \theta_i&=\tan^{-1}\left(\frac{{}^{\{L_i\}}f_{ix}}{-{}^{\{L_i\}}f_{iy}\sin(\phi_i)+{}^{\{L_i\}}f_{iz}\cos(\phi_i)}\right)
 \end{align}
 \end{subequations}
-We can also know that the thrust force and gimbal angles will be calculated automatically by this process.
+
+Therefore, the rotor thrusts and gimbal angles required to realize the command wrench are obtained through the above allocation process.
 
 % If we what to control the prior frame, we need to do frame transformation to get the error values used for impedance control. Usually, there are three important frames in the aerial robot: CoG frame, end effector frame and base link frame. Due to some kind of symmetry, there is no fundamental difference between the end effector frame and the base link frame. The reason why we set such kind of mode is to follow the kinematic modeling of the multi-link structure.
 % In real world experience, the meaning we use those three frames are different: The CoG frame can be considered as the overall state of the whole multi-link aerial robot, and it is very convenient to calculate because the command wrench needed to be calculated in the CoG frame. So if the task requires to guarantee the overall pose of the aerial robot, the CoG centric mode can be used. However, due to the CoG point is usually in the air for the special structure of the multi-link aerial robot, it usually lacks certain meaning to control this frame in the air. On the other hand, the end effector frame and the base link frame have different meaning. They are the head and rear end of the whole serial link structure, therefore can be used as the contact point. Meanwhile, other complicated requirements can be put forward. for example, we can use the end effector as the contact point to the surface, and used the base link to mount a camera, radar or other sensor. Or we can access a power cable in the base link. At this situation, the pose of the base link is also need to be consider, but it is not as important as the contact point. 
