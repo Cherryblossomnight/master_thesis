@@ -74,13 +74,13 @@ However, for more complicated tasks, the rigid manipulator may not be enough. Me
 
 
 The parallel morphology is defined as an aerial robot mounted with a delta manipulator. Since the delta manipulator has the advantages of low inertia, high stiffness and fast response due to its mechanical structure, the parallel morphology can realize high-speed motion and accurate position control. 
-Due to these advantages, a few researchers have used t kind of morphology. Guo et al. \cite{guo_2024_flying} performed calligraphy on a board with the parallel morphology, showing the potential of this morphology for precise manipulation tasks. Deng et al. \cite{deng_2025_whole} realized high-speed manipulation like pushing objects and grasping object, indicating the ability to achieve fast motion requirements.
-The above applications demonstrate that the parallel morphology can perform well in high-precision and high-speed requirements. However, since the surface sliding tasks usually require large workspace that the delta manipulator does not has, this morphology will struggle when facing a wider range of surface geometry variations.
+Due to these advantages, a few researchers have used this kind of morphology. Guo et al. \cite{guo_2024_flying} performed calligraphy on a board with the parallel morphology, showing the potential of this morphology for precise manipulation tasks. Deng et al. \cite{deng_2025_whole} realized high-speed manipulation like pushing objects and grasping object, indicating the ability to achieve fast motion requirements.
+The above applications demonstrate that the parallel morphology can perform well in high-precision and high-speed requirements. However, since the surface sliding tasks usually require large workspace that the delta manipulator does not has, this morphology will struggle when facing a wider range of surface geometric variations.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/chapter1/morphologies.png}
-  \caption{Four morphologies of aerial robots. (a) Single rigid body morphology \cite{bodie_2020_active}. (b) Series morphology \cite{he_2025_flying}. (c) Parallel morphology \cite{deng_2025_whole}. (d) Multi-link morphology \cite{zhao_2023_versatile}.}
+  \caption{Four morphologies of aerial robots. (a) Single rigid body morphology \cite{bodie_2020_active}. (b) Serial morphology \cite{he_2025_flying}. (c) Parallel morphology \cite{deng_2025_whole}. (d) Multi-link morphology \cite{zhao_2023_versatile}.}
   \label{fig:morphologies}
   \vspace{-7mm}
 \end{figure}
@@ -89,20 +89,20 @@ The serial morphology is defined as an aerial robot mounted with an robotic arm 
 Mounting a robotic arm on an aerial robot is an intuitive idea, and therefore this morphology has been widely investigated. He et al. \cite{he_2025_flying} used a serial arm to draw a relatively large figure on a board. 
 Lee et al. \cite{lee_2025_autonomous} realized SE(3) operation like a peg-in-hole task in a large scenario. 
 These studies demonstrated that the serial morphology provides strong manipulation capabilities and potential flexibility.
-Due to the multi-DOF structure, both the serial morphology and multi-link morphology provide flexible manipulation capabilities for aerial robots. However, unlike a robotic arm mounted on an aerial platform, the multi-link morphology integrates the aerial platform and articulated structure together, providing a different way to utilize structural deformation for aerial manipulation.
+Due to the multi-DoF structure, both the serial morphology and multi-link morphology provide flexible manipulation capabilities for aerial robots. However, unlike a robotic arm mounted on an aerial platform, the multi-link morphology integrates the aerial platform and articulated structure together, providing a different way to utilize structural deformation for aerial manipulation.
 
 
 %Too support the hole arm, it needs high quality rotor, which will also bring high weight.
 
-The multi-link aerial robot itself can be called as a multi-link morphology. This morphology can be regarded as a flying robotic arm, so it shares several advantages with the serial morphology. Meanwhile, the multi-link aerial robots can deform their structures to pass through narrow gaps that the conventional aerial robot can not achieve.
-The extra DoFs of multi-link aerial robot can also help it realize more complex manipulation. Sugito et al. \cite{sugito_2022_aerial} used a multi-link aerial robot to push a door. Shi et al. \cite{shi_2020_aerial} used a multi-link aerial robot to grasp a box. We already know the morphology with serial structures has the potential for surface sliding tasks. However, the multi-link aerial robot has not yet been used in the surface sliding tasks. THerefore in this work, considering the morphology features, we develop the control framework for the multi-link aerial robots.
+The multi-link aerial robot itself can be called as a multi-link morphology. This morphology can be regarded as a flying robotic arm, so it shares several advantages with the serial morphology. Meanwhile, the multi-link aerial robots can deform their structures to pass through narrow gaps that the conventional aerial robots can not achieve.
+The extra DoFs of the multi-link aerial robots can also help them realize more complex manipulation. Sugito et al. \cite{sugito_2022_aerial} used a multi-link aerial robot to push a door. Shi et al. \cite{shi_2020_aerial} used a multi-link aerial robot to grasp a box. We already know the morphology with serial structures has the potential for surface sliding tasks. However, the multi-link aerial robot has not yet been used in the surface sliding tasks. Therefore in this work, considering the morphology features, we develop the control framework for the multi-link aerial robots.
 
 
 In conclusion, the morphologies of aerial robots influence their abilities: parallel morphology is usually used for agile manipulation tasks, while the serial morphology is used for tasks requiring a large workspace. When it comes to complicated aerial manipulation tasks like surface sliding tasks, a multi-link aerial robot is a good choice.
 
 
 \subsection{Interaction Control Method Used in Aerial Manipulation}
-For increasingly complex conditions that contact-rich aerial manipulation tasks need to deal with, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
+For increasingly complex conditions that the contact-rich aerial manipulation tasks need to deal with, it is important to introduce force-control methods. Previous work has commonly adopted force-control strategies such as impedance control and admittance control \cite{ollero_2021_past}. 
 
 Both impedance and admittance control can be considered as general impedance control \cite{valency_2003_accuracy}. The concept of impedance control was proposed by Hogan \cite{hogan_1984_impedance}. In his work, the environment should be considered as an admittance; therefore, if the robot performs like an impedance, a reasonable interaction relationship can be realized. 
 
@@ -123,13 +123,13 @@ In recent years, impedance control has been used in more complicated tasks.
 Bodie et al. \cite{bodie_2020_active} introduced a six-DoF axis-selective impedance controller capable of adjusting impedance gains based on surface proximity, which realized sliding along the surface while following a specific trajectory and can be used for bridge inspection tasks. Zhang et al. \cite{zhang_2022_learning} employed learning-based techniques to adapt the impedance parameters, which help the aerial robot slide on an uneven plane. Both works paid attention to using impedance control as an adjustment mechanism to adapt to unknown external environments with different interaction-force requirements.
 
 
-The application of impedance control to aerial robots has become relatively mature. However, current literature still mainly focus on designing useful control frameworks instead of analyzing how the impedance controller performs under different interaction conditions, or how its parameters affect the performance of aerial manipulation. These methods can effectively respond to external force disturbances through gain modulation. However, there is limited evidence that they remain effective in environments with uneven or irregular surfaces by adapting to the geometric variations. 
+The application of impedance control to aerial robots has become relatively mature. However, current literature still mainly focuses on designing useful control frameworks instead of analyzing how the impedance controller performs under different interaction conditions, or how its parameters affect the performance of aerial manipulation. Meanwhile, These methods can effectively respond to external force disturbances through gain modulation, but there is limited evidence that they remain effective in environments with uneven or irregular surfaces by adapting to the geometric variations. 
 
 
 In addition to impedance approaches, admittance control has also been applied in aerial manipulation tasks. In some studies, the admittance control was utilized as an outer-loop filter, while some traditional position controllers such as PID controller are used as the inner controller. Ryll et al. \cite{ryll_2019_6d} applied admittance control by enabling an aerial robot to follow variations in the contact-plane geometry, while the induced lateral force disturbances caused noticeable rotational deviations. Cataldi et al. \cite{cataldi_2016_impedance} applied an admittance filter to calculate the reference for the lower-level controller. Compared with the impedance control, the admittance control has been less widely used in the aerial manipulation tasks.
 
 
-Admittance control has been widely used for robotic manipulators to generate compliant motion during physical interaction. For example, Solanes et al. \cite{solanes_2018_adaptive} applied admittance control to command the joint angles, in response to the interaction with a curved surface. In our framework, admittance control is applied to the multi-link structure as a regulator to apapt to external geometric variations by joint motion. The mechanism is therefore more similar to controlling a robotic manipulator than controlling the aerial robot itself, making methods from the robotic manipulator control field more relevant to our framework.
+In contrast to its relatively limited application to aerial robots,admittance control has been widely used for robotic manipulators to generate compliant motion during physical interaction. For example, Solanes et al. \cite{solanes_2018_adaptive} applied admittance control to command the joint angles, in response to the interaction with a curved surface. In our framework, admittance control is applied to the multi-link structure as a regulator to apapt to external geometric variations by joint motion. The mechanism is therefore more similar to controlling a robotic manipulator than controlling the aerial robot itself, making methods from the robotic manipulator control field more relevant to our framework.
 
 In conclusion, while these studies demonstrate the potential of impedance- or admittance-based approaches for aerial manipulation tasks in interaction scenarios, each method inevitably inherits the limitations of its underlying control principle.
 This thesis tries to combine these two controllers together on the same platform in order to exploit their respective strengths in dealing with different interaction requirements.
@@ -147,16 +147,16 @@ This thesis tries to combine these two controllers together on the same platform
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Construction of the Thesis}
 
-This thesis investigates the force control method of multi-link aerial robots. The overall structure of the thesis is organized as follows.
+Based on the related research and current problems introduced above, this thesis investigates force control methods for multi-link aerial robots, with a particular focus on contact-rich surface sliding tasks. The overall structure of the thesis is organized as follows.
 
 \begin{itemize}
-  \item Chapter 1 introduces the research background and reviews related work about the definition and solution of surface sliding tasks, morphologies of aerial robots and force-control methods used in aerial manipulation. Based on the above discussion, the motivation, objectives and main contributions of this thesis are introduced.
+  \item Chapter 1 introduces the research background and reviews related work about the definition and solution of surface sliding tasks, morphologies of aerial robots and force-control methods used in aerial manipulation. Based on the above discussion, the motivation, objectives, and proposed approach of this thesis are introduced.
   \item Chapter 2 presents the preliminary materials of this thesis, including the notation definitions, the modeling of multi-link aerial robots and the external wrench estimation algorithm.
   \item Chapter 3 introduces the basic concepts of impedance control, analyzes how impedance control can redesign the dynamic parameters of a system, and provides a new insight into the impedance parameters. The implementation on multi-link aerial robots is also introduced.
   \item Chapter 4 introduces the basic concepts of admittance control. Admittance control is used to adapt to external geometric variations through structural deformation by adjusting the configuration of the aerial robot.
   \item Chapter 5 introduces how to combine impedance control and admittance control as hybrid impedance--admittance control in the same system. The effects of the integrated hybrid controller are explained.
   \item Chapter 6 presents the experimental results, discusses the controller parameters, and exhibits the preliminary experiments on the impedance and admittance responses to external forces. Hydrus Xi is selected to demonstrate the main concepts, while DRAGON is used to show the applicability of the proposed framework to different multi-link aerial robots.
-  \item Finally, Chapter 7 concludes the thesis by summarizing the main findings and contributions of this work and outlining directions for future research.
+  \item Finally, Chapter 7 concludes the thesis by summarizing the main findings of this work and outlining directions for future research.
 \end{itemize}
 
 
