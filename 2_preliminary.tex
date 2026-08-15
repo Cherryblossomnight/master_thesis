@@ -1,19 +1,19 @@
 \chapter{Preliminary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this chapter, we will introduces the notation used throughout this thesis, the modeling of multi-link aerial robots, and the external wrench estimation method. In the modeling part, two types of multi-link aerial robots will be presented. One is the underactuated multi-link aerial robot Hydrus Xi, which can achieve 2D deformation while retaining the overall actuation of a conventional quadrotor. The other is the overactuated multi-link aerial robot DRAGON, which can deform in a 3D workspace. The basic constructions, dynamics and allocation modeling process will be introduced.
+In this chapter, we will introduce the notation used throughout this thesis, the modeling of multi-link aerial robots, and the external wrench estimation method. In the modeling part, two types of multi-link aerial robots will be presented. One is the underactuated multi-link aerial robot Hydrus Xi, which can achieve 2D deformation while retaining the overall actuation of a conventional quadrotor. The other is the overactuated multi-link aerial robot DRAGON, which can deform in a 3D workspace. The basic constructions, dynamics and allocation modeling processes will be introduced.
 
 
 \section{Notation}
 In this thesis, we denote scalars by regular font $x \in \mathbb{R}$, vectors by bold lowercase $\boldsymbol{x} \in \mathbb{R}^n$, and matrices by bold uppercase $\boldsymbol{X} \in \mathbb{R}^{m \times n}$. A vector expressed in frame $\{A\}$ is written as $^A\boldsymbol{p}$, and the rotation matrix from frame $\{A\}$ to frame $\{B\}$ is denoted as $^A\boldsymbol{R}_B$.
-Also, ${W}$ represents the world frame, and ${C}$ represents the CoG frame. For each link $i\in{1,2,3,4}$, ${F_i}$, ${G_i}$, and ${L_i}$ denote the thrust frame, gimbal roll frame, and link middle frame, respectively, associated with the corresponding gimbal module and link.
+Also, $\{W\}$ represents the world frame, and $\{C\}$ represents the CoG frame. For each link $i\in\{1,2,3,4\}$, $\{F_i\}$ and $\{G_i\}$ denote the thrust frame and gimbal roll frame of the corresponding gimbal module, while $\{L_i\}$ denotes the middle frame of the corresponding link.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Modeling of Multi-Link Aerial Robots}
 
 \subsection{General Description of Multi-Link Aerial Robots}
-The multi-link aerial robots consist of multiple serially connected links for deformation. Two typical multi-link aerial robots are shown in Fig.~\ref{fig:multi-link}. The relative angles between the serial links can be changed, enabling robotic arm-like movements in the air. To realize the dexterous aerial motion, rotors are arranged on the gimbal modules, which can change the thrust direction of the rotors depending on gimbal types, therefore achieve vectoring thrust. Each link is equipped with one gimbal module. The thrust direction of each rotor can be adjusted according to the joint angles and task requirements to maintain stable flight during hovering and generate sufficient wrench for aerial manipulation.
+The multi-link aerial robots consist of multiple serially connected links for deformation. Two typical multi-link aerial robots are shown in Fig.~\ref{fig:multi-link}. The relative angles between the serial links can be changed, enabling robotic arm-like movements in the air. To realize the dexterous aerial motion, rotors are arranged on the gimbal modules, which can change the thrust direction of the rotors depending on the gimbal types, thereby achieving vectoring thrust. Each link is equipped with one gimbal module. The thrust direction of each rotor can be adjusted according to the joint angles and task requirements to maintain stable flight during hovering and generate sufficient wrench for aerial manipulation.
 
 
 \subsection{Dynamic Model}
@@ -26,7 +26,7 @@ Using the notation defined above, the dynamics of the multi-link aerial robots a
     \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
 \end{align}
 \end{subequations}
-where $m$ is the total mass, $\boldsymbol{I}$ is the total inertial matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint angels and thrust directions vary during motion, the inertial matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertial matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
+where $m$ is the total mass, $\boldsymbol{I}$ is the total inertia matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint angles and thrust directions vary during motion, the inertia matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertia matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
 
 
 \begin{figure}[t]
@@ -50,7 +50,7 @@ The command force ${^W\boldsymbol{f}_{cmd}}$ and the command torque ${^{C}\bolds
     &=\lambda_i(^{C}\boldsymbol{\hat{p}}_{F_i}+\kappa_i\boldsymbol{E}_3)^C\boldsymbol{R}_{F_i}\boldsymbol{b}_3.
 \end{aligned}
 \end{equation}
-Here, $i\in{1,2,3,4}$ since the multi-link aerial robots considered in this thesis consist of four links. The joint angles and thrust directions determine $^{C}\boldsymbol{R}_{F_i}\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}\in \mathbb{R}^3$, which denote the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot{}}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
+Here, $i\in\{1,2,3,4\}$ since the multi-link aerial robots considered in this thesis consist of four links. The joint angles and thrust directions determine $^{C}\boldsymbol{R}_{F_i}\in \mathbb{R}^{3\times3}$ and $^{C}\boldsymbol{p}_{F_i}\in \mathbb{R}^3$, which denote the rotation matrix and the position vector of the rotor frame $\{F_i\}$ w.r.t. the CoG frame $\{C\}$. The rotor frame $\{F_i\}$ is attached to the rotor mount, and the thrust force $\lambda_i$ is along the $z$ axis of $\{F_i\}$. The vector $\boldsymbol{b}_3 = \begin{bmatrix}0 & 0 & 1\end{bmatrix}^{\mathrm{T}}$ is a unit vector and $\kappa_i$ is the coefficient associated with the rotor drag moment. The operator $\hat{\cdot}$ converts a vector into a skew-symmetric matrix, and $\boldsymbol{E}_3$ denotes the $3 \times 3$ identity matrix. 
 
 Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the mapping from the thrust vector $\boldsymbol{\lambda} = \begin{bmatrix}\lambda_1 & \lambda_2 & \lambda_3&\lambda_4\end{bmatrix}^{\mathrm{T}}$ to the command wrench is given by:
 \begin{equation}
@@ -74,7 +74,7 @@ Using \eqref{eq:allocation for force} and \eqref{eq:allocation for torque}, the 
 \end{equation}
 where $\boldsymbol{Q}_t \in \mathbb{R}^{3\times4}$ and $\boldsymbol{Q}_r\in \mathbb{R}^{3\times4}$ denote the translational and rotational components of the allocation matrix, respectively. The command force in the world frame can be obtained by $^W\!\boldsymbol{f}_{cmd} = ^W\!\!\!\boldsymbol{R}_C{}^C\!\boldsymbol{f}_{cmd}$.
 
-In this thesis, the allocation matrices $\boldsymbol{Q}_t$ and $\boldsymbol{Q}_r$ depend on the joint angles and thrust directions. We use optimization method introduced in \cite{zhao_2021_singularity} or iterative solution using gradient introduced in \cite{zhao_2023_versatile} to calculate the thrust directions and the gimbal angles automatically. 
+In this thesis, the allocation matrices $\boldsymbol{Q}_t$ and $\boldsymbol{Q}_r$ depend on the joint angles and thrust directions. We use the optimization method introduced in \cite{zhao_2021_singularity} or an iterative solution using gradients based on an optimization method introduced in \cite{zhao_2023_versatile} to calculate the thrust directions and the gimbal angles automatically. 
 
 
 \subsection{Underactuated Configuration: Hydrus Xi}
@@ -83,7 +83,7 @@ The underactuated multi-link aerial robot Hydrus Xi \cite{zhao_2021_singularity}
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/hydrus_model.png}
-      \caption{Model of the 2D multi-link aerial robot Hydrus Xi. ${L_i}$ denotes the link frame, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction. The tilt angle between $z$ axes of ${L_i}$ and ${F_i}$ is $\beta$, and the vectoring angle is $\psi_i$. }
+      \caption{Model of the 2D multi-link aerial robot Hydrus Xi. $\{L_i\}$ denotes the link frame, while $\{F_i\}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction. The tilt angle between $z$ axes of $\{L_i\}$ and $\{F_i\}$ is $\beta$, and the vectoring angle is $\psi_i$. }
     \label{fig:hydrus_model}
 \end{figure}
 
@@ -127,14 +127,14 @@ where $\boldsymbol{Q}_t(\boldsymbol{q},\boldsymbol{\psi}) $ and $\boldsymbol{Q}_
 
 
 \subsection{Overactuated Configuration: DRAGON}
-The overactuated multi-link aerial robot DRAGON \cite{zhao_2018_design, zhao_2023_versatile} is shown in Fig.~\ref{fig:dragon_model}. The platform also consists of four links, each of which is equipped with an independent gimbal module. The robot employs a serial-link structure with two rotational degrees of freedom per joint. Here $q_i$ is used to represent the $i$th joint angle. Each gimbal module has two gimbal angles, $\phi_i$ and $\theta_i$, which provide two degrees of freedom for changing the thrust direction relative to the corresponding link. More details of the robot structure can be found in \cite{zhao_2018_design}.
+The overactuated multi-link aerial robot DRAGON \cite{} is shown in Fig.~\ref{fig:dragon_model}. The platform also consists of four links, each of which is equipped with an independent gimbal module.The robot employs a serial-link structure with two rotational degrees of freedom between adjacent links, realized by two orthogonal rotational joints. Here, $q_i$ is used to represent the $i$th joint angle. Each gimbal module has two gimbal angles, $\phi_i$ and $\theta_i$, which provide two degrees of freedom for changing the thrust direction relative to the corresponding link. More details of the robot structure can be found in \cite{}.
 
 
 
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/dragon_model.png}
-    \caption{Model of the 3D multi-link aerial robot DRAGON. (a) Kinematic model of DRAGON, with ${L_i}$ denoting the link frame. (b) Two-DoF joint module with orthogonal yaw and pitch axes ($q_{i\_yaw}$, $q_{i\_pitch}$). (c) Two-DoF thrust-vectoring apparatus with gimbal angles $\theta_i$ and $\phi_i$. ${G_i}$ denotes the intermediate frame (gimbal roll frame) after the $\phi_i$ rotation, while ${F_i}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction.}
+    \caption{Model of the 3D multi-link aerial robot DRAGON. (a) Kinematic model of DRAGON, with $\{L_i\}$ denoting the link frame. (b) Two-DoF joint module with orthogonal yaw and pitch axes ($q_{i\_yaw}$, $q_{i\_pitch}$). (c) Two-DoF thrust-vectoring apparatus with gimbal angles $\theta_i$ and $\phi_i$. $\{G_i\}$ denotes the intermediate frame (gimbal roll frame) after the $\phi_i$ rotation, while $\{F_i\}$ denotes the thrust frame whose $z$ axis is aligned with the thrust direction.}
     \label{fig:dragon_model}
 \end{figure}
 
@@ -145,7 +145,7 @@ In DRAGON's case, the command equations (\ref{eq:allocation for force}), (\ref{e
 
 \begin{equation}
 \label{eq:allocation for force dragon}
-    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{L_i}(\boldsymbol{q})^{L_i}\boldsymbol{R}_{G_i}(\phi_i)^{G_i}\boldsymbol{R}_{F_i}(\theta_i)\boldsymbol{b}_3=\lambda_i^{C}\!\boldsymbol{u}_i
+    {^C\!\boldsymbol{f}_i}=\lambda_i^C\!\boldsymbol{R}_{L_i}(\boldsymbol{q})^{L_i}\boldsymbol{R}_{G_i}(\phi_i)^{G_i}\boldsymbol{R}_{F_i}(\theta_i)\boldsymbol{b}_3=\lambda_i^{C}\!\boldsymbol{u}_i.
 \end{equation}
 
 \begin{equation}
@@ -176,7 +176,7 @@ where
 ^C\!\boldsymbol{v}_1&^C\!\boldsymbol{v}_2&^C\!\boldsymbol{v}_3&^C\!\boldsymbol{v}_4
 \end{pmatrix}.
 \end{equation}
-Here $\boldsymbol{Q}(\boldsymbol{q}, \boldsymbol{\phi}, \boldsymbol{\theta}) \in \mathbb{R}^{6 \times 4}$ denotes the allocation matrix, which depends on the joint angles $\boldsymbol{q}$ and gimbal angles $\boldsymbol{\phi}$ and $\boldsymbol{\theta}$. For simplicity, its columns are denoted by $^C\boldsymbol{u}_i$ and $^C\boldsymbol{v}_i$.
+Here, $\boldsymbol{Q}(\boldsymbol{q}, \boldsymbol{\phi}, \boldsymbol{\theta}) \in \mathbb{R}^{6 \times 4}$ denotes the allocation matrix, which depends on the joint angles $\boldsymbol{q}$ and gimbal angles $\boldsymbol{\phi}$ and $\boldsymbol{\theta}$. For simplicity, its columns are denoted by $^C\boldsymbol{u}_i$ and $^C\boldsymbol{v}_i$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -191,7 +191,7 @@ For both impedance control and admittance control, an external wrench is require
  {^C\!\boldsymbol{\tilde{\tau}}_{ext}}=\boldsymbol{K}_{ri}(\boldsymbol{I}^C\!\boldsymbol{\omega}-\int({^C\!\boldsymbol{\tau}_{cmd}}-{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}} + {^C\!\boldsymbol{\tilde{\tau}}_{ext}})\mathrm{d}t),
 \end{align}
 \end{subequations}
-where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}}_{ext}$ and the real external torque   ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} \in $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translation gain matrix and estimator rotation gain matrix, respectively.
+where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}_{ext}}$ and the real external torque  ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translation gain matrix and estimator rotation gain matrix, respectively.
 
 Differentiating (\ref{eq:external wrench estimation}) and substituting (\ref{eq:dynamics}) into it yields a first-order low-pass filtered form: 
 \begin{subequations}
@@ -201,9 +201,9 @@ Differentiating (\ref{eq:external wrench estimation}) and substituting (\ref{eq:
  {^C\!\boldsymbol{\dot{\tilde{\tau}}}_{ext}}&=\boldsymbol{K}_{ri}({^C\!\boldsymbol{\tau}_{ext}}-{^C\!\boldsymbol{\tilde{\tau}}_{ext}}).
 \end{align}
 \end{subequations}
-That means by increasing the parameters, the estimated data will follow the real data faster, but also easier to introduce noise and lead to instability.
+This means that by increasing the parameters, the estimated data will follow the real data faster, but will also be more likely to introduce noise and lead to instability.
 
-Note that \eqref{eq:external wrench estimation} estimates external forces and torques without using acceleration measurements, relying solely on the estimated linear and angular velocities. That means only by using built-in IMU data, we can realize getting the external wrench data.
+Note that \eqref{eq:external wrench estimation} estimates external forces and torques without using acceleration measurements, relying solely on the estimated linear and angular velocities. This means that the external wrench can be obtained using only the built-in IMU data.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
