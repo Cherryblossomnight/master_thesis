@@ -11,6 +11,15 @@ However, when facing a broader range of aerial manipulation tasks, both mechanic
 
 We first consider potential improvements to the mechanical structure. Intuitively, aerial manipulation tasks can be executed by an aerial robot equipped with a manipulator. Therefore, current aerial morphologies are designed by either attaching a static manipulator (e.g., a tool or a stick) to the aerial robot, or mounting a robotic arm on the aerial robot. In both cases mentioned above, the whole aerial mechanical system simply consists of the aerial robot itself and the manipulator. Until now, the design principle has been proven effective across various tasks. However, when the complexity of the task increases, such traditional morphologies may suffer from scenarios that require a higher degree of freedom and operation in confined spaces. It is necessary to consider developing aerial robots with other morphologies.
 
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/chapter1/main_figure.png}
+  \caption{The multi-link aerial robots are tracking circular trajectories on a sloped board while maintaining contact. The desired trajectories are marked by white dashed lines. (a) 2D multi-link aerial robot Hydrus Xi. (b) 3D multi-link aerial robot DRAGON.}
+  \label{fig:main_figure}
+\end{figure}
+
+
 Considering the complex requirements of real-world environments, in order to raise the performance ceiling of existing aerial robots for aerial manipulation, articulated multi-link aerial robots were developed. Multi-link aerial robots consist of articulated serial-link structures, which enables them to achieve serpentine flying trajectory and undergo significant deformation in mid-air. Besides, their deformability provides additional degrees of freedom for manipulation during flight \cite{zhao_2021_singularity, zhao_2018_design, yang_2018_lasdra, hameed_2025_dragonfly}. Their structures help to go through narrow spaces or enhance the operation wrench \cite{zhao_2020_online, zhao_2022_forceful}, which significantly expands the range of methods available for aerial manipulation. Owing to these structural advantages, multi-link aerial robots offer opportunities for many applications, including inspection and search-and-rescue tasks. Their effectiveness has been demonstrated in a variety of experimental tasks, such as grasping objects \cite{hameed_2025_dragonfly, shi_2020_aerial, zhao_2023_versatile}, opening sliding doors \cite{sugito_2022_aerial} and manipulating valves \cite{zhao_2022_forceful}. Inspired by the success of deformable structures in various aerial manipulation tasks, such robots can adapt to potential geometric variations, making this morphology a promising solution for the proposed surface sliding task.
 
 
@@ -24,12 +33,7 @@ Considering the complex requirements of real-world environments, in order to rai
 
 % (it is essential to further address more complex interaction scenarios that involve sustained contact and environmental uncertainties.)
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figures/chapter1/main_figure.png}
-  \caption{The multi-link aerial robots are tracking circular trajectories on a sloped board while maintaining contact. The desired trajectories are marked by white dashed lines. (a) 2D multi-link aerial robot Hydrus Xi. (b) 3D multi-link aerial robot DRAGON.}
-  \label{fig:main_figure}
-\end{figure}
+
 
 
 Secondly, regarding control strategies, force control plays an essential role in contact-rich tasks. Two widely adopted force control approaches, impedance control and admittance control, have been extensively applied in the aerial manipulation tasks \cite{ollero_2021_past}. However, they each have their own advantages and disadvantages. Impedance control performs well in regulating interaction forces and resisting external force disturbances, but typically exhibits limited adaptability to changing contact geometry. In contrast, admittance control is effective in adapting to geometric variations, but is generally less robust against large interaction force disturbances. These differences originate from the complementary yet opposite causal relationships of impedance and admittance control paradigms \cite{ott_2010_unified}. Consequently, contact-rich tasks that simultaneously require disturbance rejection and adaptation to uncertain surface geometry cannot be reliably addressed by either approach alone, naturally motivating a combination of both control principles to achieve resilient and adaptive interaction capabilities.

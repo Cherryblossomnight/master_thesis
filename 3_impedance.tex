@@ -1,11 +1,11 @@
 \chapter{Impedance Control for CoG Motion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this chapter, we will introduce the fundamental concept of impedance control and how can we achieve it in the multi-link aerial robots, as well as a new insight of impedance control. After that, the special setting on the 2D mutli-link aerial robot Hydrus Xi and on the 3D multi-link aerial robot DRAGON will be introduced. Finally, due to some tasks need to select the impedance acting coordinate, we will introduce the task-oriented impedance coordinate selection method.
+In this chapter, we will introduce the fundamental concept of impedance control and how we can achieve it in multi-link aerial robots, as well as a new insight into impedance control. After that, the special settings for the 2D multi-link aerial robot Hydrus Xi and the 3D multi-link aerial robot DRAGON will be introduced. Finally, since some tasks require the selection of the impedance acting coordinate, we will introduce the task-oriented impedance coordinate selection method.
 % We will discuss a new concept of impedance controller.
 % also what should we consider when choosing the parameters in impedance and admittance controller
 % \section{Motivation}
-
+.
 % The motivation for this hybrid impedance-admittance control framework is to provide both resilience and adaptivity when sliding on an unknown surface, where geometry and friction introduce significant uncertainties.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,9 +17,11 @@ In this chapter, we will introduce the fundamental concept of impedance control 
 
 % In this section, we will introduce how to adjust parameters to make the aerial robot to meet the require performance.
 % In this subsection, we will introduce the 
-Impedance control models the robot as a second-order system in the sight of environment, so that the robot can adjusting its own movement by external force \cite{hogan_1984_impedance}. To meat different requirements, the dynamic parameters can be freely designed to achieve the desired interaction behavior. For example, by adjusting the stiffness parameters, the robot can be made resilient in certain directions to reject disturbances while remaining compliant in others to maintain safe interaction \cite{bodie_2020_active}. In this section, we will introduce how to get the command wrench equation of impedance control.
+Impedance control models the robot as a second-order system from the perspective of the environment, so that the robot can adjust its own movement according to external forces \cite{hogan_1984_impedance}. To meat different requirements, the dynamic parameters can be freely designed to achieve the desired interaction behavior. For example, by adjusting the stiffness parameters, the robot can be made resilient in certain directions to reject disturbances while remaining compliant in others to maintain safe interaction \cite{bodie_2020_active}. In this section, we will introduce how to obtain the command wrench equation of impedance control.
 
-We will obtain the motion by translational and rotational, seperatively. The translational motion is expressed in the world frame $\{W\}$, whereas the rotational motion is expressed in the CoG frame $\{C\}$. Under this convention, the impedance equations are written as:
+We will describe the motion in terms of translation and rotation separately. The translational motion is expressed in the world frame $\{W\}$, whereas the rotational motion is expressed in the CoG frame $\{C\}$. Under this convention, the impedance equations are written as:
+
+
 \begin{subequations}
 \label{eq:impedance control 1}
 \begin{align}
@@ -27,7 +29,8 @@ We will obtain the motion by translational and rotational, seperatively. The tra
     {\boldsymbol{I}_{d}}{^C\!\dot{\boldsymbol{\omega}}}+{\boldsymbol{C}_{rd}}{\boldsymbol{e}_\omega}+{\boldsymbol{K}_{rd}}{\boldsymbol{e}_R}&={^C\!\boldsymbol{\tilde{\tau}}_{ext}},
 \end{align}
 \end{subequations}
-where ${\boldsymbol{M}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual mass, ${\boldsymbol{I}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual inertia, ${\boldsymbol{C}_{td}}\in \mathbb{R}^{3\times3}$, ${\boldsymbol{C}_{rd}}\in \mathbb{R}^{3\times3}$ are the desired linear and rotational damping matrices, and ${\boldsymbol{K}_{td}}\in \mathbb{R}^{3\times3}$, ${\boldsymbol{K}_{rd}}\in \mathbb{R}^{3\times3}$ are the desired linear and rotational stiffness matrices, respectively. All of these matrices are positive definite. These are what we want the system performs like. Here the error vectors in (\ref{eq:impedance control 1}) are defined as:
+where ${\boldsymbol{M}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual mass, ${\boldsymbol{I}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual inertia, ${\boldsymbol{C}_{td}}\in \mathbb{R}^{3\times3}$, ${\boldsymbol{C}_{rd}}\in \mathbb{R}^{3\times3}$ are the desired linear and rotational damping matrices, and ${\boldsymbol{K}_{td}}\in \mathbb{R}^{3\times3}$, ${\boldsymbol{K}_{rd}}\in \mathbb{R}^{3\times3}$ are the desired linear and rotational stiffness matrices, respectively. All of these matrices are positive definite. These are the dynamics that we want the system to exhibit. Here the error vectors in (\ref{eq:impedance control 1}) are defined as:
+
 \begin{subequations}
 \label{eq:error of rotation}
 \begin{align}
@@ -37,108 +40,107 @@ where ${\boldsymbol{M}_{d}}\in \mathbb{R}^{3\times3}$ is the desired virtual mas
     {\boldsymbol{e}_\omega}&={^C\!\boldsymbol{\omega}}-{^W\!\boldsymbol{R}^{\mathrm{T}}_{C}}{^W\!\boldsymbol{\omega}}_{ref},
 \end{align}
 \end{subequations}
-where we use the vee-operator $^\vee$ to extract a vector from a skew symmetric matrix.
+where we use the vee-operator $^\vee$ to extract a vector from a skew-symmetric matrix.
 
-Next, by substituting the dynamic equations \eqref{eq:dynamics} into the impedance control equations \eqref{eq:impedance control 1} in order to eliminate $\ddot{\boldsymbol{p}}$ and $\dot{\boldsymbol{\omega}}$, the command wrench added on the CoG can be derived. The translational component can be written as
+Next, by substituting the dynamic equations \eqref{eq:dynamics} into the impedance control equations \eqref{eq:impedance control 1} to eliminate $\ddot{\boldsymbol{p}}$ and $\dot{\boldsymbol{\omega}}$, the command wrench applied to the CoG can be derived. The translational component can be written as
 
 \begin{equation}
 \label{eq:imp cmd for trans1}
     {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m\boldsymbol{M}_d^{-1}({\boldsymbol{C}_{td}}{\boldsymbol{e}_v}+{\boldsymbol{K}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
 \end{equation}
 
-And the rotational component can be written as
+The rotational component can be written as
 
 \begin{equation}
 \label{eq:imp cmd for rot1}
     {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}\boldsymbol{I}^{-1}_d({\boldsymbol{C}_{rd}}{\boldsymbol{e}_\omega}+{\boldsymbol{K}_{rd}}{\boldsymbol{e}_R})+{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
-Here we obtain the command wrench that the rotor of the aerial robot must generate.
+Here, we obtain the command wrench that the rotors of the aerial robot must generate.
 
-Finally, for some reason we will introduce in the next section, we can rewrite the \ref{eq:imp cmd for trans1} and \ref{eq:imp cmd for rot1} as follow.  Here we define the normalized linear damping and stiffness as $\tilde{\boldsymbol{C}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{C}_{td}$ and $\tilde{\boldsymbol{K}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{K}_{td}$, respectively. Using these definitions, \eqref{eq:imp cmd for trans1} can be rewritten as
+Finally, for the reason that we will introduce in the next section, we can rewrite the \ref{eq:imp cmd for trans1} and \ref{eq:imp cmd for rot1} as follows. Here we define the normalized linear damping and stiffness as $\tilde{\boldsymbol{C}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{C}_{td}$ and $\tilde{\boldsymbol{K}}_{td} = \boldsymbol{M}^{-1}_d\boldsymbol{K}_{td}$, respectively. Using these definitions, \ref{eq:imp cmd for trans1} can be rewritten as
+
 \begin{equation}
 \label{eq:imp cmd for trans2}
     {^W\!\boldsymbol{f}_{cmd}}=(m\boldsymbol{M}^{-1}_d-\boldsymbol{E}_3){^W\!\boldsymbol{\tilde{f}}_{ext}}-m(\tilde{\boldsymbol{C}}_{td}{\boldsymbol{e}_v}+{\tilde{\boldsymbol{K}}_{td}}{\boldsymbol{e}_p})+m\boldsymbol{g}.
 \end{equation}
-Also we define the normalized rotation damping and stiffness as $\tilde{\boldsymbol{C}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{C}_{rd}$ and $\tilde{\boldsymbol{K}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{K}_{rd}$, respectively. Equation (\ref{eq:imp cmd for rot1}) can then be rewritten as
+Also, we define the normalized rotational damping and stiffness as $\tilde{\boldsymbol{C}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{C}_{rd}$ and $\tilde{\boldsymbol{K}}_{rd} = \boldsymbol{I}^{-1}_d\boldsymbol{K}_{rd}$, respectively. Equation (\ref{eq:imp cmd for rot1}) can then be rewritten as
+
 \begin{equation}
 \label{eq:imp cmd for rot2}
-    {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_\alpha})
+    {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_R})
     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
-These equations help generate the command wrench that we want the rotors to perform. In next section, we will explain why we rewrite the equation like these, and will introduce a new insight of impedance control.
+These equations help generate the command wrench that we want the rotors to generate. In the next section, we will explain why we rewrite the equations in this form and introduce a new insight into impedance control.
+
 % Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parameter tuning discussion}
 \label{sec:imp_param_tuning}
-One of the most important features of impedance control is the performance of aerial robot can be reshaped due to the specificly designed parameter matrices. However, Tranditional literatures seldomly consider the connection between the parameter selection and the flight and contact behaviours. Even though the parameter matrices usually have specific physical meaning, these physical interpretations do not directly provide a practical parameter selection procedure. Therefore, although the qualitative influence of each parameter is generally understood, determining suitable numerical values remains difficult in practice. 
+One of the most important features of impedance control is that the performance of the aerial robot can be reshaped by specifically designed parameter matrices. However, traditional literature seldom considers the connection between parameter selection and flight and contact behaviors. Even though the parameter matrices usually have specific physical meanings, these physical interpretations do not directly provide a practical parameter selection procedure. Therefore, although the qualitative influence of each parameter is generally understood, determining suitable numerical values remains difficult in practice. 
 
-In this section, by re-analyze the meaning of the impedance parameters, we will obtain a new insight about impedance control, and find the special according relationship between impedance control and PID control. Therefore, the parameters can be better selected according to the resulting system behavior rather than their physical meanings alone. 
+In this section, by re-analyzing the meaning of the impedance parameters, we will obtain a new insight into impedance control and find the specific corresponding relationship between impedance control and PID control. Therefore, the parameters can be better selected according to the resulting system behavior rather than their physical meanings alone.
+
+
 
 % We can find some relationship between PID control and impedance control, therefore use PID inspired tuning method to find the suitable parameters.
 
 
-Let's consider the following 1-DoF impedance control equation
+Let's consider the following 1-DoF impedance control equation:
 \begin{equation}
 \label{eq:imp cmd analysis1}
   m_d\ddot{p}+c_de_v+k_de_p = f_{ext},
 \end{equation}
-Here, the parameters $m_d$, $c_d$, $k_d$ are the designed mass, the designed damping, and the designed stiffness, respectively. $\ddot{p}$ is the current acceleration, while $e_v$ and $e_p$ denote the velecity and position error defined as $e_v = \dot{p}-\dot{p}_{ref}$ and $e_p = p-p_{ref}$, respectively. $f_{ext}$ represents the external force.
+Here, the parameters $m_d$, $c_d$, and $k_d$ are the designed mass, the designed damping, and the designed stiffness, respectively. $\ddot{p}$ is the current acceleration, while $e_v$ and $e_p$ denote the velocity and position errors defined as $e_v = \dot{p}-\dot{p}_{ref}$ and $e_p = p-p_{ref}$, respectively. $f_{ext}$ represents the external force.
 
 
-The dynamic equation of a 1-dof object can be written as
+The dynamic equation of a 1-DoF object can be written as
 \begin{equation}
 \label{eq:imp cmd analysis2}
   m\ddot{p}+g(\dot{p}, p) = f_{ext} + f_{cmd},
 \end{equation}
-here $g(\dot{p}, p)$ represents an extreme term such as gravity and Coriolis, $f_{cmd}$ is the command force. 
-By substituting equation (\ref{eq:imp cmd analysis2}) into equation (\ref{eq:imp cmd analysis1}) in order to  eliminate $\ddot{p}$, we can get
+where $g(\dot{p}, p)$ represents an external term such as gravity and Coriolis effects, and $f_{cmd}$ is the command force.
+By substituting equation (\ref{eq:imp cmd analysis2}) into equation (\ref{eq:imp cmd analysis1}) to eliminate $\ddot{p}$, we can obtain
 
 \begin{equation}
 \label{eq:imp cmd analysis3}
-{{f}_{cmd}}=(\frac{m}{m_d}-1){{f}_{ext}}-m({\frac{c_d}{m_d}e_v+\frac{c_d}{k_d}e_p})+g(\dot{p}, p).
+{{f}_{cmd}}=(\frac{m}{m_d}-1){{f}_{ext}}-m({\frac{c_d}{m_d}e_v+\frac{k_d}{m_d}e_p})+g(\dot{p}, p).
 \end{equation}
 
-Theoretically, the three parameters $m_d$, $c_d$ and $k_d$ can be chosen independently refer to the task requirement. 
-we define $\tilde{c}_d = \frac{c_d}{m_d}$, $\tilde{k}_d = \frac{k_d}{m_d}$ as the normalized damping and normalized stiffness, respectively. we also use mass ratio $\mu$ to replace $\frac{m}{m_d}$, so the equation becomes 
+Theoretically, the three parameters $m_d$, $c_d$, and $k_d$ can be chosen independently according to the task requirements.
+We define $\tilde{c}_d = \frac{c_d}{m_d}$ and $\tilde{k}_d = \frac{k_d}{m_d}$ as the normalized damping and normalized stiffness, respectively. We also use the mass ratio $\mu$ to replace $\frac{m}{m_d}$, so the equation becomes
 \begin{equation}
 \label{eq:imp cmd analysis4}
 {{f}_{cmd}}=(\mu-1){{f}_{ext}}-m({\tilde{c}_de_v+\tilde{k}_de_p})+g(\dot{p}, p).
 \end{equation}
 
-If we write the PID control equation as 
+If we write the PID control equation as
 \begin{equation}
 \label{eq:PID cmd}
-{{f}_{cmd}}=-k_pe_p-k_i\int e_p\mathrm{d}t-k_de_v+g(\dot{p}, p).
+{{f}_{cmd}}=-k_p^{PID}e_p-k_i^{PID}\int e_p\mathrm{d}t-k_d^{PID}e_v+g(\dot{p}, p).
 \end{equation}
-Note that the defination of errors here is the current value minus the reference value, therefore here we use minus symbol.
+Note that the errors here are defined as the current values minus the reference values; therefore, we use negative signs in the control law.
 
-We could find that the two equations are very similar. If we chose $\tilde{c}_d=\frac{k_d}{m}$ and $\tilde{k}_d=\frac{k_p}{m}$, the only differenty lines on the I term $k_i\int e_p\mathrm{d}t$ and the external force  compensation term $(\mu-1){{f}_{ext}}$. Both of them are designed to reduce errors, but the effect is different in the contact situation.
+We can find that the two equations are very similar. If we choose $\tilde{c}_d=\frac{k_d^{PID}}{m}$ and $\tilde{k}_d=\frac{k_p^{PID}}{m}$, the only differences lie in the integral term $k_i^{PID}\int e_p\mathrm{d}t$ and the external force compensation term $(\mu-1){{f}_{ext}}$. Both of them are designed to reduce errors, but their effects are different in contact situations.
 
-In the context of interaction, due to the contact condition, we may encounter it usually exist persistent position error between the position reference and the contact boundary in the contact direction, or persistent external force related to friction in the moving direction. In the case of contact direction, to reduce the position error, the I term $k_i\int e_p\mathrm{d}t$ will continue integral to increase the command force to infinite except we set a limitation in advance. That is means the integral term unable to respond well to external forces. On the other hand, the external force term $(\mu-1){{f}_{ext}}$ is related to the estimated external force. It can adjust the final command wrench by considering the external force, and the real contact force vary indirectly with changes in position error. In the case of moving direction, the external force term can compensate part of the friction, which means it can perform better than PID control that does not have the imformation of external force. In a word, in the contact scenario, due to consider the external force imformation, the impedance control generally perform better than the PID control.
+In the context of interaction, due to the contact conditions, there may be a persistent position error between the position reference and the contact boundary in the contact direction, or a persistent external force related to friction in the moving direction. In the case of the contact direction, to reduce the position error, the integral term $k_i^{PID}\int e_p\mathrm{d}t$ will continue to accumulate and increase the command force without bound unless we set a limitation in advance. This means that the integral term is unable to respond well to external forces. On the other hand, the external force term $(\mu-1){{f}_{ext}}$ is related to the estimated external force. It can adjust the final command wrench by considering the external force, while the real contact force varies indirectly with changes in the position error. In the case of the moving direction, the external force term can compensate for part of the friction, which means that it can perform better than PID control that does not have information about the external force. In summary, in contact scenarios, impedance control generally performs better than PID control because it takes external force information into consideration.
 
-Considering in other side, the impedance control still has a lot of similarities to the PID control, so we can get some inspiration form PID parameters tuning process. Here we can divide the impedance equation it into PD control part $-m({\frac{c_d}{m_d}e_v+\frac{c_d}{k_d}e_p})$ and external force part $(\frac{m}{m_d}-1){{f}_{ext}}$. If there is no external force, the external force part should disappear, and only PD control part left. So we can use PID turning method to find the parameters $\tilde{c}_d$ and $\tilde{k}_d$, now they are consider as the $k_p$ and $k_d$.
+On the other hand, impedance control still has many similarities to PID control, so we can get some inspiration from the PID parameter tuning process. Here, we can divide the impedance equation into the PD control part $-m({\frac{c_d}{m_d}e_v+\frac{k_d}{m_d}e_p})$ and the external force part $(\frac{m}{m_d}-1){{f}_{ext}}$. If there is no external force, the external force part disappears, and only the PD control part remains. Therefore, we can use PID tuning methods to determine the parameters $\tilde{c}_d$ and $\tilde{k}_d$, which can now be considered as the corresponding $k_d$ and $k_p$ gains, respectively.
 
-After we tuning the parameters in free flight, it must be consider in contact situation. Let us consider the mass ratio parameter $\mu$. If $\mu$ is set to $0$, the compensation term is exactly the estimated external wrench, so the command will completed compensate the external force. If $\mu$ is set to $1$, the external force term will also disappear, in which situation the impedance controller degenerate to a PD controller. If $\mu > 1$, the external force term has the same direction with the external force, so the command will help to push the aerial robot to the direction of external force, which means the aerial robot will follow the external force. In this situation, the aerial robot can be regarded as compliance, the stiffness is relatively low. On the other hand, if $\mu < 1$, the external force term has the reverse direction with the external force, which means the command will help to resist the external force. In this situation, the aerial robot will try to reduce its movement at the direction of external force, the stiffness is relatively high. In summary, by setting $\mu$ larger or less than $1$, the aerial robot can perform relatively compliant or rigid. By tuning parameters depend on the task requirements and environment situation, the aerial robot can perform differently along different axes.
+After tuning the parameters in free flight, their effects must also be considered in contact situations. Let us consider the mass ratio parameter $\mu$. If $\mu$ is set to $0$, the compensation term is exactly opposite to the estimated external wrench, so the command will completely compensate for the external force. If $\mu$ is set to $1$, the external force term will disappear, in which case the impedance controller degenerates into a PD controller. If $\mu > 1$, the external force term has the same direction as the external force, so the command will help push the aerial robot in the direction of the external force, which means that the aerial robot will follow the external force. In this situation, the aerial robot can be regarded as relatively compliant, and the stiffness is relatively low. On the other hand, if $\mu < 1$, the external force term has the opposite direction to the external force, which means that the command will help resist the external force. In this situation, the aerial robot will try to reduce its movement in the direction of the external force, and the stiffness is relatively high. In summary, by setting $\mu$ larger or smaller than $1$, the aerial robot can exhibit relatively compliant or rigid behavior. By tuning the parameters depending on the task requirements and environmental conditions, the aerial robot can exhibit different behaviors along different axes.
+%
 % The impedance control usually set the parameter between $0$ and $\inf$. If the parameter
 
-Based on this discussion, a practical tuning principle can also be obtained. We can first tune $\tilde{c}_d$ and $\tilde{k}_d$ as the PD controller in free flight, the design the value of $\mu$ to realize what the task what to achieve. Because we use the same set of parameters both in free flight and contact, it is not necessary to switch mode before and after contact.
+Based on this discussion, a practical tuning principle can also be obtained. We can first tune $\tilde{c}_d$ and $\tilde{k}_d$ as PD controller gains in free flight, and then design the value of $\mu$ according to the task requirements. Because we use the same set of parameters in both free flight and contact, it is not necessary to switch the control mode before and after contact.
 
-From this perspective, the impedance control can be consider as the upper lever of pure PD control and feedforward + PD control, or we can also consider the equation as PID controller whose integral term is replaced by estimated wrench term \cite{bodie_2023_omnidirectional}. If the parameter $\mu$ is set to $1$, the compensation term disappeared, and the equation degenerate to a pure PD control. By adjusting $\mu$, the performance will be different, and satisfy the requirements of tasks.
+From this perspective, impedance control can be considered as a generalization of pure PD control and feedforward compensation with PD control. We can also consider the equation as a PID controller whose integral term is replaced by an estimated wrench term \cite{bodie_2023_omnidirectional}. If the parameter $\mu$ is set to $1$, the compensation term disappears, and the equation degenerates into pure PD control. By adjusting $\mu$, different interaction behaviors can be achieved to satisfy different task requirements.
 
-In this section, we can see the fundamental concept of the impedance controller using in multi-link aerial robot. The impedance controller can be considered as the mid situation of the PD controller and the PD controller with the feedforward compensation. The main idea is to adjust the parameter $\mu$ to realize different contact effect in order to meet the different tasks requirement. Due to the impedance controller consider the external force information, it is site to react to the tasks that has some force requirements, realizing both resist to the external force and keep safe. Apparently, the feature of impedance control is very suit for the surface sliding tasks that require force reaction.
-
-
+In this section, we introduced the fundamental concept of the impedance controller used in multi-link aerial robots. The impedance controller can be considered as an intermediate form between a PD controller and a PD controller with feedforward compensation. The main idea is to adjust the parameter $\mu$ to realize different contact behaviors in order to meet different task requirements. Since the impedance controller considers external force information, it is suitable for tasks with force-interaction requirements, allowing the robot to resist external forces while maintaining safe interaction. Therefore, the characteristics of impedance control are well suited to surface sliding tasks that require appropriate responses to external forces.
 
 % So actually we use the same parameters whatever the drone is in free flight or in contacting. when contact happen, the equation will use the compensation term to help deal with the external force.
 % \eqref{eq:imp cmd for trans1} and 
 
 % If there is static force added in the aerial robot, such as force disturbance. For PID controller, the I term will help to resist the external force, so finally the position errors will disappear. For impedance controller, the external term usually could not completely resist the external force, so there must be position errors remained. But the position error can be reduced by tuning the parameter $\mu$. 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Parameter analysis}
-% In most of the pervious paper using impedance control in aerial manipulation, impedance control is usually used as a tool without being entirely explained. Here we will try to explain it.
-% The impedance control equation usually has three parameters to tune. By unit setting, we can rewrite the equation, and discover the insight of the equation.
-
 
 
 
@@ -156,18 +158,25 @@ In this section, we can see the fundamental concept of the impedance controller 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Adaptation of Impedance Control for Multi-Link Aerial Robots}
-After knowing the parameter meanings, we can try to achieve the impedance control on the multi-link aerial robot. Since the current multi-link aerial robots have different mechanical configurations, which could influence their specfic control access, in this section, we will discuss the realization of impedance control based on the underactuated platform Hydrus and the overactuated platform DRAGON, respectively.
+After understanding the parameter meanings, we can implement impedance control on the multi-link aerial robot. Since current multi-link aerial robots have different mechanical configurations, which could influence their specific control implementations, in this section, we will discuss the realization of impedance control based on the underactuated platform Hydrus and the overactuated platform DRAGON, respectively.
+
+
+
 
 \subsection{Implementation on Hydrus}
-To use impedance control on Hydrus, we need do some special step. Due to Hydrus is an underactuated system, it must control the translation part and rotation part cascadely.
+To use impedance control on Hydrus, we need to take some special steps. Since Hydru Xi is an underactuated system, the translational and rotational parts must be controlled cascadely.
 To obtain the desired thrust vector, we first calculate the translational command force magnitude by
 \begin{equation}
 \label{eq:thrust translation 1}
-    f_{cmd}=(^W\!\boldsymbol{R}_{C}\boldsymbol{b}_3){^W\!\boldsymbol{f}_{cmd}},
+f_{cmd}=(^W\!\boldsymbol{R}_{C}\boldsymbol{b}_3)^{\mathrm{T}}
+{^W\!\boldsymbol{f}_{cmd}}.
 \end{equation}
 where $^{W}\boldsymbol{R}_{C}\boldsymbol{b}_3$ represents the unit vector along the $z$ axis of the CoG frame expressed in the world frame.
 
-Next, we determine the thrust vector associated with the rotational component. By using the tranlational command, the desired roll angle $^W\!\alpha^{tgt}_x$ and desired pitch angle $^W\!\alpha^{tgt}_y$ are computed as
+
+Next, we determine the thrust vector associated with the rotational component. By using the translational command, the desired roll angle $^W\!\alpha^{tgt}_x$ and desired pitch angle $^W\!\alpha^{tgt}_y$ are computed as
+
+
 \begin{subequations}
 \label{eq:target roll and pitch angle}
 \begin{align}
@@ -182,9 +191,11 @@ where
 ^W\!\bar{f}_{x,cmd} & ^W\!\bar{f}_{y,cmd} & ^W\!\bar{f}_{z,cmd}
 \end{bmatrix}^{\mathrm{T}}=R^{-1}_Z(^W\!\alpha_z)^W\!\boldsymbol{f}_{cmd}.
 \end{equation}
-Here, $R_Z(\cdot{})$ is a rotation matrix that only rotates along the $z$ axis with a certain angle.
+Here, $R_Z(\cdot{})$ is a rotation matrix that represents rotates along the $z$ axis with a certain angle.
 
 Employing the computed target roll $^W\!\alpha^{tgt}_x$, target pitch $^W\!\alpha^{tgt}_y$, and the reference yaw angle $^W\!\alpha^{ref}_z$, the reference rotation matrix $^W\!R_{C,ref}$ in \eqref{eq:error of rotation} is constructed, from which the rotation error vector ${\boldsymbol{e}_R}$ is derived. 
+
+
 % In near hovering condition, we also define ${\boldsymbol{e}_\alpha}$ as the vector form of ${\boldsymbol{e}_R}^\wedge$, where the hat operator $^\wedge$ converts a skew-symmetric matrix into its corresponding vector representation.
 
 Next, we define the following allocation relationship:
@@ -195,26 +206,30 @@ Next, we define the following allocation relationship:
 \boldsymbol{Q}_r
 \end{pmatrix}\boldsymbol{\lambda}_t,
 \end{equation}
-where $\boldsymbol{Q}_{tz} \in \mathbb{R}^{1 \times 4}$ is the third row of $\boldsymbol{Q}_t$. Solving \eqref{eq:thrust translation 2} yields the translational thrust vector $\boldsymbol{\lambda}_t$. Note that the purpose of the translational command force is to counteract gravity and generate the required translational acceleration, while ensuring that it does not affect the rotational direction. Then the rotation thrust vector can be obtained by
+where $\boldsymbol{Q}_{tz} \in \mathbb{R}^{1 \times 4}$ is the third row of $\boldsymbol{Q}_t$. Solving \eqref{eq:thrust translation 2} yields the translational thrust vector $\boldsymbol{\lambda}_t$. Note that the purpose of the translational command force is to counteract gravity and generate the required translational acceleration, while ensuring that it does not affect the rotational motion. Then, the rotation thrust vector can be obtained by
+
+
 \begin{equation}
 \label{eq:thrust rotation 1}
      \boldsymbol{\lambda}_r=\boldsymbol{Q}_r^{\dagger}{^{C}\boldsymbol{\tau}_{cmd}},
 \end{equation}
-where $\boldsymbol{Q}_r^{\dagger}$ is the Moore--Penrose pseudoinverse of $ \boldsymbol{Q}_r$.
+where $\boldsymbol{Q}_r^{\dagger}$ is the Moore--Penrose pseudoinverse of $\boldsymbol{Q}_r$.
 
 Finally, the total thrust required to be generated by the rotors can be obtained as
 \begin{equation}
 \label{eq:thrust}
 \boldsymbol{\lambda}=\boldsymbol{\lambda}_t+\boldsymbol{\lambda}_r,
 \end{equation}
-This gives the individual thrust values that each rotor needs to produce. In the real machine, by generated the needed thrust, the aerial robot could perform as a designed 2-order system.
+which gives the individual thrust values that each rotor needs to produce. On the real platform, by generating the required thrust, the aerial robot can behave as the designed second-order system.
 % The detail calculated of allocation process about the thrusts can be found in \cite{zhao_2021_singularity}.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Implementation on DRAGON}
 
-In DRAGON's case, the platform is an overactuated system, and the calculated command wrench can be directly excuted by the rotors after allocation. Given the command wrench $^C\boldsymbol{w}_{cmd}$ from the controller, the required rotor thrusts and gimbal angles are calculated through an optimization-based allocation method \cite{zhao_2023_versatile}. Ignoring the servo response time, the command wrench can be simultaneously generated by the vectoring thrusts of the rotors.
+In DRAGON's case, the platform is an overactuated system, and the calculated command wrench can be directly executed by the rotors after allocation. Given the command wrench $^C\boldsymbol{w}_{cmd}$ from the controller, the required rotor thrusts and gimbal angles are calculated through an optimization-based allocation method \cite{zhao_2023_versatile}. Ignoring the servo response time, the command wrench can be simultaneously generated by the vectoring thrusts of the rotors.
 
 In principle, the control allocation can be formulated as an optimization problem with the rotor thrust magnitudes and gimbal angles as the optimization variables:
+
+
 
 \begin{equation}
 \label{eq:thrust least dragon}
@@ -226,6 +241,7 @@ In principle, the control allocation can be formulated as an optimization proble
 \end{equation}
 However, instead of directly solving for $\boldsymbol{\lambda}$, $\boldsymbol{\theta}$, and $\boldsymbol{\phi}$,
 the actual implementation first calculates the thrust force vector $\boldsymbol{F}$ by solving
+
 
 \begin{equation}
 \label{eq:thrust least2 dragon}
@@ -260,12 +276,12 @@ here $\boldsymbol{F}
 =\begin{bmatrix}
 {}^{\{L_1\}}\boldsymbol{f}_1^{\top}&{}^{\{L_2\}}\boldsymbol{f}_2^{\top}&{}^{\{L_3\}}\boldsymbol{f}_3^{\top}&{}^{\{L_4\}}\boldsymbol{f}_{4}^{\top}
 \end{bmatrix}^{\top} \in \mathbb{R}^{12}$.
-Then we get $\boldsymbol{F}$ by
+Then, we obtain $\boldsymbol{F}$ by
 \begin{equation}
 \label{eq:thrust least3 dragon}
 \boldsymbol{F}=\tilde{\boldsymbol{Q}}^{\#}{}^C\!\boldsymbol{w}_{cmd},
 \end{equation}
-where $(\cdot)^{\#}$ denotes the MP-pseudo-inverse of a full-rank matrix.
+where $(\cdot)^{\#}$ denotes the Moore--Penrose pseudoinverse of a full-rank matrix.
 
 After obtaining $\boldsymbol{F}$, the rotor thrust forces and gimbal angles can be obtained as
 
@@ -374,4 +390,4 @@ Therefore, the rotor thrusts and gimbal angles required to realize the command w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
 
-In this chapter, we explained how impedance control can modify the dynamic response of the system. We also discussed the difference between the PID controller and impedance controller, focusing on how impedance control can regulate the dynamic response of the system through the desired impedance parameters, especially the mass ratio $\mu$. Finally, the implementation of impedance control for the multi-link aerial robot was presented.
+In this chapter, we explained how impedance control can modify the dynamic response of the system. We also discussed the difference between PID control and impedance control, focusing on how impedance control can regulate the dynamic response of the system through the desired impedance parameters, especially the mass ratio $\mu$. Finally, the implementation of impedance control for multi-link aerial robots was presented.
