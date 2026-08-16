@@ -118,15 +118,12 @@
 
 
 \def\@makechapterhead#1{%
-  \vspace*{\fill}
-  \vspace{-8mm}
   \begin{center}
+    \vspace*{70mm}
     {\Huge\bfseries Chapter~\thechapter\par}
     \vspace{1cm}
     {\Huge\bfseries #1\par}
   \end{center}
-  \vspace{8mm}
-  \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
   \mbox{}
@@ -134,13 +131,10 @@
 }
 
 \def\@makeschapterhead#1{%
-  \vspace*{\fill}
-  \vspace{-8mm}
   \begin{center}
+    \vspace*{75mm}
     {\Huge\bfseries #1\par}
   \end{center}
-  \vspace{8mm}
-  \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
   \mbox{}
@@ -180,7 +174,7 @@
 % 只影响 Chapter 1, Chapter 2, ... 所在的目录行
 \let\oldl@chapter\l@chapter
 \renewcommand{\l@chapter}[2]{%
-  \oldl@chapter{{\rmfamily\bfseries #1}}{#2}%
+  \oldl@chapter{{\rmfamily\bfseries #1}}{{\rmfamily\bfseries #2}}%
 }
 
 
