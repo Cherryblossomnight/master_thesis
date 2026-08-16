@@ -6,7 +6,7 @@ In this chapter, The notation used throughout this thesis, the modeling of multi
 
 \section{Notation}
 In this thesis, we denote scalars by regular font $x \in \mathbb{R}$, vectors by bold lowercase $\boldsymbol{x} \in \mathbb{R}^n$, and matrices by bold uppercase $\boldsymbol{X} \in \mathbb{R}^{m \times n}$. A vector expressed in frame $\{A\}$ is written as $^A\boldsymbol{p}$, and the rotation matrix from frame $\{A\}$ to frame $\{B\}$ is denoted as $^A\boldsymbol{R}_B$.
-Also, $\{W\}$ represents the world frame, and $\{C\}$ represents the CoG frame. For each link $i\in\{1,2,3,4\}$, $\{F_i\}$ and $\{G_i\}$ denote the thrust frame and gimbal roll frame of the corresponding gimbal module, while $\{L_i\}$ denotes the middle frame of the corresponding link.
+Also, $\{W\}$ represents the world frame, and $\{C\}$ represents the CoG frame. For each link $i\in\{1,2,3,4\}$, $\{F_i\}$ and $\{G_i\}$ denote the thrust frame and gimbal roll frame of the corresponding gimbal module, while $\{L_i\}$ denotes the corresponding link frame.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -26,13 +26,13 @@ Using the notation defined above, the dynamics of the multi-link aerial robots a
     \boldsymbol{I}{^C\!\dot{\boldsymbol{\omega}}}+{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}}&={^C\!\boldsymbol{\tau}_{cmd}} + {^C\!\boldsymbol{\tau}_{ext}},
 \end{align}
 \end{subequations}
-where $m$ is the total mass, $\boldsymbol{I}$ is the total inertia matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint angles and thrust directions vary during motion, the inertia matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertia matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
+where $m$ is the total mass, $\boldsymbol{I}$ is the total inertia matrix expressed in frame $\{C\}$, $^W\boldsymbol{p}$ is the position of the oringinal point of  the CoG frame $\{C\}$ in the world frame $\{W\}$, $^{C}\boldsymbol{\omega}$ is the angular velocity expressed in the CoG frame $\{C\}$, $\boldsymbol{g}$ is the gravitational acceleration, ${^W\!\boldsymbol{f}_{cmd}}$, ${^C\!\boldsymbol{\tau}_{cmd}}$ and ${^W\!\boldsymbol{f}_{ext}}$, ${^C\!\boldsymbol{\tau}_{ext}}$ denote the command force and torque, and the external force and torque, respectively. Since the joint angles and thrust directions vary during motion, the inertia matrix is configuration dependent and may vary accordingly. Here, we consider the multi-link aerial robot as a quasi-static system, meaning that the variations in the inertia matrix caused by joint and thrust-vectoring motions are negligible within a single control period \cite{zhao_2021_singularity, zhao_2023_versatile}.
 
 
 \begin{figure}[t]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter2/multi-link.png}
-    \caption{Photographs of the multi-link aerial robots. (a): underactuated multi-link aerial robot Hydrus Xi\cite{zhao_2021_singularity}. (b): overactuated mutli-link aerial robot DRAGON\cite{zhao_2018_design}.}
+    \caption{Photographs of the multi-link aerial robots. (a): underactuated multi-link aerial robot Hydrus Xi \cite{zhao_2021_singularity}. (b): overactuated mutli-link aerial robot DRAGON \cite{zhao_2018_design}.}
     \label{fig:multi-link}
 \end{figure}
 

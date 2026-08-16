@@ -118,8 +118,8 @@
 
 
 \def\@makechapterhead#1{%
+  \vspace*{55mm}
   \begin{center}
-    \vspace*{70mm}
     {\Huge\bfseries Chapter~\thechapter\par}
     \vspace{1cm}
     {\Huge\bfseries #1\par}
@@ -131,8 +131,8 @@
 }
 
 \def\@makeschapterhead#1{%
+ \vspace*{65mm}
   \begin{center}
-    \vspace*{75mm}
     {\Huge\bfseries #1\par}
   \end{center}
   \clearpage
@@ -156,11 +156,10 @@
     \divide\jsc@tocl@width by 2
     \advance\jsc@tocl@width 1zw
   \fi
-  \vspace*{\fill}
+  \vspace*{65mm}
   \begin{center}
     {\Huge\bfseries Contents\par}
   \end{center}
-  \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
   \mbox{}
