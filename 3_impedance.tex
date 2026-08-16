@@ -135,7 +135,21 @@ Inspired by the interpretation in \cite{bodie_2023_omnidirectional}, where imped
 
 Based on this discussion, a practical tuning principle can also be obtained. We can first tune $\tilde{c}_d$ and $\tilde{k}_d$ as PD controller gains in free flight, and then design the value of $\mu$ according to the task requirements during contact. Because we use the same set of parameters in both free flight and contact, it is not necessary to switch the control mode before and after contact.
 
-After introducing the tuning principle, we can explain why the adjustment of $\mu$ influences the behavior of the aerial robot. The desired stiffness is $k_d$, which represents the stiffness of the system under impedance control. Considering that $\tilde{k}_d = \frac{k_d}{m_d}$, since $\tilde{k}_d$ has already been determined in the no-force case, the desired stiffness $k_d$ is directly proportional to the desired mass $m_d$. Since the mass $m$ is constant and $\mu=\frac{m}{m_d}$, $k_d$ is inversely proportional to the mass ratio $\mu$. This means that the larger the mass ratio, the smaller the desired stiffness, and thus the more compliant the aerial robot behaves, and vice versa. The desired damping changes with the desired mass as well, so the damping ratio remains unchanged. In summary, adjusting the mass ratio $\mu$ essentially changes the desired stiffness, thereby reshaping the behavior of the aerial robot.
+After introducing the tuning principle, we can explain why the adjustment of $\mu$ influences the behavior of the aerial robot. The desired stiffness is $k_d$, which represents the stiffness of the system under impedance control. Considering that $\tilde{k}_d = \frac{k_d}{m_d}$, since $\tilde{k}_d$ has already been determined in the no-force case, the desired stiffness $k_d$ is directly proportional to the desired mass $m_d$. Since the mass $m$ is constant and $\mu=\frac{m}{m_d}$, $k_d$ is inversely proportional to the mass ratio $\mu$. This means that the larger the mass ratio, the smaller the desired stiffness, and thus the more compliant the aerial robot behaves, and vice versa. In addition, to provide a clearer physical interpretation of the damping parameter, here we use the damping ratio $\zeta$ instead of the damping coefficient $c_d$. For the system in \eqref{eq:imp cmd analysis1}, the damping ratio of the designed system can be defined as
+\begin{equation}
+\label{eq:damping ratio 1}
+\zeta=\frac{c_d}{2\sqrt{m_dk_d}}.
+\end{equation}
+Since $\tilde{c}_d = \frac{c_d}{m_d}$ and $\tilde{k}_d = \frac{k_d}{m_d}$, substituting $c_d=m_d\tilde{c}_d$ and $k_d=m_d\tilde{k}_d$ gives
+\begin{equation}
+\label{eq:damping ratio 2}
+\begin{aligned}
+\zeta
+&=\frac{m_d\tilde{c}_d}{2\sqrt{m_d^2\tilde{k}_d}}\\
+&=\frac{\tilde{c}_d}{2\sqrt{\tilde{k}_d}}.
+\end{aligned}
+\end{equation}
+Therefore, the damping ratio $\zeta$ is independent of the mass ratio $\mu$. Since $\tilde{k}_d$ and $\tilde{c}_d$ remain unchanged after they are determined, the damping ratio also remains constant when $\mu$ is adjusted. This property will also be used for practical parameter adjustment in the experiments. In summary, adjusting the mass ratio $\mu$ essentially changes the desired stiffness, thereby reshaping the behavior of the aerial robot.
 
 In this section, we introduced the fundamental concept of the impedance controller used in multi-link aerial robots. The impedance controller can be considered as a generalization of a PD controller and a PD controller with external force feedforward compensation. From this perspective, the parameter $\mu$ can be adjusted to realize different contact behaviors according to different task requirements. Since the impedance controller takes external force information into consideration, it can provide different responses to external forces to meet different task requirements. Therefore, the characteristics of impedance control are well suited to surface sliding tasks with different force-interaction requirements.
 
