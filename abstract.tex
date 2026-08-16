@@ -23,7 +23,7 @@
 \section{Introduction}
 Aerial manipulation has attracted significant attention due to its potential for performing complex tasks. Among these tasks, surface sliding is challenging because an aerial robot must maintain contact with an unmodeled surface while following a desired trajectory \cite{bodie_2020_active}. In these tasks, complex contact conditions lead to uncertainties in both the external wrench and the contact geometry, requiring both robustness against force disturbances and compliance with geometric variations. Nevertheless, existing approaches remain limited in achieving this combination, and solutions are needed in both mechanical structures and control methods.
 
-For the mechanical structures, articulated multi-link aerial robots can actively deform in flight, providing additional degrees of freedom for aerial manipulation \cite{zhao_2021_singularity} and potential for these tasks. For the control methods, impedance and admittance control have been commonly used for aerial interaction. Impedance control provides robustness against interaction-force disturbances, while admittance control provides compliance with geometric variations. However, their opposite causal relationships make them difficult to combine on the same platform.
+For the mechanical structures, articulated multi-link aerial robots can actively deform in flight, providing additional degrees of freedom for aerial manipulation \cite{zhao_2021_singularity, zhao_2023_versatile} and potential for these tasks. For the control methods, impedance and admittance control have been commonly used for aerial interaction. Impedance control provides robustness against interaction-force disturbances, while admittance control provides compliance with geometric variations. However, their opposite causal relationships make them difficult to combine on the same platform.
 
 In this work, we propose a hybrid impedance--admittance control framework using two actuation sources of multi-link aerial robots. Rotor thrust governs the global motion and realizes impedance control to resist external wrench disturbances, while joint actuation regulates the related end effector position and generates admittance behavior to adapt to unmodeled surface geometry. This combination enables resilient sliding and adaptive contact, as illustrated in Fig.~\ref{fig:main_figure}.
 
@@ -35,7 +35,7 @@ Multi-link aerial robots consist of serially connected links with distributed ve
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/abstract/main_figure.png}
     \vspace{-8mm}
-    \caption{The multi-link aerial robots are tracking circular trajectories on a inclined board while maintaining contact. The desired trajectories are marked by white dashed lines. (a) underactuated multi-link aerial robot Hydrus Xi. (b) overactuated multi-link aerial robot DRAGON.}
+    \caption{The multi-link aerial robots are tracking circular trajectories on an inclined board while maintaining contact. The desired trajectories are marked by white dashed lines. (a) underactuated multi-link aerial robot Hydrus Xi \cite{zhao_2021_singularity}. (b) overactuated multi-link aerial robot DRAGON \cite{zhao_2023_versatile}.}
     \label{fig:main_figure}
     \vspace{-3mm}
 \end{figure}
@@ -56,13 +56,13 @@ Multi-link aerial robots consist of serially connected links with distributed ve
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/abstract/multi-link.png}
     \vspace{-7mm}
-    \caption{Photographs of the multi-link aerial robots. (a): underactuated multi-link aerial robot Hydrus Xi. (b): overactuated mutli-link aerial robot DRAGON.}
+    \caption{Photographs of the multi-link aerial robots. (a) underactuated multi-link aerial robot Hydrus Xi. (b) overactuated mutli-link aerial robot DRAGON.}
     \label{fig:multi-link}
     \vspace{-6mm}
 \end{figure}
 
 \section{Control}
-Impedance control models the robot as a second-order system that exhibits different motion responses to external forces. Its dynamic parameters can be designed to achieve different interaction behaviors \cite{bodie_2020_active}, which are used in this work to resist external wrench disturbances. Based on this principle, the translational and rotational command wrenches used in this work are given by
+Impedance control models the robot as a second-order system that exhibits different motion responses to external forces. The robot's dynamic parameters therefore can be designed to achieve different interaction behaviors \cite{bodie_2020_active}, which are used in this work to resist external wrench disturbances. Based on this principle, the translational and rotational command wrenches used in this work are given by
 
 \vspace{-5mm}
 \begin{equation}
@@ -102,7 +102,7 @@ In surface-sliding tasks, the sliding directions are mainly affected by friction
 
 \begin{figure}[h]
     \centering
-    \vspace{-5mm}
+    \vspace{-4mm}
     \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter5/hybrid.png}
     \caption{Schematic diagram of the hybrid impedance--admittance control.}
     \label{fig:hybrid_controller}
@@ -112,11 +112,11 @@ In surface-sliding tasks, the sliding directions are mainly affected by friction
 \section{Experiment}
 In the hybrid control experiment, Hydrus Xi was used as the primary experimental platform. The robot was commanded to follow a circular reference trajectory on a plane perpendicular to the $x$ axis. Due to the unknown inclination of the board, approximately $0.15\,\mathrm{m}$ of geometric variation occurred along the $x$ axis during one cycle, as shown in Fig.~\ref{fig:experiment_scenario}(a). This variation was not incorporated into the reference trajectory or controller design, requiring online adaptation during contact.
 
-To evaluate the proposed framework, four controllers were compared: baseline PD, impedance, admittance, and hybrid impedance--admittance. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes against sliding disturbances, while admittance control was applied along the $x$ axis to adapt to geometric variations. The impedance-only case disabled admittance-based joint adaptation, while the admittance-only case used baseline PD control for the CoG. The experimental process is shown in Fig.~\ref{fig:experiment_scenario} (b) and (c).
+To evaluate the proposed framework, four controllers were compared: baseline PD, impedance, admittance, and hybrid impedance--admittance. In the hybrid controller, impedance control was applied along the $y$ and $z$ axes against sliding disturbances, while admittance control was applied along the $x$ axis to adapt to geometric variations. The impedance-only case disabled admittance-based joint adaptation, while the admittance-only case used baseline PD control for the CoG. The experimental process is shown in Fig.~\ref{fig:experiment_scenario}(b) and (c).
 
 Table~\ref{tb:hybrid} compares the four controllers. The best and second-best results for each metric are highlighted in red and brown, respectively. The impedance-only controller achieved good tracking performance along the $y$ and $z$ axes, whereas the admittance-only controller resulted in relatively small CoG position variation along the $x$ axis. The hybrid controller maintained competitive performance across all four metrics, combining the advantages of both controllers in the sliding and contact directions.
 
-The proposed framework was further applied to the overactuated multi-link aerial robot DRAGON. As shown in Fig.~\ref{fig:experiment_scenario} (d) and (e), DRAGON realized stable contact under hybrid controller, further demonstrating the applicability of the framework to different multi-link aerial robots.
+The proposed framework was further applied to the overactuated multi-link aerial robot DRAGON. As shown in Fig.~\ref{fig:experiment_scenario}(d) and (e), DRAGON realized stable contact under hybrid controller, further demonstrating the applicability of the framework to different multi-link aerial robots.
 
 \section{Conclusion}
 In this thesis, we presented a hybrid impedance--admittance control framework for multi-link aerial robots performing surface sliding tasks. Impedance control provides resilience against friction-induced disturbances, while admittance control utilizes structural deformation to adapt to unmodeled surface geometry. By assigning the two controllers to different task directions, the proposed method combines their different characteristics. Experiments with Hydrus Xi demonstrated that the hybrid controller combined the capabilities of both control methods, while the DRAGON experiment further showed its applicability to different multi-link aerial robots.
@@ -126,7 +126,7 @@ In this thesis, we presented a hybrid impedance--admittance control framework fo
     \includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/abstract/experiment_scenario.png}
     \vspace{-4mm}
-    \caption{Experimental setup and snapshots of the surface sliding experiments. (a) Surface geometry and reference trajectory. (b)--(c) Top and side views of Hydrus Xi performing the surface sliding task. (d)--(e) Top and side views of DRAGON performing the surface sliding task}
+    \caption{Experimental setup and snapshots of the surface sliding experiments. (a) Surface geometry and reference trajectory. (b)--(c) Top and side views of Hydrus Xi performing the surface sliding task. (d)--(e) Top and side views of DRAGON performing the surface sliding task.}
     \label{fig:experiment_scenario}
     \vspace{-9mm}
 \end{figure}

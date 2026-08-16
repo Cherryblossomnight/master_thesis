@@ -119,11 +119,13 @@
 
 \def\@makechapterhead#1{%
   \vspace*{\fill}
+  \vspace{-8mm}
   \begin{center}
     {\Huge\bfseries Chapter~\thechapter\par}
     \vspace{1cm}
     {\Huge\bfseries #1\par}
   \end{center}
+  \vspace{8mm}
   \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
@@ -131,12 +133,13 @@
   \clearpage
 }
 
-
 \def\@makeschapterhead#1{%
   \vspace*{\fill}
+  \vspace{-8mm}
   \begin{center}
     {\Huge\bfseries #1\par}
   \end{center}
+  \vspace{8mm}
   \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
