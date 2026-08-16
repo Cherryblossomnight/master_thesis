@@ -6,7 +6,7 @@ In this chapter, we will introduce the basic concept of admittance control, as w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{General Admittance Control}
 
-Similar to impedance control, admittance control also regulates the system's response to external forces through a virtual dynamic relationship. However, impedance control generates a resisting force in response to displacement errors, whereas admittance control directly produces a compliant displacement in response to external forces. In this work, we employ admittance control to regulate the end-effector position error by adjusting the joint angles in response to the external forces induced by surface geometric variations, thereby mitigating both the force and position disturbances experienced by the CoG through deformation.  
+Similar to impedance control, admittance control also regulates the system's response to external forces through a virtual dynamic relationship. However, impedance control generates a resisting force in response to displacement errors, whereas admittance control directly produces a compliant displacement in response to external forces. In this work, we employ admittance control to regulate the end effector position error by adjusting the joint angles in response to the external forces induced by surface geometric variations, thereby mitigating both the force and position disturbances experienced by the CoG through deformation.  
 
 
 In general, since position errors may occur in all translational directions, we consider admittance control along the $x$, $y$, and $z$ axes. The admittance dynamics can then be written as:
@@ -35,7 +35,7 @@ Using this acceleration, the velocity and position can be updated iteratively ac
 \end{subequations}
 where $\Delta t$ is the control period.
 
-% Given the desired end-effector pose, the corresponding angle $\theta$ that is defined in Fig.~\ref{fig:hybrid_controller} 
+% Given the desired end effector pose, the corresponding angle $\theta$ that is defined in Fig.~\ref{fig:hybrid_controller} 
 
 Given the calculated distance, the desired end effector position can be derived, and the corresponding joint angles are then obtained by solving the inverse kinematics (IK). The detailed IK process depends on the definition of the distance $\boldsymbol{r}$ and the control variables, so it will be introduced in the experiment chapter.  As a result, deformation is achieved through joint motion, thereby changing the end effector position in response to the external force.
 

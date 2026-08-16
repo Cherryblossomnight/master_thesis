@@ -23,7 +23,7 @@ The underactuated multi-link aerial robot Hydrus Xi used in the experiments is s
 \begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_dragon.png}
-    \caption{The mechanical design of the overactuated multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) End-effector used in surface sliding experiments. (c) 2-DoF Gimbal module. (d) 2-DoF Joints.}
+    \caption{The mechanical design of the overactuated multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) end effector used in surface sliding experiments. (c) 2-DoF Gimbal module. (d) 2-DoF Joints.}
     \label{fig:robot_dragon}
 \end{figure}
 
@@ -205,7 +205,7 @@ Consequently, when an external force is applied to the multi-link aerial robot, 
 % Here we measure the estimated external force in X axis and the corresponding displacement in X axis. The result is shown in Fig.\ref{fig:drag_plot2}.
 
 
-% The experiment result varify that the distance between CoG and end-effector can change with the external force. By setting parameters like this, we can guarantee stability and response speed, simultaneously
+% The experiment result varify that the distance between CoG and end effector can change with the external force. By setting parameters like this, we can guarantee stability and response speed, simultaneously
 % \subsection{Hybrid control}
 % In this section, we show that the hybrid impedance-admittance controller can be used in the multi-link aerial robot. As shown in Fig.\ref{fig:hybrid_showing}, the robot realize consist to the friction and adapt to the surface variation, simultaneously.
 
@@ -241,7 +241,7 @@ In the surface sliding experiment, the controller parameters were set as follows
 
 Throughout the experiment, a constant yaw angle was maintained by keeping the end effector aligned with the $x$ axis of $\{W\}$. This setting allowed the surface geometric variations to be equivalently represented as variations along the direction of the end effector. Specifically, the configuration angle $\theta$, as shown in Fig.~\ref{fig:admittance_drag}, was defined as the sole variable determining the configuration in the admittance controller.
 
-Hydrus Xi was required to start from the nominal configuration that is also shown in Fig.~\ref{fig:admittance_drag}. Assuming that each link has a similar mass, this nominal configuration approximately keeps the CoG on the extension line of the end effector, while the other allowable configurations also approximately satisfy this condition. Therefore, the external force applied along the end-effector direction passes close to the CoG and generates only a small external torque about the CoG. This setting helps to reduce the potential instability caused by excessive external torque during contact. Under the above configuration settings, the corresponding joint angles were analytically obtained through inverse kinematics as
+Hydrus Xi was required to start from the nominal configuration that is also shown in Fig.~\ref{fig:admittance_drag}. Assuming that each link has a similar mass, this nominal configuration approximately keeps the CoG on the extension line of the end effector, while the other allowable configurations also approximately satisfy this condition. Therefore, the external force applied along the end effector direction passes close to the CoG and generates only a small external torque about the CoG. This setting helps to reduce the potential instability caused by excessive external torque during contact. Under the above configuration settings, the corresponding joint angles were analytically obtained through inverse kinematics as
 
 \begin{equation}
 \label{eq:joint angles}
@@ -440,7 +440,7 @@ As shown in Fig.~\ref{fig:dragon_experiment}, DRAGON successfully performed the 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/dragon_trajectory.png}}
-    \caption{Trajectories of DRAGON during surface sliding. (a) End-effector trajectory. (b) CoG trajectory.}
+    \caption{Trajectories of DRAGON during surface sliding. (a) end effector trajectory. (b) CoG trajectory.}
     \label{fig:dragon_trajectory}
 \end{figure}
 
