@@ -3,11 +3,9 @@ In this chapter, we will demonstrate the effects of the proposed hybrid impedanc
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Platforms}
-In our experiment, both the 2D multi-link aerial robot Hydrus Xi and the 3D multi-link aerial robot DRAGON are used as the experimental platforms. Both platforms use the Robot Operating System (ROS) for communication and sim-to-real development. A motion capture system is used together with the IMU measurements on the robots, and a Kalman filter is employed to obtain the estimated states throughout the experiments.
 
-
-\subsection{2D Multi-Link Aerial Robot Hydrus Xi}
-The 2D multi-link aerial robot Hydrus Xi used in the experiments is shown in Fig.~\ref{fig:robot_hydrus}. The robot consists of four serial links connected by three rotational joints. All joint axes are parallel, so that the deformation is constrained in a plane. Each link is equipped with a gimbal mudule with a propeller, which enables thrust vectoring through the 1-DoF yaw rotation mechanism. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU for onboard computation. 
+\subsection{Hydrus Xi: Primary Experimental Platform}
+The underactuated multi-link aerial robot Hydrus Xi used in the experiments is shown in Fig.~\ref{fig:robot_hydrus}. The robot consists of four serial links connected by three rotational joints. All joint axes are parallel, so that the deformation is constrained in a plane. Each link is equipped with a gimbal mudule with a propeller, which enables thrust vectoring through the 1-DoF yaw rotation mechanism. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x5-Z8350 CPU for onboard computation. 
 
 \begin{figure}[!htbp]
     \centering
@@ -16,8 +14,8 @@ The 2D multi-link aerial robot Hydrus Xi used in the experiments is shown in Fig
     \label{fig:robot_hydrus}
 \end{figure}
 
-\subsection{3D Multi-Link Aerial Robot DRAGON}
-The 3D multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\ref{fig:robot_dragon}. Similar to Hydrus Xi, DRAGON also consists of four serial links, but adjacent links are connected by two orthogonal joints, resulting in a total of six joint DoFs. Due to this robotic-arm-like mechanism, DRAGON can deform in three-dimensional space and achieve more complex configurations than Hydrus Xi. Each link is equipped with an independent gimbal module with two ducted rotors. The gimbal module provides 2-DoF to realize more flexible thrust vectoring thrust under complex deformations. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x7-Z8700 quad-core CPU for onboard computation.
+\subsection{DRAGON: Extension Experimental Platform}
+The overactuated multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\ref{fig:robot_dragon}. Similar to Hydrus Xi, DRAGON also consists of four serial links, but adjacent links are connected by two orthogonal joints, resulting in a total of six joint DoFs. Due to this robotic-arm-like mechanism, DRAGON can deform in three-dimensional space and achieve more complex configurations than Hydrus Xi. Each link is equipped with an independent gimbal module with two ducted rotors. The gimbal module provides 2-DoF to realize more flexible thrust vectoring thrust under complex deformations. The platform is equipped with an UP-Board single-board computer featuring an Intel Atom x7-Z8700 quad-core CPU for onboard computation.
 
 \begin{figure}[!htbp]
     \centering
@@ -26,9 +24,12 @@ The 3D multi-link aerial robot DRAGON used in the experiments is shown in Fig.~\
     \label{fig:robot_dragon}
 \end{figure}
 
+\subsection{Computation, State Estimation, and Motion-Capture System}
+In our experiment, both the 2D multi-link aerial robot Hydrus Xi and the 3D multi-link aerial robot DRAGON are used as the experimental platforms. Both platforms use the Robot Operating System (ROS) for communication and sim-to-real development. A motion capture system is used together with the IMU measurements on the robots, and a Kalman filter is employed to obtain the estimated states throughout the experiments.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preliminary Experiments}
-\subsection{Parameter Effects and Selection for Hydrus Xi}
+\section{Controller Calibration and Component-Level Validation on Hydrus Xi}
+\subsection{Parameter-Selection Principles}
 \label{sec:parameter_selection}
 
 
@@ -47,7 +48,7 @@ The admittance mass $m_a$ was selected mainly according to the required response
 Finally, the admittance damping $c_a$ was usually selected depend together with $m_a$ and $k_a$. The damping ratio $\zeta=\frac{c_a}{2\sqrt{m_ak_a}}$ was generally set slightly below $1$ to obtain a response close to critical damping.
 
 
-\subsection{Free Flight Parameter Tuning}
+\subsection{Free-Flight Baseline Calibration and Validation}
 \label{sec:free_flight}
 
 According to the parameter tuning principle mentioned in Sec~\ref{sec:imp_param_tuning}, the PD parameters are first tuned under free flight conditions before introducing contact interaction. Note that in this stage, the mass ratio $\mu$ in all directions is set to $1$, such that no additional impedance characteristic is introduced. Meanwhile, the admittance controller is deactivated. Therefore, the controller in this experiment can be regarded as the baseline PD controller.
@@ -56,7 +57,7 @@ The parameters obtained from the free flight tuning are summarized in Table~\ref
 
 \begin{table}[H]
     \centering
-    \caption{Parameters of Hydrus Xifor free flight.}
+    \caption{Parameters of Hydrus Xi for free flight.}
     \label{tb:params1}
     \begin{tabular}{ccc}
         \hline
@@ -89,10 +90,10 @@ The free flight result is shown in in Fig.~\ref{fig:free_flight_plot}. Here, the
     \vspace{-5mm}
 \end{figure}
 
-\subsection{Impedance Parameter Adjustment under External Force}
+\subsection{Impedance Response under External Force}
 \label{sec:impedance_parameter}
 
-In this experiment, the effect of the mass ratio $\mu$ will be investigated. Accoding to Sec.~\ref{sec:imp_param_tuning}, the mass ration $\mu$ will redesigned the performance. In particular, $\mu>1$ provides a more rigid response to external disturbances, whereas $\mu<1$ provides a softer response.
+In this experiment, the effect of the mass ratio $\mu$ will be investigated. Accoding to Sec.~\ref{sec:imp_param_tuning}, the mass ration $\mu$ will redesign the performance. In particular, $\mu>1$ provides a more rigid response to external disturbances, whereas $\mu<1$ provides a softer response.
 
 
 As shown in Fig.~\ref{fig:imp_drag}, a rope was used to horizontally drag Hydrus Xi and generate an external force along the $x$ axis. Pulling the rope along the positive direction of the $x$ axis can be regarded as applying a positive external force along this direction. The other controller parameters were kept the same as those used in the free flight experiment, as listed in Table~\ref{tb:params1}. Three different mass ratios, $\mu=0.5$, $1$, and $2$, were tested, corresponding to the soft, normal, and rigid cases, respectively. 
@@ -136,7 +137,7 @@ As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus 
 The result in Fig.~\ref{fig:imp_drag_plot} shows the relationship between the estimated external force and the CoG position error along the $x$ axis. The slope of the force-position relationship can be regarded as the effective stiffness. As shown by the trend line, the slopes for $\mu=0.5$, $1$, and $2$ are $4.18~\mathrm{N/m}$, $8.25~\mathrm{N/m}$, and $14.22~\mathrm{N/m}$, respectively. Consquently, the results demostrate that by varying the mass ratio $\mu$, the aerial robot could change its performance to the external force. Therefore, an appropriate mass ratio can be selected according to the experimental conditions and task requirements.
 
 
-\subsection{Admittance Control under External Force}
+\subsection{Admittance Mapping and Configuration Adaptation under External Force}
 
 In this experiment, the deformation behavior generated by the admittance controller was demonstrated using the 2D multi-link aerial robot Hydrus Xi. As shown in Fig.~\ref{fig:admittance_drag}, Hydrus Xi starts from its nominal configuration, which a rope attach at one of the joints. By pulling the rope to the negative direction of the $x$ axis, an external force on the negative direction of the $x$ axis can be imitated. We need to emphasize that in this and the following experiments, as shown in Fig.~\ref{fig:admittance_drag}, the distance $r$ used in admittance controller \ref{eq:admittance control2} is defined as the distance between the end effector and the CoG projected onto the $x$ axis.
 
@@ -196,7 +197,7 @@ As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure changes
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Control Experiment on Hydrus Xi}
+\section{Comparative Surface-Sliding Evaluation on Hydrus Xi}
 \subsection{Experimental Setup}
 
 In the hybrid control experiment, we used Hydrus Xi as the expeirmental platform. The basic PD parameters were kept the same as those listed Table~\ref{tb:params1}. Based on the experimental results demonstrated in Sec.~\ref{sec:impedance_parameter}, the mass ratio $\mu$ in each direction was selected according to the experiment requirement. For the orientation, $\mu$ was chosen to be sufficiently large to resist external torques generated during the contact and sliding. For the sliding directions, especially the $y$ axis, $\mu$ was selected to be larger than $1$ to resist external disturbances. Along the contact direction $x$ axis, the mass ratio $\mu$ was set to $1$. The resulting parameters are summarized in Table~\ref{tb:params4}. Note that the diagonal elements of the linear mass ratio matrix $\boldsymbol{M}_d/m$ and the inertia ratio matrix $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ represent the mass ratios $\mu$ in the corresponding translational and rotational directions, respectively. Meanwhile, the admittance controller was activated only along the $x$ axis, whose parameters shown also in Table~\ref{tb:params4}. The reference external force used in the admittance controller was set to $f_{ref,x}=0$. The parameters used for external wrench estimation are also summarized in the same table.
@@ -244,6 +245,9 @@ Throughout the experiment, a constant yaw angle was maintained, implemented by k
 \end{equation}
 where $\theta$ is shown in Fig.~\ref{fig:admittance_drag}.
 
+
+
+
 The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A vertical board was placed at a known location within the testing area. The board's surface provided sufficient friction for stable contact while still allowing smooth sliding of the end-effector (marker pen). The board's surface was intentionally sloped by approximately $20^\circ$ with respect to the $y$ axis, and the inclination angle was kept unknown to the robot. Although the surface is planar, its unknown inclination introduces unmodeled geometric variations that serve the same role as curved surfaces in this study. The friction coefficient is also unknown. Consequently, both the contact forces and the surface geometry remain unmodeled in this experiment, which provides a challenging benchmark for evaluating the robot's adaptive sliding capability.
 
 
@@ -255,6 +259,8 @@ The experimental environment is illustrated in Fig.~\ref{fig:exp_scene}. A verti
     \label{fig:exp_scene}
     \vspace{-5mm}
 \end{figure}
+
+\subsection{Comparative Study}
 
 During the experiment, the reference trajectory of the multi-link aerial robot was defined on a plane perpendicular to the $x$ axis. The robot was commanded to follow the predefined circular trajectory with a radius of $0.30\,\mathrm{m}$ and a period of $14\,\mathrm{s}$ within this plane. Due to the board's unknown inclination angle, the desired circular trajectory experienced approximately $0.15\,\mathrm{m}$ of variation along the $x$ axis during one cycle, introducing measurable geometry-induced deviations during contact. This geometric variation was not incorporated into the reference trajectory generation or controller design. Therefore, the robot was required to adapt to this geometric variation online during contact.
 
@@ -292,7 +298,7 @@ Fig.~\ref{fig:admittance_exp} further illustrates through snapshots how the mult
 
 
 
-\subsection{Compare on Impedance-Related Directions}
+\subsection{Sliding-Direction Tracking and Disturbance Rejection}
 
 Fig.~\ref{fig:impedance_plot} presents the CoG trajectories together with the reference path under the four controllers. Note that during the sliding task, the $y$ and $z$ axes corresponded to the sliding directions, where friction-induced disturbances were dominant. Although Fig.~\ref{fig:impedance_plot} illustrates the overall trajectories of the four controllers, their performance differences become more evident in the tracking error distributions shown in Fig.~\ref{fig:impedance_box}. The figure shows the distributions of tracking errors of the CoG in the $y$ and $z$ axes, in which smaller tracking errors indicate better trajectory tracking performance. In particular, the median $y$ axis errors were approximately $0.134\,\mathrm{m}$ for PD controller, $0.079\,\mathrm{m}$ for only impedance controller, $0.105\,\mathrm{m}$ for only admittance controller, and $0.083\,\mathrm{m}$ for the hybrid controller. 
 
@@ -317,7 +323,7 @@ This part of the experiments shows that along the sliding directions, impedance 
 \end{figure}
 
 
-\subsection{Compare on Admittance-Related Direction}
+\subsection{Contact-Direction Adaptation and Interaction Force}
 
 Fig.~\ref{fig:admittance_plot} presents the CoG position and estimated external force along the $x$ axis. As further quantified in Fig.~\ref{fig:admittance_box}, the PD and impedance-only controllers showed relatively larger variations in the CoG position, with interquartile ranges of $0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$, respectively. In contrast, the interquartile ranges were reduced to $0.088,\mathrm{m}$ and $0.084,\mathrm{m}$ for the admittance-only and hybrid controllers, respectively. A smaller interquartile range indicates that the CoG position was less affected by the geometric variation introduced by the inclined board.
 
@@ -371,11 +377,11 @@ The experiment highlights the complementary roles of the two strategies: impedan
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Extension Experiment on DRAGON}
+\section{Cross-Platform Feasibility Demonstration on DRAGON}
 \subsection{Experimental Setup}
 
 
-To demonstrate that the proposed hybrid impedance--admittance control framework can be used in diifferent types of multi-link aerial robot, the surface sliding experiment was also conducted using the 3D multi-link aerial robot DRAGON, in addition to the primary experiments using the 2D platform Hydrus Xi. The basic experimental setup and control framework were kept similar to those used in the Hydrus Xi experiments. In DARGON's case, the parameters were listed in Table~\ref{tb:params5}.
+To demonstrate that the proposed hybrid impedance--admittance control framework can be used in different types of multi-link aerial robots, the surface sliding experiment was also conducted using the 3D multi-link aerial robot DRAGON, in addition to the primary experiments using the 2D platform Hydrus Xi. The basic experimental setup and control framework were kept similar to those used in the Hydrus Xi experiments. In DARGON's case, the parameters were listed in Table~\ref{tb:params5}.
 
 \begin{table}[H]
     \centering
