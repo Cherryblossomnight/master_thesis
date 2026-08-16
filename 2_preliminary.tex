@@ -191,7 +191,7 @@ For both impedance control and admittance control, an external wrench is require
  {^C\!\boldsymbol{\tilde{\tau}}_{ext}}=\boldsymbol{K}_{ri}(\boldsymbol{I}^C\!\boldsymbol{\omega}-\int({^C\!\boldsymbol{\tau}_{cmd}}-{^C\!\boldsymbol{\omega}} \times \boldsymbol{I}{^C\!\boldsymbol{\omega}} + {^C\!\boldsymbol{\tilde{\tau}}_{ext}})\mathrm{d}t),
 \end{align}
 \end{subequations}
-where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}_{ext}}$ and the real external torque  ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translation gain matrix and estimator rotation gain matrix, respectively.
+where ${^W\!\boldsymbol{\tilde{f}}_{ext}}$ is the estimated external force, ${^C\!\boldsymbol{\tilde{\tau}}_{ext}}$ is the estimated external torque, and they can be assumed to be equal to the real external force ${^W\!\boldsymbol{f}_{ext}}$ and the real external torque  ${^C\!\boldsymbol{\tau}_{ext}}$, respectively. $\boldsymbol{K}_{ti} \in \mathbb{R}^{3\times3} $ and $\boldsymbol{K}_{ri} \in \mathbb{R}^{3\times3}$ are the estimator translational gain matrix and estimator rotational gain matrix, respectively.
 
 Differentiating (\ref{eq:external wrench estimation}) and substituting (\ref{eq:dynamics}) into it yields a first-order low-pass filtered form: 
 \begin{subequations}
