@@ -10,6 +10,7 @@
 \usepackage{here}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage[ms]{pxchfon}
+\usepackage{xcolor}
 \setminchofont{:0:msmincho.ttc}
 \setgothicfont{:0:msgothic.ttc}
 \DeclareUnicodeCharacter{92EE}{\char"92EE}
@@ -27,13 +28,20 @@
     % English main title (multi-line, centered)
     {\fontsize{20}{24}\selectfont\bfseries Hybrid Impedance--Admittance Control\par}
     \vspace{2mm}
-    {\fontsize{20}{24}\selectfont\bfseries of Multi-Link Aerial Robots\par}
+    {\fontsize{20}{24}\selectfont\bfseries of Articulated Aerial Robots\par}
     \vspace{2mm}
     {\fontsize{20}{24}\selectfont\bfseries for Contact-Rich Surface Sliding Task\par}
     \vspace{8mm}
 
     % Japanese subtitle and additional text — 参考图中应为粗体
-    {\fontsize{18}{20}\selectfont\textgt{\bfseries 傾斜面への接触ならび作業に向けた多リンク飛行ロボットのインピーダンス・アドミッタンス複合制御}\par}
+    {\fontsize{18}{20}\selectfont\textgt{\bfseries 空中での接触ならい作業に向けた}\par}
+    \vspace{2mm}
+    {\fontsize{18}{20}\selectfont\textgt{\bfseries 多リンク型飛行ロボットの}\par}
+     \vspace{2mm}
+    {\fontsize{18}{20}\selectfont\textgt{\bfseries インピーダンス・アドミッタンスの混合制御}\par}
+
+
+    
     \vspace{28mm}
 
     % 提出日期与指导教师
@@ -47,7 +55,7 @@
     \vspace{2mm}
     {\fontsize{16}{18}\textgt{\bfseries 機械工学専攻}\par}
     \vspace{2mm}
-    {\fontsize{16}{18}\textgt{\bfseries 37-245135 }\par}
+    {\fontsize{16}{18}\textgt{\bfseries 37-245135 羅 子鋮}\par}
     \vspace*{8mm}
 \end{center}
 \clearpage
@@ -55,32 +63,58 @@
 
 % 设置 PDF 元信息
 \hypersetup{
-  pdftitle={Hybrid Impedance-Admittance Control of Multi-Link Aerial Robots for Contact-Rich Surface Sliding Task},
+  pdftitle={Hybrid Impedance-Admittance Control of Articulated Aerial Robots for Contact-Rich Surface Sliding Task},
   pdfauthor={Zicheng Luo},
 }
 
 % 前書き
-\frontmatter
-% \include{_abstract}
-\tableofcontents
-\listoffigures
-\listoftables
+
+\cleardoublepage
+\thispagestyle{empty}
+
+\makecontents
 
 % 本文
-\mainmatter
+
 \include{1_introduction}
 \include{2_preliminary}
-\include{3_separation}
-\include{4_integration}
-\include{5_experiment}
-\include{6_conclusion}
+\include{3_impedance}
+\include{4_admittance}
+\include{5_hybrid}
+\include{6_experiment}
+\include{7_conclusion}
 \include{acknowledgement}
 \include{bibliography}
 
-
 % 後書き
-\backmatter
+
 \appendix
 
 \printindex
+
+
+\begingroup
+\thispagestyle{empty}
+
+    \vspace{24mm}
+    {\fontsize{20}{20}\textmc{ 以上}\par}
+    \vspace{30mm}
+\begin{center}
+    % 提出日期与指导教师
+    {\fontsize{16}{18}\textmc{ 1p〜97p完}\par}
+    \vspace{1cm}
+    {\fontsize{16}{18}\textmc{ 修士論文}\par}
+    \vspace{1cm}
+
+    % 学校与院系信息
+    {\fontsize{16}{18}\textmc{ 令和 8 年 8 月 17 日 提出}\par}
+    \vspace{5cm}
+    {\fontsize{20}{22}\textmc{ 機械工学専攻}\par}
+    \vspace{5mm}
+    {\fontsize{20}{22}\textmc{37-245135 羅 子鋮}\par}
+    \vspace*{8mm}
+\end{center}
+\endgroup
+
+
 \end{document}

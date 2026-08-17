@@ -7,17 +7,20 @@
     colorlinks=false,% false: boxed links; true: colored links
     setpagesize=false,
     hyperfootnotes=false,
-	pdfborder={0 0 0},
+    pdfborder={0 0 0},
     pdfsubject={修士論文},   % text for PDF Subject field
     ]{hyperref}%
   \usepackage{pxjahyper}%
 }
 
+
 % 目次の深さ
 \setcounter{tocdepth}{2}
 
-\renewcommand{\figurename}{Fig.}
-\renewcommand{\tablename}{Table}
+
+\renewcommand{\figurename}{Fig.~}
+\renewcommand{\tablename}{Table~}
+
 
 % 参照を楽にするコマンド
 \def \figref #1{\figurename\ref{#1}}
@@ -25,18 +28,20 @@
 \def \equref #1{式(\ref{#1})}
 \def \chapref #1{Chapter\ref{#1}}
 \def \appendixref #1{付録\ref{#1}}
-\def \secref  #1{\ref{#1}節}
-\def \subsecref  #1{\ref{#1}小節}
+\def \secref #1{\ref{#1}節}
+\def \subsecref #1{\ref{#1}小節}
+
 
 \def\thesis #1{\gdef\@thesis{#1}}
 \def\teacher #1{\gdef\@teacher{#1}}
 \def\organization #1{\gdef\@organization{#1}}
 
+
 \renewcommand{\maketitle}{
     \thispagestyle{empty}
     \begin{center}
         \vspace*{2cm}
-        \LARGE \@thesis 
+        \LARGE \@thesis
         \hspace*{\fill}\leavevmode\\
         \vspace{2cm}
         \LARGE{\bf \@title}
@@ -44,17 +49,17 @@
         \label{font_title}
         \Large
         \vspace{5cm}
-        \@date \hspace*{0.5zw}提出 
+        \@date \hspace*{0.5zw}提出
         \hspace*{\fill}\leavevmode\\
         \vspace{1cm}
-        指導教員 \@teacher 
+        指導教員 \@teacher
         \hspace*{\fill}\leavevmode\\
         \Large
         \vspace{1cm}
         \@organization
         \hspace*{\fill}\leavevmode\\
         \LARGE
-        \@author 
+        \@author
         \hspace*{\fill}\leavevmode\\
         \normalsize
     \end{center}
@@ -64,19 +69,25 @@
     \clearpage
 }
 
+
 \usepackage{fancyhdr}
+
 
 \pagestyle{fancy}
 \fancyhf{}
 
+
 \fancyhead[L]{\bfseries --- \leftmark\ ---}
 \fancyhead[R]{\bfseries \thepage}
 
+
 \renewcommand{\headrulewidth}{0.4pt}
+
 
 \renewcommand{\chaptermark}[1]{%
   \markboth{Chapter \thechapter: #1}{}
 }
+
 
 \fancypagestyle{plain}{
   \fancyhf{}
@@ -87,7 +98,15 @@
 
 
 
+\renewcommand{\contentsname}{}
+
+
+\renewcommand{\prechaptername}{Chapter~}
+\renewcommand{\postchaptername}{}
+
+
 \makeatletter
+
 
 \renewcommand{\chapter}{%
   \if@openright\cleardoublepage\else\clearpage\fi
@@ -97,18 +116,88 @@
   \secdef\@chapter\@schapter
 }
 
+
 \def\@makechapterhead#1{%
-  \vspace*{\fill}
+  \vspace*{55mm}
   \begin{center}
     {\Huge\bfseries Chapter~\thechapter\par}
     \vspace{1cm}
     {\Huge\bfseries #1\par}
   \end{center}
-  \vspace*{\fill}
   \clearpage
   \thispagestyle{empty}
   \mbox{}
   \clearpage
 }
+
+\def\@makeschapterhead#1{%
+ \vspace*{65mm}
+  \begin{center}
+    {\Huge\bfseries #1\par}
+  \end{center}
+  \clearpage
+  \thispagestyle{empty}
+  \mbox{}
+  \clearpage
+  \markboth{#1}{}
+}
+
+
+\renewcommand{\bibname}{References}
+
+
+\newcommand{\makecontents}{%
+  \settowidth\jsc@tocl@width{\headfont\prechaptername\postchaptername}%
+  \settowidth\@tempdima{\headfont\appendixname}%
+  \ifdim\jsc@tocl@width<\@tempdima
+    \setlength\jsc@tocl@width{\@tempdima}%
+  \fi
+  \ifdim\jsc@tocl@width<2zw
+    \divide\jsc@tocl@width by 2
+    \advance\jsc@tocl@width 1zw
+  \fi
+  \vspace*{65mm}
+  \begin{center}
+    {\Huge\bfseries Contents\par}
+  \end{center}
+  \clearpage
+  \thispagestyle{empty}
+  \mbox{}
+  \clearpage
+  \markboth{Contents}{}
+  \@starttoc{toc}
+}
+
+
+% 目录中的 Chapter 条目改为 Roman + Bold
+% 只影响 Chapter 1, Chapter 2, ... 所在的目录行
+\let\oldl@chapter\l@chapter
+\renewcommand{\l@chapter}[2]{%
+  \oldl@chapter{{\rmfamily\bfseries #1}}{{\rmfamily\bfseries #2}}%
+}
+
+
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus .2ex}%
+  {\normalfont\Large\bfseries\rmfamily}%
+}
+
+
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {-3.25ex \@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\large\bfseries\rmfamily}%
+}
+
+
+\let\oldbibitem\bibitem
+\renewcommand{\bibitem}{%
+  \vspace{10pt}%
+  \oldbibitem
+}
+
 
 \makeatother

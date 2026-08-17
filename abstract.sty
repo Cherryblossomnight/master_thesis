@@ -1,0 +1,127 @@
+\PassOptionsToPackage{dvipdfmx}{graphicx}
+\PassOptionsToPackage{dvipdfmx}{xcolor}
+
+% Packages
+
+\usepackage{amsmath}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{bm}
+
+\usepackage{cite}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+% Page layout
+\usepackage[
+  top=20mm,
+  bottom=20mm,
+  left=15mm,
+  right=15mm,
+  columnsep=10mm
+]{geometry}
+
+% Main text: 10 pt
+\renewcommand{\normalsize}{%
+  \@setfontsize\normalsize{10pt}{13pt}%
+}
+\normalsize
+
+% Paragraph formatting
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1.5em}
+
+% Prevent excessive vertical stretching
+\raggedbottom
+
+% Figure / table names
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+% References
+\renewcommand{\refname}{References}
+
+% Reference commands
+\def\figref#1{\figurename~\ref{#1}}
+\def\tabref#1{\tablename~\ref{#1}}
+\def\equref#1{(\ref{#1})}
+
+% Section style: 12 pt
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+  {0.6ex \@plus .2ex \@minus .1ex}%
+  {0.4ex \@plus .1ex}%
+  {\normalfont\large\bfseries}%
+}
+
+% Subsection style: 10 pt
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {0.5ex \@plus .2ex \@minus .1ex}%
+  {0.3ex \@plus .1ex}%
+  {\normalfont\normalsize\bfseries}%
+}
+
+% Title information
+\def\teacher#1{\gdef\@teacher{#1}}
+\def\keywords#1{\gdef\@keywords{#1}}
+
+% Title spans both columns
+\renewcommand{\maketitle}{%
+  \twocolumn[
+    \begin{center}
+
+      % English + Japanese title
+      {\Large
+        \setlength{\baselineskip}{14pt}%
+        \@title\par
+      }
+
+      \vspace{0.25em}
+
+      % Author and supervisor
+    {\normalsize\gtfamily
+      \setlength{\baselineskip}{11pt}%
+      \@author
+      \hspace{2em}
+      指導教員 \@teacher
+      \par
+    }
+
+      \vspace{0.10em}
+
+      % Keywords
+      {\normalsize
+        \setlength{\baselineskip}{11pt}%
+        \textit{Key Words:} \@keywords
+        \par
+      }
+
+      \vspace{0.45em}
+
+    \end{center}
+  ]
+}
+
+% For IEEEtran bibliography style compatibility
+\def\bstctlcite#1{\@bsphack
+  \@for\@citeb:=#1\do{%
+    \edef\@citeb{\expandafter\@firstofone\@citeb}%
+    \if@filesw
+      \immediate\write\@auxout{\string\citation{\@citeb}}%
+    \fi
+  }%
+  \@esphack
+}
+
+% Compact equation spacing
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\setlength{\jot}{2pt}
+
+% No page numbers
+\pagestyle{empty}
