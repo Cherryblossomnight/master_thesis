@@ -1,7 +1,7 @@
 \chapter{Experiments}
 In this chapter, we will demonstrate the effects of the proposed hybrid impedance--admittance control framework. Hydrus Xi is selected as the primary experimental platform, while DRAGON is used as an extension platform. The experiments in this chapter have the following three main objectives. 
 
-First, preliminary experiments are conducted to demonstrate the individual effects of impedance and admittance control on the multi-link aerial robot and to experimentally demonstrate the conclusions of Chapters~\ref{ch:impedance} and~\ref{ch:admittance}. 
+First, preliminary experiments are conducted to demonstrate the individual effects of impedance and admittance control on the multi-link aerial robot and to validate their characteristics discussed in Chapters~\ref{ch:impedance} and~\ref{ch:admittance}.
 
 Second, comparative surface sliding experiments on Hydrus Xi are conducted to evaluate the proposed hybrid control framework. The experiments examine whether impedance and admittance control can be combined while maintaining stable surface sliding, whether their respective control effects can be preserved after the combination, and whether the hybrid controller can simultaneously provide the desired behaviors in both the sliding and contact directions, as intended in Chapter~\ref{ch:hybrid}.
 
@@ -23,7 +23,7 @@ The underactuated multi-link aerial robot Hydrus Xi used in the experiments is s
 \begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/robot_dragon.png}
-    \caption{The mechanical design of the overactuated multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) end effector used in surface sliding experiments. (c) 2-DoF Gimbal module. (d) 2-DoF Joints.}
+    \caption{The mechanical design of the overactuated multi-link aerial robot DRAGON. (a) Overall mechanical structure. (b) end effector used in surface sliding experiments. (c) 2-DoF Gimbal module. (d) Two orthogonal joints between adjacent links.}
     \label{fig:robot_dragon}
 \end{figure}
 
@@ -55,12 +55,12 @@ The admittance mass $m_a$ was selected mainly according to the required response
 Finally, the admittance damping $c_a$ was usually selected together with $m_a$ and $k_a$. The admittance damping ratio $\zeta_a=\frac{c_a}{2\sqrt{m_a k_a}}$ was generally set slightly below $1$ to obtain a response close to critical damping.
 
 
-\subsection{Free-Flight Parameter Tuning}
+\subsection{Free Flight Parameter Tuning}
 \label{sec:free_flight}
 
 According to the parameter tuning principle mentioned in Sec.~\ref{sec:imp_param_tuning}, the PD parameters are first tuned under free flight conditions before introducing contact interaction. The parameters were adjusted according to the practical considerations introduced in Sec.~\ref{sec:parameter_selection}. Note that at this stage, the mass ratio $\mu$ in all directions is set to $1$, so that no additional impedance characteristic is introduced. Meanwhile, the admittance controller is deactivated. Therefore, the controller in this experiment can be regarded as the baseline PD controller.
 
-During the free-flight tuning process, the controller parameters were adjusted while observing the flight response of Hydrus Xi. The parameters obtained from the tuning process are summarized in Table~\ref{tb:params1}.
+During the free flight tuning process, the controller parameters were adjusted while observing the flight response of Hydrus Xi. The parameters obtained from the tuning process are summarized in Table~\ref{tb:params1}.
 
 \begin{table}[H]
     \centering
@@ -99,7 +99,7 @@ Here, the damping parameters are represented by the damping ratios rather than t
 
 The resulting free flight response is shown in Fig.~\ref{fig:free_flight_plot}. With the tuned parameters, Hydrus Xi maintained stable free flight throughout the experiment without apparent divergence or sustained oscillation. 
 
-Based on the free-flight tuning, these parameters were used as the baseline controller parameters for the subsequent contact experiments.
+Based on the free flight tuning, these parameters were used as the baseline controller parameters for the subsequent contact experiments.
 
 \subsection{Impedance Response under External Force}
 \label{sec:impedance_parameter}
@@ -108,12 +108,12 @@ In this experiment, the effect of the mass ratio $\mu$ on the response of the mu
 
 In this experiment, as shown in Fig.~\ref{fig:imp_drag}, a rope was used to horizontally drag Hydrus Xi and generate an external force along the $x$ axis. Pulling the rope along the positive direction of the $x$ axis can be regarded as applying a positive external force along this direction. The other controller parameters were kept the same as those used in the free flight experiment, as listed in Table~\ref{tb:params1}. Three different mass ratios, $\mu=2$, $1$, and $0.5$, were tested, corresponding to the soft, normal, and rigid cases, respectively. 
 
-Under impedance control, the external force induces a corresponding displacement according to the designed second-order dynamics. Therefore, the relationship between the estimated external force and the CoG position error along the $x$ axis is used to evaluate the response under different mass ratios. Specifically, the slope of the force--position relationship is defined as the effective stiffness, where a larger value indicates that a larger external force is required to produce the same position error.
+Under impedance control, the external force induces a corresponding displacement according to the designed second-order dynamics. Therefore, the relationship between the external force and the CoG position error along the $x$ axis is used to evaluate the response under different mass ratios. Specifically, the slope of the force--position relationship is defined as the effective stiffness, where a larger value indicates that a larger external force is required to produce the same position error.
 
 % we will do a experiment to valid the ability of impedance control. We can demonstrate that by varifying the parameter $\mu$, the performance of multi-link aerial robot will become different.
 
 
-% Here we will measure the estimated external force in $x$ axis and the corresponding CoG displacement in $x$ axis. The result is shown in Fig. \ref{fig:drag_plot}. In the analysis in Sec, when $\mu$ is larger than $1$, the system can be considered as a rigid system. On the other hand,  when $\mu$ is smaller than $1$, the system can be considered as a soft system.
+% Here we will measure the external force in $x$ axis and the corresponding CoG displacement in $x$ axis. The result is shown in Fig. \ref{fig:drag_plot}. In the analysis in Sec, when $\mu$ is larger than $1$, the system can be considered as a rigid system. On the other hand,  when $\mu$ is smaller than $1$, the system can be considered as a soft system.
 
 
 
@@ -132,13 +132,13 @@ Under impedance control, the external force induces a corresponding displacement
 \end{figure}
 
 
-As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus Xi was gradually dragged away from its reference position until larger position errors became difficult to achieve. Although the same external force was not guaranteed across the different cases, different responses could be observed under the three mass-ratio settings. In particular, a larger position error was observed in the soft case, whereas the rigid case exhibited a smaller position error. The result in Fig.~\ref{fig:imp_drag_plot} shows the relationship between the estimated external force and the CoG position error along the $x$ axis. As shown by the trend lines, the effective stiffness values for $\mu=2$, $1$, and $0.5$ were $4.18~\mathrm{N/m}$, $8.25~\mathrm{N/m}$, and $14.22~\mathrm{N/m}$, respectively.
+As illustrated in Fig.~\ref{fig:imp_drag_result}, during the experiment, Hydrus Xi was gradually dragged away from its reference position until larger position errors became difficult to achieve. Although the same external force was not guaranteed across the different cases, different responses could be observed under the three mass ratio settings. In particular, a larger position error was observed in the soft case, whereas the rigid case exhibited a smaller position error. The result in Fig.~\ref{fig:imp_drag_plot} shows the relationship between the external force and the CoG position error along the $x$ axis. As shown by the trend lines, the effective stiffness values for $\mu=2$, $1$, and $0.5$ were $4.18~\mathrm{N/m}$, $8.25~\mathrm{N/m}$, and $14.22~\mathrm{N/m}$, respectively.
 
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[trim={0cm 0cm 0cm 0cm}, clip, width=\linewidth]{figures/chapter6/imp_drag_plot.png}
-    \caption{Relationship between the estimated external force and the CoG position error under different mass ratios during the dragging experiment.}
+    \caption{Relationship between the external force and the CoG position error under different mass ratios during the dragging experiment.}
     \label{fig:imp_drag_plot}
 \end{figure}
 
@@ -148,12 +148,12 @@ Consequently, the results shown in Fig.~\ref{fig:imp_drag_result} intuitively de
 
 In this experiment, the deformation behavior induced by external forces under admittance control is investigated. As discussed in Chapter~\ref{ch:admittance}, the relationship between the external forces and the resulting deformation constitutes one part of the response cycle for adapting to geometric variations. The complete response cycle will be further demonstrated in the surface sliding experiments.
 
-In this experiment, as shown at the bottom of Fig.~\ref{fig:admittance_drag}, a rope was also used to generate an external force along the $x$ axis. To show the deformation more clearly, the rope was pulled in the negative direction of the $x$ axis, thereby generating an external force in the same direction. Here, the distance $r$ used in the admittance controller in \eqref{eq:admittance control2} is defined as the projected distance between the end effector and the CoG along the $x$ axis. To avoid unexpected configurations and instability, Hydrus Xi started from the nominal configuration shown at the top of Fig.~\ref{fig:admittance_drag}, and the distance $r$ was constrained within a feasible range during the experiment.
+In this experiment, as shown at the bottom of Fig.~\ref{fig:admittance_drag}, a rope was also used to generate an external force along the $x$ axis. To show the deformation more clearly, the rope was pulled in the negative direction of the $x$ axis, thereby generating an external force in the same direction. Here, the distance $r$ used in the admittance controller in \eqref{eq:admittance control2} is defined as the projected distance between the end effector and the CoG along the $x$ axis. To avoid unexpected configurations and instability, Hydrus Xi started from the nominal configuration shown in Fig.~\ref{fig:admittance_drag}(a), and the distance $r$ was constrained within a feasible range during the experiment.
 
 \begin{figure}[!htbp]
     \centering
     % \parbox{3in}
-    \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_drag.png}
+    \includegraphics[trim={0.3cm 0cm 0cm 0cm},clip,width=\linewidth]{figures/chapter6/admittance_drag.png}
     \caption{(a) The nominal surface-contact configuration of the multi-link aerial robot. The distance $r$ used in the admittance controller is defined as the projected distance between the end effector and the CoG along the $x$ axis of $\{W\}$. The configuration angle is $\theta=\pi/6$, and the joint angles $q_1$, $q_2$, and $q_3$ are $\pi/3$, $\pi/3$, and $-\pi/6$, respectively. (b) Hydrus Xi is dragged by the rope to simulate an external force applied along the $x$ axis.}
     \label{fig:admittance_drag}
 \end{figure}
@@ -184,7 +184,7 @@ To observe the resulting deformation behavior, the external force, the distance 
 
 As shown in Fig.~\ref{fig:admittance_changing}, the multi-link structure deformed in response to the applied external force. The snapshots provide a visualization of the deformation process under the admittance controller. From (a) to (d), the applied force was gradually increased, resulting in obvious configuration changes and a small yaw error.
 
-The relationship among the external forces, the distance $r$, and the joint angles is shown in Fig.~\ref{fig:admittance_deformation_plot}. During the interval indicated by the pink region, the admittance controller was activated and the multi-link aerial robot was dragged in the negative direction of the $x$ axis. The estimated external force along the $x$ axis consequently showed an apparent negative value, and the distance $r$ varied in response to the external force. The flat regions in the distance response correspond to the imposed limit on $r$. Correspondingly, the joint angles also changed, producing the structural deformation shown in Fig.~\ref{fig:admittance_changing}.
+The relationship among the external forces, the distance $r$, and the joint angles is shown in Fig.~\ref{fig:admittance_deformation_plot}. During the interval indicated by the pink region, the admittance controller was activated and the multi-link aerial robot was dragged in the negative direction of the $x$ axis. The external force along the $x$ axis consequently showed an apparent negative value, and the distance $r$ varied in response to the external force. The flat regions in the distance response correspond to the imposed limit on $r$. Correspondingly, the joint angles also changed, producing the structural deformation shown in Fig.~\ref{fig:admittance_changing}.
 
 
 Consequently, when an external force is applied to the multi-link aerial robot, the distance $r$ changes under admittance control. Through inverse kinematics, the variation in $r$ is further converted into changes in the joint angles, resulting in deformation of the multi-link structure. The results demonstrate that the multi-link aerial robot can deform in response to an external force applied along the admittance-activated direction. This deformation behavior demonstrates one part of the response cycle discussed in Chapter~\ref{ch:admittance} and provides the basis for using structural deformation to respond to geometric variations.
@@ -202,7 +202,7 @@ Consequently, when an external force is applied to the multi-link aerial robot, 
 
 % In this experiment, we use a rope to horizontally drag the multi-link aerial robot in order to imitate the horizontal external force. The dragging direction is similar to the impedance part. The other parameters are shown in the following Table \ref{tb:params3}.
 
-% Here we measure the estimated external force in X axis and the corresponding displacement in X axis. The result is shown in Fig.\ref{fig:drag_plot2}.
+% Here we measure the external force in X axis and the corresponding displacement in X axis. The result is shown in Fig.\ref{fig:drag_plot2}.
 
 
 % The experiment result varify that the distance between CoG and end effector can change with the external force. By setting parameters like this, we can guarantee stability and response speed, simultaneously
@@ -216,7 +216,7 @@ Consequently, when an external force is applied to the multi-link aerial robot, 
 In this section, the surface sliding experiment was conducted using Hydrus Xi under the proposed hybrid impedance--admittance control framework. As discussed in Chapter~\ref{ch:hybrid}, impedance and admittance control were combined in their respective directions to utilize their different characteristics. The experiment investigated whether the two control methods can be combined while maintaining stable surface sliding and whether their respective control effects can be preserved after the combination.
 
 \subsection{Experimental Setup}
-In the surface sliding experiment, the controller parameters were set as follows. The basic PD parameters were kept the same as those listed in Table~\ref{tb:params1}. Based on the discussion in Chapter~\ref{ch:impedance} and the experimental results presented in Sec.~\ref{sec:impedance_parameter}, the mass ratio $\mu$ in each direction was selected according to the experimental requirements. For the orientation, $\mu$ was chosen to provide sufficient resistance to external torques generated during contact and sliding. For the sliding directions, especially the $y$ axis, $\mu$ was selected to provide a more rigid response to external disturbances. Along the contact direction, namely the $x$ axis, the mass ratio $\mu$ was set to $1$. The resulting parameters are summarized in Table~\ref{tb:params4}. Note that the diagonal elements of the mass ratio translational matrix $m\boldsymbol{M}_d^{-1}$ and the mass ratio rotational matrix $\boldsymbol{I}\boldsymbol{I}_d^{-1}$ represent the mass ratios $\mu$ in the corresponding translational and rotational directions, respectively. Meanwhile, the admittance controller was activated only along the $x$ axis, and its parameters were selected based on the practical considerations introduced in Sec.~\ref{sec:parameter_selection}. These parameters are also shown in Table~\ref{tb:params4}. The reference external force used in the admittance controller was set to $f_{ref,x}=0$. The parameters used for external wrench estimation are also summarized in the same table
+In the surface sliding experiment, the controller parameters were set as follows. The basic PD parameters were kept the same as those listed in Table~\ref{tb:params1}. Based on the discussion in Chapter~\ref{ch:impedance} and the experimental results presented in Sec.~\ref{sec:impedance_parameter}, the mass ratio $\mu$ in each direction was selected according to the experimental requirements. For the orientation, $\mu$ was chosen to provide sufficient resistance to external torques generated during contact and sliding. For the sliding directions, especially the $y$ axis, $\mu$ was selected to provide a more rigid response to external disturbances. Along the contact direction, namely the $x$ axis, the mass ratio $\mu$ was set to $1$. The resulting parameters are summarized in Table~\ref{tb:params4}. Note that the diagonal elements of the mass ratio translational matrix $m\boldsymbol{M}_d^{-1}$ and the mass ratio rotational matrix $\boldsymbol{I}\boldsymbol{I}_d^{-1}$ represent the mass ratios $\mu$ in the corresponding translational and rotational directions, respectively. Meanwhile, the admittance controller was activated only along the $x$ axis, and its parameters were selected based on the practical considerations introduced in Sec.~\ref{sec:parameter_selection}. These parameters are also shown in Table~\ref{tb:params4}. The reference external force used in the admittance controller was set to $f_{ref,x}=0$. The parameters used for external wrench estimation are also summarized in the same table.
 
 % as follows. The estimator translation and rotation gain matrices are given by $\boldsymbol{K}_{ti}=diag(3.0, 3.0, 3.0)$ and $\boldsymbol{K}_{ri}=diag(1.0, 1.0, 1.0)$. We treat $\boldsymbol{M}_d/m$ and $\boldsymbol{I}_d\boldsymbol{I}^{-1}$ as entities. Their values are set to $\boldsymbol{M}_d/m=diag(1.0, 3.0, 1.0)$, $\boldsymbol{I}_d\boldsymbol{I}^{-1}=diag(10.0, 10.0, 5.0)$. By choosing these values greater than $1$, the impedance controller exhibits more resilient behavior against environmental disturbances due to the increased designed stiffness. The normalized linear stiffness and rotational stiffness are given by $\tilde{\boldsymbol{K}}_{td} = diag(2.5, 2.5, 1.5)$, $\tilde{\boldsymbol{K}}_{rd} = diag(40.0, 40.0, 10.0)$. The normalized linear and rotational damping terms are not directly specified. Instead, we define the linear damping ratio $\boldsymbol{Z}_{td}=diag(0.6, 0.6, 0.7)$ and the rotational damping ratio $\boldsymbol{Z}_{rd}=diag(1.1, 1.1, 0.8)$, and compute the corresponding normalized damping matrices as follows:
 
@@ -337,22 +337,24 @@ Overall, this part of the experiments demonstrates that impedance control provid
 
 \subsection{Contact-Direction Adaptation and Interaction Force}
 
-Fig.~\ref{fig:admittance_plot} presents the CoG position and estimated external force along the $x$ axis. The interquartile range of the CoG position was used to evaluate how strongly the CoG position was affected by the surface geometric variations, with a smaller value indicating a smaller influence. As further quantified in Fig.~\ref{fig:admittance_box}, the PD and impedance-only controllers showed relatively larger variations in the CoG position, with interquartile ranges of $0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$, respectively. In contrast, the interquartile ranges were $0.088\,\mathrm{m}$ and $0.084\,\mathrm{m}$ for the admittance-only and hybrid controllers, respectively.
+Fig.~\ref{fig:admittance_plot} presents the CoG position and external force along the $x$ axis. The interquartile range of the CoG position was used to evaluate how strongly the CoG position was affected by the surface geometric variations, with a smaller value indicating a smaller influence. As further quantified in Fig.~\ref{fig:admittance_box}, the PD and impedance-only controllers showed relatively larger variations in the CoG position, with interquartile ranges of $0.133\,\mathrm{m}$ and $0.137\,\mathrm{m}$, respectively. In contrast, the interquartile ranges were $0.088\,\mathrm{m}$ and $0.084\,\mathrm{m}$ for the admittance-only and hybrid controllers, respectively.
 
 The median external force along the $x$ axis was used to evaluate the overall influence of the surface interaction on the CoG, where a median value closer to zero indicates a smaller influence. As shown in Fig.~\ref{fig:admittance_box}, the median external forces were approximately $-1.190\,\mathrm{N}$ for the PD controller, $-0.453\,\mathrm{N}$ for the impedance-only controller, $-0.712\,\mathrm{N}$ for the admittance-only controller, and $-0.328\,\mathrm{N}$ for the hybrid controller. 
 
-Compared with the baseline PD controller, the admittance-only controller showed a smaller interquartile range in the CoG position. In the baseline PD case, the configuration of the multi-link aerial robot remained unchanged, and therefore the variation in the CoG position approximately followed the geometric variation of the surface, which was around $0.15\,\mathrm{m}$. In contrast, the admittance-only controller showed a smaller variation in the CoG position, as indicated by its smaller interquartile range, due to the deformation of the multi-link structure. As shown in Fig.~\ref{fig:admittance_plot}, the surface geometric variation induced changes in the external force. Under admittance control, the change in external force further induced structural deformation, thereby reducing the geometric variation transmitted to the CoG. This response demonstrates the complete response cycle discussed in Chapter~\ref{ch:admittance} and its capability to adapt to surface geometric variations.
+Compared with the baseline PD controller, the admittance-only controller showed a smaller interquartile range in the CoG position. In the baseline PD case, the configuration of the multi-link aerial robot remained unchanged, and therefore the variation in the CoG position approximately followed the geometric variation of the surface, which was around $0.15\,\mathrm{m}$. In contrast, the admittance-only controller showed a smaller variation in the CoG position, as indicated by its smaller interquartile range, due to the deformation of the multi-link structure. The surface geometric variation first induced changes in the external force, which further caused structural deformation under admittance control, as shown in Fig.~\ref{fig:admittance_plot}. This deformation reduced the geometric variation transmitted to the CoG. This response demonstrates the complete response cycle discussed in Chapter~\ref{ch:admittance} and its capability to adapt to surface geometric variations.
+
+T
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/chapter6/admittance_plot.png}}
-    \caption{Plots of position variations and estimated external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
+    \caption{Plots of position variations and external force on the CoG in the $x$ axis. The yellow region denotes the contact period, and the pink region indicates the interval during which the admittance controller actively adjusts the configuration.}
     \label{fig:admittance_plot}
 \end{figure}
 
 \begin{figure}[!htbp]
     \centerline{\includegraphics[trim=0 0 0 0,clip,width=\linewidth]
     {figures/chapter6/box_force.png}}
-    \caption{Box plots of CoG position and estimated external force on the CoG along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
+    \caption{Box plots of CoG position and external force on the CoG along the contact direction ($x$ axis) for the four controllers during the period when the admittance controller was active.}
     \label{fig:admittance_box}
 \end{figure}
 
@@ -464,4 +466,4 @@ These results demonstrate that the proposed hybrid control framework can also be
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this chapter, the proposed hybrid impedance--admittance control framework was experimentally evaluated on multi-link aerial robots. In the preliminary experiments, practical parameter-selection considerations were discussed, stable operation under free-flight conditions was demonstrated, and the effects of impedance and admittance control were investigated. The Hydrus Xi experiments compared four controllers and demonstrated that the hybrid controller combined the resilience of impedance control with the adaptivity of admittance control, achieving good performance in both the sliding and contact directions. Finally, the extension experiment on DRAGON demonstrated that the proposed framework could also be applied to another type of multi-link aerial robot.
+In this chapter, the proposed hybrid impedance--admittance control framework was experimentally evaluated on multi-link aerial robots. In the preliminary experiments, practical parameter-selection considerations were discussed, stable operation under free flight conditions was demonstrated, and the effects of impedance and admittance control were investigated. The Hydrus Xi experiments compared four controllers and demonstrated that the hybrid controller combined the resilience of impedance control with the adaptivity of admittance control, achieving good performance in both the sliding and contact directions. Finally, the extension experiment on DRAGON demonstrated that the proposed framework could also be applied to another type of multi-link aerial robot.
