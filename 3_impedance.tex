@@ -2,7 +2,7 @@
 \label{ch:impedance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this chapter, we will introduce the fundamental concept of impedance control and how we can achieve it in multi-link aerial robots. Next, we will provide a new insight into impedance control. Finally, we will describe the special settings for the underactuated multi-link aerial robot Hydrus Xi and the overactuated multi-link aerial robot DRAGON.
+In this chapter, we will introduce the fundamental concept of impedance control and how we can achieve it in multi-link aerial robots. Next, we will provide a reinterpretation into impedance control. Finally, we will describe the special settings for the underactuated multi-link aerial robot Hydrus Xi and the overactuated multi-link aerial robot DRAGON.
 % We will discuss a new concept of impedance controller.
 % also what should we consider when choosing the parameters in impedance and admittance controller
 % \section{Motivation}
@@ -69,7 +69,7 @@ Also, we define the normalized rotational damping and stiffness as $\tilde{\bold
     {^{C}\boldsymbol{\tau}_{cmd}}=(\boldsymbol{I}\boldsymbol{I}^{-1}_d-\boldsymbol{E}_3){^{C}}\boldsymbol{\tilde{\tau}}_{ext}-\boldsymbol{I}(\tilde{\boldsymbol{C}}_{rd}{\boldsymbol{e}_\omega}+\tilde{\boldsymbol{K}}_{rd}{\boldsymbol{e}_R})
     +{^{C}\boldsymbol{\omega}} \times \boldsymbol{I}{^{C}\boldsymbol{\omega}}.
 \end{equation}
-These equations provide the command wrench that the rotors need to generate. In the next section, we will explain why we rewrite the equations in this form and introduce a new insight into impedance control.
+These equations provide the command wrench that the rotors need to generate. In the next section, we will explain why we rewrite the equations in this form and introduce a reinterpretation into impedance control.
 
 % Noting that the normalized matrices are considered as contact parameters and are tuned in free flight situation. This is how we get the command wrench.
 
@@ -78,7 +78,7 @@ These equations provide the command wrench that the rotors need to generate. In 
 \label{sec:imp_param_tuning}
 One of the most important features of impedance control is that the performance of the aerial robot can be reshaped by specifically designed parameter matrices. However, traditional literature seldom considers the connection between parameter selection and flight and contact behaviors. Even though the parameter matrices usually have specific physical meanings, these physical interpretations do not directly provide a practical parameter selection procedure. Therefore, although the qualitative influence of each parameter is generally understood, determining suitable numerical values remains difficult in practice. 
 
-In this section, by re-analyzing the meaning of the impedance parameters, we will obtain a new insight into impedance control and find the specific corresponding relationship between impedance control and PID control. Therefore, the parameters can be better selected according to the resulting system behavior rather than their physical meanings alone.
+In this section, by re-analyzing the meaning of the impedance parameters, we will obtain a reinterpretation into impedance control and find the specific corresponding relationship between impedance control and PID control. Therefore, the parameters can be better selected according to the resulting system behavior rather than their physical meanings alone.
 
 
 
